@@ -1,0 +1,29 @@
+/* Extra small devices (phones, <576px) */
+@media (max-width: 575.98px) {
+    .last-update {
+        font-size: 10px;
+    }
+}
+
+/* Small devices (≥576px) */
+@media (min-width: 576px) {
+    .last-update {
+        font-size: 12px;
+    }
+}
+
+/* Medium devices (≥768px) */
+@media (min-width: 768px) {
+    .last-update {
+        font-size: 14px;
+    }
+}
+
+/* Large devices (≥992px) */
+@media (min-width: 992px) {
+    
+}
+
+/* Extra large devices (≥1200px) */
+@media (min-width: 1200px) {
+}   
