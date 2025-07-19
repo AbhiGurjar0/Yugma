@@ -1,5 +1,5 @@
 
-// Replace 'YOUR_API_KEY' with your actual OpenWeatherMap API key
+
 async function getWeather(city) {
     const apiKey = 'fab1287105dc652116091b8007a1638a';
     const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
@@ -15,12 +15,11 @@ async function getWeather(city) {
         windSpeed: (data.wind.speed * (5 / 18)).toFixed(2),
         windDirection: data.wind.deg,
         pressure: data.main.pressure,
-        visibility: (data.visibility / 1000), // Convert visibility from meters to kilometers
-        // Add date and time from API (dt is in seconds since epoch, UTC)
+        visibility: (data.visibility / 1000), 
         dateTime: new Date(data.dt * 1000).toLocaleString()
     }
 }
-// getWeather('hindaun');
+
 let Weather = getWeather('hindaun');
 Weather.then(data => {
     document.getElementById('w-city').innerText = `${data.city}, ${data.country}`;
