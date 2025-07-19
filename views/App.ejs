@@ -12,247 +12,231 @@
 
 <body class="bg-gray-200 min-h-screen flex flex-col">
 
-    <!-- HEADER with Logo and Profile Icon -->
-    <header class="flex items-center justify-between px-6 py-4 bg-white shadow">
-        <div class="text-2xl font-bold text-gray-700 select-none">Logo</div>
-        <div class="flex gap-4 items-center">
-            <div class="last_update flex gap-1 bg-gray-200 px-4 py-2 rounded-full last-update">
-                <p>Last Updated:
-                <p id="dynamic_update">Just Now</p>
-                </p>
-            </div>
-            <button aria-label="User Profile"
-                class="w-10 h-10 rounded-full bg-gray-300 hover:bg-gray-400 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                <svg class="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path
-                        d="M12 12c2.7 0 4.9-2.2 4.9-4.9S14.7 2.2 12 2.2 7.1 4.4 7.1 7.1 9.3 12 12 12zm0 2.2c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
-                </svg>
-            </button>
-        </div>
-    </header>
-
-    <!-- BANNER SECTION -->
     <section class="banner flex flex-col items-center justify-center mx-5 mt-6">
-        <div
-            class="banner_component w-full max-w-7xl h-48 md:h-64 flex items-center justify-center text-3xl font-semibold text-gray-700 select-none">
-            <button aria-label="Previous Banner"
-                class="bg-white z-10 p-2 h-24 md:h-48 shadow hover:bg-gray-100 focus:outline-none">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
-                </svg>
-            </button>
-            <div
-                class="bg-gray-300 rounded shadow-lg overflow-hidden z-50 w-full max-w-7xl h-48 md:h-64 flex items-center justify-center text-3xl font-semibold text-gray-700 select-none">
-                BANNER
+            <div id="banner-container"
+                class="banner_component w-full max-w-7xl h:48 sm:h-60 md:h-64 lg:h-96 overflow-hidden flex items-center justify-center text-3xl font-semibold text-gray-700 select-none">
+                <button aria-label="Previous Banner" id="prevSlide"
+                    class="bg-white md:block hidden z-10 p-2 h-24 md:h-48 shadow hover:bg-gray-100 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <div
+                    class="bg-gray-300 rounded shadow-lg overflow-hidden z-40 w-full max-w-7xl h-48 sm:h-60 md:h-64 lg:h-96 flex items-center justify-center text-3xl font-semibold text-gray-700 select-none">
+                    <img id="banner-img" class="w-full h-full object-cover" src="../images/banner/banner.jpg"
+                        alt="banner_img">
+                    <!-- <div class="text-3xl font-semibold text-gray-700 select-none">
+                        
+                    </div> -->
+                </div>
+                <button aria-label="Next Banner" id="nextSlide"
+                    class="bg-white md:block hidden p-2 h-24 md:h-48 z-10 shadow hover:bg-gray-100 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
             </div>
-            <button aria-label="Next Banner"
-                class="bg-white p-2 h-24 md:h-48 z-10 shadow hover:bg-gray-100 focus:outline-none">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-            </button>
-        </div>
 
-        <div class="flex space-x-2 justify-center p-5">
-            <span class="actice w-9 h-3 rounded-full bg-gray-700"></span>
-            <span class=" w-3 h-3 rounded-full bg-gray-400"></span>
-            <span class="w-3 h-3 rounded-full bg-gray-400"></span>
-            <span class="w-3 h-3 rounded-full bg-gray-400"></span>
-            <span class="w-3 h-3 rounded-full bg-gray-400"></span>
-        </div>
-    </section>
+            <div class="flex space-x-2 justify-center p-5">
+                <span id="dot-0" class="active w-9 h-3 rounded-full bg-gray-700 transition-all"></span>
+                <span id="dot-1" class=" w-3 h-3 rounded-full bg-gray-400 transition-all"></span>
+                <span id="dot-2" class="w-3 h-3 rounded-full bg-gray-400 transition-all"></span>
+                <span id="dot-3" class="w-3 h-3 rounded-full bg-gray-400 transition-all"></span>
+                <span id="dot-4" class="w-3 h-3 rounded-full bg-gray-400 transition-all"></span>
+            </div>
+        </section>
+        <!-- NOW COPY & PASTE  -->
 
 
+        <main class="flex flex-col lg:flex-row max-w-7xl mx-auto mt-8 px-4 md:px-0 gap-6 flex-grow">
 
-    <main class="flex flex-col md:flex-row max-w-7xl mx-auto mt-8 px-4 md:px-0 gap-6 flex-grow">
+            <!-- Left Column -->
+            <section class="flex flex-col space-y-6 flex-1 min-w-0">
 
-        <!-- Left Column -->
-        <section class="flex flex-col space-y-6 flex-1 min-w-0">
-
-            <!-- Smart Irrigation -->
-            <div
-                class="bg-white rounded-xl border border-red-400 p-6 flex-1 min-w-[300px] hover:-translate-y-1 transition">
-                <h3 class="text-xl font-semibold mb-4">Smart Irrigation</h3>
-                <div class="main-box flex flex-col md:flex-row  gap-4 pt-4 items-center">
-                    <div class="flex items-center justify-center mb-4">
-                        <div class="relative w-48 h-48 md:w-64 md:h-64">
-                            <svg class="w-48 h-48 md:w-64 md:h-64" viewBox="0 0 36 36">
-                                <path class="text-gray-300" stroke-width="4" fill="none" stroke="currentColor"
-                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                                <path id="moisture-fill" class="text-blue-600" stroke-width="4" fill="none"
-                                    stroke="currentColor" stroke-dasharray="20, 100"
-                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                            </svg>
-                            <div
-                                class="absolute inset-0 flex items-center justify-center md:text-3xl	 text-xl font-bold">
-                                <span id="moisture-percentage">20%</span>
+                <!-- Select from here -->
+                <!-- Smart Irrigation -->
+                <div class="bg-white rounded-xl border border-gray-300 p-6 flex-1 min-w-[300px]">
+                    <h3 class="text-xl font-semibold mb-4">Smart Irrigation</h3>
+                    <div class="main-box flex flex-col md:flex-row justify-around  gap-4 pt-4 items-center">
+                        <div class="flex items-center justify-center mb-4">
+                            <div class="relative w-48 h-48 md:w-64 md:h-64">
+                                <svg class="w-48 h-48 md:w-64 md:h-64" viewBox="0 0 36 36">
+                                    <path class="text-gray-300" stroke-width="4" fill="none" stroke="currentColor"
+                                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <path id="moisture-fill" class="text-blue-600" stroke-width="4" fill="none"
+                                        stroke="currentColor" stroke-dasharray="20, 100"
+                                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                </svg>
+                                <div
+                                    class="absolute inset-0 flex items-center justify-center md:text-3xl	 text-xl font-bold">
+                                    <span id="moisture-percentage">20%</span>
+                                </div>
                             </div>
                         </div>
+                        <div class="space-y-3">
+                            <button class="w-full bg-indigo-600 text-white py-2 rounded-lg"  id="setup-waterpump"> Setup Irrigation </button>
+                            <button id="start-irrigation" class="w-full border border-indigo-600 text-indigo-600 py-2 bg-indigo-50 rounded-lg"> Start Irrigation </button>
+                            <button id="stop-irrigation" class="w-full border border-red-600 text-red-600 py-2 bg-red-50 rounded-lg">Emergency Stop</button>
+                        </div>
                     </div>
-                    <div class="space-y-3">
-                        <button class="w-full bg-indigo-600 text-white py-2 rounded-lg">Start Water Pump</button>
-                        <button
-                            class="w-full border border-indigo-600 text-indigo-600 py-2 bg-indigo-50 rounded-lg">Setup
-                            Water Pump</button>
-                        <button class="w-full border border-red-600 text-red-600 py-2 bg-red-50 rounded-lg">Emergency
-                            Stop</button>
+
+                </div>
+                <!-- NOW COPY & PASTE -->
+
+                <!-- Waste Reuse Suggestions -->
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col select-none">
+                    <h2 class="text-lg font-semibold text-gray-700 mb-4">Waste Reuse Suggestions</h2>
+                    <div class="flex flex-col gap-4">
+                        <div class="border border-gray-300 rounded-lg px-4 py-3 bg-gray-50 text-gray-600 text-base">
+                            Suggestion 1</div>
+                        <div class="border border-gray-300 rounded-lg px-4 py-3 bg-gray-50 text-gray-600 text-base">
+                            Suggestion 2</div>
+                        <div class="border border-gray-300 rounded-lg px-4 py-3 bg-gray-50 text-gray-600 text-base">
+                            Suggestion 3</div>
                     </div>
                 </div>
 
-            </div>
+            </section>
 
-            <!-- Waste Reuse Suggestions -->
-            <div class="bg-white p-6 rounded-lg shadow-md flex flex-col select-none">
-                <h2 class="text-lg font-semibold text-gray-700 mb-4">Waste Reuse Suggestions</h2>
-                <div class="flex flex-col gap-4">
-                    <div class="border border-gray-300 rounded-lg px-4 py-3 bg-gray-50 text-gray-600 text-base">
-                        Suggestion 1</div>
-                    <div class="border border-gray-300 rounded-lg px-4 py-3 bg-gray-50 text-gray-600 text-base">
-                        Suggestion 2</div>
-                    <div class="border border-gray-300 rounded-lg px-4 py-3 bg-gray-50 text-gray-600 text-base">
-                        Suggestion 3</div>
-                </div>
-            </div>
+            <!-- Right Column -->
+            <aside class="flex flex-col space-y-6 w-full md:w-96 min-w-[280px]">
 
-        </section>
+                <!-- Illustration and Weather Update -->
 
-        <!-- Right Column -->
-        <aside class="flex flex-col space-y-6 w-full md:w-96 min-w-[280px]">
-
-            <!-- Illustration and Weather Update -->
-
-            <div
-                class="bg-gradient-to-b from-purple-800 to-indigo-900 h-[85vh] text-white font-sans rounded-lg shadow-lg">
-                <div class="max-w-sm mx-auto p-4">
-                    <!-- Top Bar -->
-                    <div class="flex justify-center items-center mb-4">
-                        <h1 id="w-city" class="text-xl font-semiboldv items-center">Sydney</h1>
-                        <!-- <div class="bg-white/20 p-2 rounded-full">
+                <div
+                    class="bg-gradient-to-b from-purple-800 to-indigo-900 h-[85vh] text-white font-sans rounded-lg shadow-lg">
+                    <div class="max-w-sm mx-auto p-4">
+                        <!-- Top Bar -->
+                        <div class="flex justify-center items-center mb-4">
+                            <h1 id="w-city" class="text-xl font-semiboldv items-center">Sydney</h1>
+                            <!-- <div class="bg-white/20 p-2 rounded-full">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                                 stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M3 4a1 1 0 011-1h1.28a2 2 0 011.416.586l.708.708A2 2 0 009.414 5H19a1 1 0 011 1v1H4V5a1 1 0 01-1-1z" />
                             </svg>
                         </div> -->
-                    </div>
+                        </div>
 
-                    <!-- Weather Info -->
-                    <div class="flex flex-col items-center">
-                        <div id="w-temp" class="relative text-7xl font-bold flex items-center justify-center">
-                            23°
-                            <div class="h-[10vw]">
-                                <img id="w-icon" class="h-full object-cover" src="https://openweathermap.org/img/wn/04n@2x.png"
-                                    alt="123">
-                            </div>
-                        </div>
-                        <p id="w-des" class="text-lg mt-6">Mostly Sunny</p>
-                        <p id="w-date" class="text-sm mt-1 text-gray-300">Saturday, 10 February | 10.00 AM</p>
-                    </div>
-
-                    <!-- Stats -->
-                    <div class="flex justify-between items-center mt-8 bg-white/10 rounded-xl p-4">
+                        <!-- Weather Info -->
                         <div class="flex flex-col items-center">
-                            <img src="https://img.icons8.com/emoji/48/000000/umbrella-with-rain-drops.png"
-                                class="w-6 h-6" />
-                            <span class="mt-1 text-sm">NA%</span>
-                            <span class="text-xs text-gray-300">Precipitation</span>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <img src="https://img.icons8.com/ios-filled/50/ffffff/humidity.png" class="w-6 h-6" />
-                            <span id="w-humidity" class="mt-1 text-sm">20%</span>
-                            <span class="text-xs text-gray-300">Humidity</span>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <img src="https://img.icons8.com/ios-filled/50/ffffff/wind.png" class="w-6 h-6" />
-                            <span id="w-windSpeed" class="mt-1 text-sm">9km/h</span>
-                            <span class="text-xs text-gray-300">Wind Speed</span>
-                        </div>
-                        <div class="flex flex-col items-center">
-                            <img src="https://img.icons8.com/ios-filled/50/ffffff/wind.png" class="w-6 h-6" />
-                            <span id="w-visibility" class="mt-1 text-sm">9km</span>
-                            <span class="text-xs text-gray-300">Visibility</span>
-                        </div>
-                    </div>
-
-                    <!-- Forecast Hours -->
-                    <div class="mt-8">
-                        <div class="flex justify-between text-sm text-gray-300 mb-2">
-                            <span>Today</span>
-                            <span>7-Day Forecasts</span>
-                        </div>
-                        <div class="flex justify-between gap-2">
-                            <div class="bg-white/10 rounded-xl p-3 text-center">
-                                <p class="text-xs">10 AM</p>
-                                <img src="https://img.icons8.com/emoji/48/000000/partly-cloudy-day.png"
-                                    class="w-6 mx-auto my-1" />
-                                <p class="text-sm">23°</p>
-                            </div>
-                            <div class="bg-white/10 rounded-xl p-3 text-center">
-                                <p class="text-xs">11 AM</p>
-                                <img src="https://img.icons8.com/emoji/48/000000/cloud.png" class="w-6 mx-auto my-1" />
-                                <p class="text-sm">20°</p>
-                            </div>
-                            <div class="bg-white/10 rounded-xl p-3 text-center">
-                                <p class="text-xs">12 PM</p>
-                                <img src="https://img.icons8.com/emoji/48/000000/sun-behind-small-cloud.png"
-                                    class="w-6 mx-auto my-1" />
-                                <p class="text-sm">19°</p>
-                            </div>
-                            <div class="bg-white/10 rounded-xl p-3 text-center">
-                                <p class="text-xs">1 PM</p>
-                                <img src="https://img.icons8.com/emoji/48/000000/sun-behind-large-cloud.png"
-                                    class="w-6 mx-auto my-1" />
-                                <p class="text-sm">18°</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Other Cities -->
-                    <div class="mt-8">
-                        <p class="text-sm text-gray-300 mb-2">Other Cities</p>
-                        <div class="flex items-center justify-between bg-white/10 rounded-xl p-4">
-                            <div class="flex items-center gap-3">
-                                <img src="https://img.icons8.com/emoji/48/000000/cloud-with-snow.png" class="w-6 h-6" />
-                                <div>
-                                    <p class="text-sm">New Zealand</p>
-                                    <p class="text-xs text-gray-300">Snowy</p>
+                            <div id="w-temp" class="relative text-7xl font-bold flex items-center justify-center">
+                                23°
+                                <div class="h-[10vw]">
+                                    <img id="w-icon" class="h-full object-cover"
+                                        src="https://openweathermap.org/img/wn/04n@2x.png" alt="123">
                                 </div>
                             </div>
-                            <p class="text-lg font-semibold">9°</p>
+                            <p id="w-des" class="text-lg mt-6">Mostly Sunny</p>
+                            <p id="w-date" class="text-sm mt-1 text-gray-300">Saturday, 10 February | 10.00 AM</p>
+                        </div>
+
+                        <!-- Stats -->
+                        <div class="flex justify-between items-center mt-8 bg-white/10 rounded-xl p-4">
+                            <div class="flex flex-col items-center">
+                                <img src="https://img.icons8.com/emoji/48/000000/umbrella-with-rain-drops.png"
+                                    class="w-6 h-6" />
+                                <span class="mt-1 text-sm">NA%</span>
+                                <span class="text-xs text-gray-300">Precipitation</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <img src="https://img.icons8.com/ios-filled/50/ffffff/humidity.png" class="w-6 h-6" />
+                                <span id="w-humidity" class="mt-1 text-sm">20%</span>
+                                <span class="text-xs text-gray-300">Humidity</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <img src="https://img.icons8.com/ios-filled/50/ffffff/wind.png" class="w-6 h-6" />
+                                <span id="w-windSpeed" class="mt-1 text-sm">9km/h</span>
+                                <span class="text-xs text-gray-300">Wind Speed</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <img src="https://img.icons8.com/ios-filled/50/ffffff/wind.png" class="w-6 h-6" />
+                                <span id="w-visibility" class="mt-1 text-sm">9km</span>
+                                <span class="text-xs text-gray-300">Visibility</span>
+                            </div>
+                        </div>
+
+                        <!-- Forecast Hours -->
+                        <div class="mt-8">
+                            <div class="flex justify-between text-sm text-gray-300 mb-2">
+                                <span>Today</span>
+                                <span>7-Day Forecasts</span>
+                            </div>
+                            <div class="flex justify-between gap-2">
+                                <div class="bg-white/10 rounded-xl p-3 text-center">
+                                    <p class="text-xs">10 AM</p>
+                                    <img src="https://img.icons8.com/emoji/48/000000/partly-cloudy-day.png"
+                                        class="w-6 mx-auto my-1" />
+                                    <p class="text-sm">23°</p>
+                                </div>
+                                <div class="bg-white/10 rounded-xl p-3 text-center">
+                                    <p class="text-xs">11 AM</p>
+                                    <img src="https://img.icons8.com/emoji/48/000000/cloud.png"
+                                        class="w-6 mx-auto my-1" />
+                                    <p class="text-sm">20°</p>
+                                </div>
+                                <div class="bg-white/10 rounded-xl p-3 text-center">
+                                    <p class="text-xs">12 PM</p>
+                                    <img src="https://img.icons8.com/emoji/48/000000/sun-behind-small-cloud.png"
+                                        class="w-6 mx-auto my-1" />
+                                    <p class="text-sm">19°</p>
+                                </div>
+                                <div class="bg-white/10 rounded-xl p-3 text-center">
+                                    <p class="text-xs">1 PM</p>
+                                    <img src="https://img.icons8.com/emoji/48/000000/sun-behind-large-cloud.png"
+                                        class="w-6 mx-auto my-1" />
+                                    <p class="text-sm">18°</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Other Cities -->
+                        <div class="mt-8">
+                            <p class="text-sm text-gray-300 mb-2">Other Cities</p>
+                            <div class="flex items-center justify-between bg-white/10 rounded-xl p-4">
+                                <div class="flex items-center gap-3">
+                                    <img src="https://img.icons8.com/emoji/48/000000/cloud-with-snow.png"
+                                        class="w-6 h-6" />
+                                    <div>
+                                        <p class="text-sm">New Zealand</p>
+                                        <p class="text-xs text-gray-300">Snowy</p>
+                                    </div>
+                                </div>
+                                <p class="text-lg font-semibold">9°</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
 
-            <!-- Instruction Box -->
-            <div class="bg-white p-3 rounded-lg shadow-md flex justify-between items-center select-none">
-                <span class="text-gray-600 font-medium">Instruction</span>
-                <button class="text-indigo-600 hover:underline focus:outline-none">Show ></button>
-            </div>
-
-            <!-- Alerts -->
-            <div class="bg-white p-4 rounded-lg shadow-md select-none">
-                <h3 class="text-md font-semibold text-gray-700 mb-3">Alert</h3>
-                <div class="space-y-3">
-                    <div class="border border-red-400 text-red-700 bg-red-50 rounded-md px-4 py-2">Alert 1</div>
-                    <div class="border border-red-400 text-red-700 bg-red-50 rounded-md px-4 py-2">Alert 2</div>
+                <!-- Instruction Box -->
+                <div class="bg-white p-3 rounded-lg shadow-md flex justify-between items-center select-none">
+                    <span class="text-gray-600 font-medium">Instruction</span>
+                    <button class="text-indigo-600 hover:underline focus:outline-none">Show ></button>
                 </div>
-            </div>
 
-            <!-- Alert System Setup -->
-            <div class="bg-white p-4 rounded-lg shadow-md select-none">
-                <h3 class="text-md font-semibold text-gray-700 mb-3">Alert system setup</h3>
-                <button
-                    class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Setup
-                    Alert</button>
-            </div>
+                <!-- Alerts -->
+                <div class="bg-white p-4 rounded-lg shadow-md select-none">
+                    <h3 class="text-md font-semibold text-gray-700 mb-3">Alert</h3>
+                    <div class="space-y-3">
+                        <div class="border border-red-400 text-red-700 bg-red-50 rounded-md px-4 py-2">Alert 1</div>
+                        <div class="border border-red-400 text-red-700 bg-red-50 rounded-md px-4 py-2">Alert 2</div>
+                    </div>
+                </div>
 
-        </aside>
+                <!-- Alert System Setup -->
+                <div class="bg-white p-4 rounded-lg shadow-md select-none">
+                    <h3 class="text-md font-semibold text-gray-700 mb-3">Alert system setup</h3>
+                    <button
+                        class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Setup
+                        Alert</button>
+                </div>
 
-    </main>
+            </aside>
+
+        </main>
 
 </body>
 <script src="../javascripts/script.js"></script>
