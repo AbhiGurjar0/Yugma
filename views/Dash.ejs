@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AgriNova Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        agriGreen: '#5C9E55',
+                        agriLightGreen: '#E9F4E9',
+                        agriYellow: '#F8E877',
+                        agriOrange: '#F0B429',
+                        agriRed: '#F87171',
+                        agriDarkGreen: '#3E6B36',
+                    }
+                },
+                fontFamily: {
+                    sans: ['Inter', 'sans-serif'],
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-agriLightGreen text-gray-800 font-sans">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="flex flex-col bg-white w-20 md:w-64 shadow-lg transition-all duration-300 group hover:w-64">
+            <div class="flex items-center gap-2 px-5 py-6 border-b border-gray-200">
+                <div class="text-agriGreen font-extrabold text-3xl select-none">🌿</div>
+                <h1 class="hidden md:block text-2xl font-extrabold select-none leading-none text-agriDarkGreen">AgriConnect
+                </h1>
+            </div>
+
+            <nav class="mt-8 flex flex-col gap-2 tracking-wide text-sm font-medium flex-grow">
+                <a href="#"
+                    class="sidebar-link active group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
+                    <span class="material-icons-outlined text-agriGreen text-lg mr-4">dashboard</span>
+                    <span class="hidden md:inline">Dashboard</span>
+                    <span
+                        class="absolute md:relative left-0 top-0 bottom-0 w-1 bg-agriGreen rounded-tr-md rounded-br-md hidden group-hover:block"></span>
+                </a>
+                <a href="#" class="sidebar-link group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
+                    <span class="material-icons-outlined text-gray-400 text-lg mr-4">grass</span>
+                    <span class="hidden md:inline">Fields</span>
+                    <span
+                        class="absolute md:relative left-0 top-0 bottom-0 w-1 bg-agriGreen rounded-tr-md rounded-br-md hidden group-hover:block"></span>
+                </a>
+                <a href="#" class="sidebar-link group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
+                    <span class="material-icons-outlined text-gray-400 text-lg mr-4">tune</span>
+                    <span class="hidden md:inline">Sepsors</span>
+                    <span
+                        class="absolute md:relative left-0 top-0 bottom-0 w-1 bg-agriGreen rounded-tr-md rounded-br-md hidden group-hover:block"></span>
+                </a>
+                <a href="#" class="sidebar-link group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
+                    <span class="material-icons-outlined text-gray-400 text-lg mr-4">assignment</span>
+                    <span class="hidden md:inline">Reports</span>
+                    <span
+                        class="absolute md:relative left-0 top-0 bottom-0 w-1 bg-agriGreen rounded-tr-md rounded-br-md hidden group-hover:block"></span>
+                </a>
+                <a href="#" class="sidebar-link group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
+                    <span class="material-icons-outlined text-gray-400 text-lg mr-4">task</span>
+                    <span class="hidden md:inline">Tasks</span>
+                    <span
+                        class="absolute md:relative left-0 top-0 bottom-0 w-1 bg-agriGreen rounded-tr-md rounded-br-md hidden group-hover:block"></span>
+                </a>
+                <a href="#" class="sidebar-link group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
+                    <span class="material-icons-outlined text-gray-400 text-lg mr-4">settings</span>
+                    <span class="hidden md:inline">Settings</span>
+                    <span
+                        class="absolute md:relative left-0 top-0 bottom-0 w-1 bg-agriGreen rounded-tr-md rounded-br-md hidden group-hover:block"></span>
+                </a>
+            </nav>
+            <div
+                class="flex items-center gap-3 px-6 py-5 border-t border-gray-200 cursor-pointer group hover:bg-agriLightGreen transition-colors duration-300">
+                <div
+                    class="w-10 h-10 rounded-full bg-gray-300 overflow-hidden border-2 border-agriGreen flex items-center justify-center">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/86ee3f1f-9ae1-44a0-a583-609d6644e300.png"
+                        alt="Profile avatar of John Doe smiling man with brown hair and beard" class="object-cover"
+                        onerror="this.style.display='none'" />
+                    <svg class="w-10 h-10 text-gray-300" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10" />
+                        <path fill="#fff"
+                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM12 14c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                    </svg>
+                </div>
+                <div class="hidden md:block">
+                    <p class="text-gray-700 font-semibold leading-tight">John Doe</p>
+                    <p class="text-xs text-gray-400">Farmer</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 md:p-10 overflow-y-auto bg-gradient-to-b from-white to-agriLightGreen">
+            <!-- Topbar: Search and Profile -->
+            <div class="flex justify-between items-center mb-8">
+                <form class="relative w-full max-w-lg" id="searchForm" onsubmit="return false;">
+                    <label for="searchInput" class="sr-only">Search</label>
+                    <input id="searchInput" type="search" placeholder="Search..."
+                        class="w-full py-3 pl-12 pr-4 rounded-lg shadow-sm border border-gray-300 focus:ring-2 focus:ring-agriGreen focus:outline-none text-gray-700 transition"
+                        autocomplete="off" />
+                    <span
+                        class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 material-icons-outlined pointer-events-none select-none">search</span>
+                </form>
+                <button id="voiceBtn" aria-label="Activate voice search"
+                    class="ml-6 p-3 rounded-lg bg-agriGreen text-white shadow hover:bg-agriDarkGreen transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-agriGreen"
+                    title="Voice Search">
+                    <span class="material-icons-outlined">mic</span>
+                </button>
+                <div class="ml-8 w-12 h-12 rounded-full overflow-hidden border-2 border-agriGreen cursor-pointer group transition transform hover:scale-105"
+                    title="Profile menu">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d13bad9f-4f57-441d-bc3d-cf65a5713806.png"
+                        alt="Profile avatar of John Doe smiling man with brown hair and beard"
+                        class="object-cover w-full h-full" onerror="this.style.display='none'" />
+                    <svg class="w-12 h-12 text-gray-300 group-hover:hidden" fill="currentColor" viewBox="0 0 24 24"
+                        aria-hidden="true">
+                        <circle cx="12" cy="12" r="10" />
+                        <path fill="#fff"
+                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM12 14c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+                <div
+                    class="bg-white rounded-xl shadow p-5 flex items-center gap-4 cursor-pointer transition hover:shadow-md hover:ring-2 hover:ring-agriGreen">
+                    <div class="bg-agriLightGreen rounded-full p-4 shadow-inner">
+                        <span class="material-icons-outlined text-agriGreen text-3xl select-none">opacity</span>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-900 select-none">Soil</p>
+                        <p class="text-2xl font-extrabold text-agriDarkGreen select-none">23%</p>
+                    </div>
+                </div>
+                <div
+                    class="bg-white rounded-xl shadow p-5 flex items-center gap-4 cursor-pointer transition hover:shadow-md hover:ring-2 hover:ring-agriGreen">
+                    <div class="bg-agriLightGreen rounded-full p-4 shadow-inner">
+                        <span
+                            class="material-icons-outlined text-agriGreen text-3xl select-none">device_thermostat</span>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-900 select-none">Temperature</p>
+                        <p class="text-2xl font-extrabold text-agriDarkGreen select-none">18.7°C</p>
+                    </div>
+                </div>
+                <div
+                    class="bg-white rounded-xl shadow p-5 flex items-center gap-4 cursor-pointer transition hover:shadow-md hover:ring-2 hover:ring-agriGreen">
+                    <div class="bg-agriLightGreen rounded-full p-4 shadow-inner">
+                        <!-- <span class=" text-agriGreen text-xl select-none">sprout</span> -->
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-900 select-none">Crop Health</p>
+                        <p class="text-2xl font-extrabold text-agriDarkGreen select-none">Good</p>
+                    </div>
+                </div>
+                <div
+                    class="bg-white rounded-xl shadow p-5 flex items-center gap-4 cursor-pointer transition hover:shadow-md hover:ring-2 hover:ring-agriGreen">
+                    <div class="bg-agriLightGreen rounded-full p-4 shadow-inner">
+                        <span class="material-icons-outlined text-yellow-400 text-3xl select-none">bolt</span>
+                    </div>
+                    <div>
+                        <p class="font-semibold text-gray-900 select-none">Energy</p>
+                        <p class="text-2xl font-extrabold text-agriYellow select-none">45%</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Area -->
+            <section class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Moisture Over Time -->
+                <div class="bg-white rounded-xl shadow p-6 md:col-span-2">
+                    <h2 class="text-lg font-semibold mb-4 ">Moisture Over Time</h2>
+                    <canvas id="moistureChart" class="w-full h-44"></canvas>
+                </div>
+
+                <!-- Field Overview -->
+                <div class="bg-white rounded-xl shadow p-4">
+                    <h2 class="text-lg font-semibold mb-4 select-none">Field Overview</h2>
+                    <div class="w-full h-44 rounded-lg overflow-hidden relative">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d4a5c83a-e803-488e-bfbc-27849c84d4ae.png"
+                            alt="A stylized illustration map of farm fields in various shades of green and yellow with crop sensors indicated as location pins"
+                            class="w-full h-full object-cover rounded-lg" onerror="this.style.display='none'"
+                            loading="lazy" />
+                        <div aria-hidden="true" class="absolute top-8 left-16 text-agriGreen select-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 drop-shadow-lg" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 11c1.656 0 3-1.567 3-3.5S13.656 4 12 4 9 5.567 9 7.5 10.344 11 12 11z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 22c-4-7-7-7-7-11a7 7 0 0 1 14 0c0 3.996-3 4-7 11z" />
+                            </svg>
+                        </div>
+                        <div aria-hidden="true" class="absolute top-20 left-40 text-agriGreen select-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 drop-shadow-lg" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 11c1.656 0 3-1.567 3-3.5S13.656 4 12 4 9 5.567 9 7.5 10.344 11 12 11z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 22c-4-7-7-7-7-11a7 7 0 0 1 14 0c0 3.996-3 4-7 11z" />
+                            </svg>
+                        </div>
+                        <div aria-hidden="true" class="absolute top-28 left-24 text-agriGreen select-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 drop-shadow-lg" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 11c1.656 0 3-1.567 3-3.5S13.656 4 12 4 9 5.567 9 7.5 10.344 11 12 11z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 22c-4-7-7-7-7-11a7 7 0 0 1 14 0c0 3.996-3 4-7 11z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Alerts and Quick Actions -->
+            <section class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
+                <!-- Alerts -->
+                <div class="bg-white rounded-xl shadow p-6 overflow-x-auto">
+                    <h2 class="text-lg font-semibold mb-4 select-none">Alerts</h2>
+                    <table class="w-full text-left table-fixed border-collapse border border-gray-100">
+                        <thead class="bg-agriLightGreen text-sm text-gray-600 font-semibold select-none">
+                            <tr>
+                                <th class="py-2 px-4">Date <button
+                                        class="text-agriGreen hover:text-agriDarkGreen focus:outline-none"
+                                        title="Sort Date" aria-label="Sort Alerts by Date">▲</button></th>
+                                <th class="py-2 px-4">Description</th>
+                                <th class="py-2 px-4">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="hover:bg-agriLightGreen cursor-pointer transition-colors duration-150">
+                                <td class="py-3 px-4 text-sm text-gray-700 select-text">10 Apr</td>
+                                <td class="py-3 px-4 text-sm select-text">Low Soil Moisture</td>
+                                <td class="py-3 px-4 text-sm">
+                                    <span
+                                        class="inline-block bg-agriOrange text-white text-xs px-2 py-0.5 rounded-md select-none">Critical</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-agriLightGreen cursor-pointer transition-colors duration-150">
+                                <td class="py-3 px-4 text-sm text-gray-700 select-text">08 Apr</td>
+                                <td class="py-3 px-4 text-sm select-text">High Temperature</td>
+                                <td class="py-3 px-4 text-sm">
+                                    <span
+                                        class="inline-block bg-yellow-300 text-gray-700 text-xs px-2 py-0.5 rounded-md select-none">Warning</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-agriLightGreen cursor-pointer transition-colors duration-150">
+                                <td class="py-3 px-4 text-sm text-gray-700 select-text">02 Apr</td>
+                                <td class="py-3 px-4 text-sm select-text">Low Soil Moisture</td>
+                                <td class="py-3 px-4 text-sm">
+                                    <span
+                                        class="inline-block bg-yellow-300 text-gray-700 text-xs px-2 py-0.5 rounded-md select-none">Warning</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-agriLightGreen cursor-pointer transition-colors duration-150">
+                                <td class="py-3 px-4 text-sm text-gray-700 select-text">28 Dec</td>
+                                <td class="py-3 px-4 text-sm select-text">Device Disconnected</td>
+                                <td class="py-3 px-4 text-sm">
+                                    <span
+                                        class="inline-block bg-gray-300 text-gray-700 text-xs px-2 py-0.5 rounded-md select-none">Disabled</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Quick Actions 1 -->
+                <div class="bg-white rounded-xl shadow p-6 flex flex-col gap-4">
+                    <h2 class="text-lg font-semibold select-none">Quick Actions</h2>
+                    <button id="startIrrigationBtn"
+                        class="bg-agriGreen text-white py-3 rounded-lg shadow hover:bg-agriDarkGreen transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-agriGreen"
+                        aria-label="Start Irrigation Cycle">Start Irrigation Cycle</button>
+                    <button id="scheduleReportBtn"
+                        class="bg-agriLightGreen text-agriDarkGreen py-3 rounded-lg shadow hover:bg-agriGreen hover:text-white transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-agriGreen"
+                        aria-label="Schedule Report Export">Schedule Report Export</button>
+                </div>
+
+                <!-- Quick Actions 2 with Map Mini -->
+                <div class="bg-white rounded-xl shadow p-6">
+                    <h2 class="text-lg font-semibold mb-4 select-none">Quick Actions</h2>
+                    <div class="w-full h-44 rounded-lg overflow-hidden relative">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/436a9278-8395-43c2-a963-06c9c94ed255.png"
+                            alt="Miniature stylized farm field view with green patches and subtle gradient"
+                            class="w-full h-full object-cover rounded-lg" onerror="this.style.display='none'"
+                            loading="lazy" />
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Chart.js line chart for Moisture Over Time
+        // const ctx = document.getElementById('moistureChart').getContext('2d');
+        const moistureChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                datasets: [{
+                    label: 'Moisture %',
+                    data: [20, 22, 21, 23, 20, 24, 26],
+                    borderColor: 'rgba(92, 158, 85, 0.8)',
+                    backgroundColor: 'rgba(92, 158, 85, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 3,
+                    pointHoverRadius: 6,
+                    borderWidth: 3,
+                    hoverBorderWidth: 4,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    intersect: false,
+                    mode: 'nearest',
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: '#5C9E55',
+                        titleColor: 'white',
+                        bodyColor: 'white',
+                        cornerRadius: 6,
+                        padding: 8
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        max: 30,
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+
+        // Voice search interaction (stub)
+        const voiceBtn = document.getElementById('voiceBtn');
+        voiceBtn.addEventListener('click', () => {
+            alert('Voice search activated (Demo mode, not implemented).');
+        });
+
+        // Quick Actions interaction
+        const startIrrigationBtn = document.getElementById('startIrrigationBtn');
+        startIrrigationBtn.addEventListener('click', () => {
+            startIrrigationBtn.disabled = true;
+            startIrrigationBtn.innerText = 'Starting...';
+            setTimeout(() => {
+                alert('Irrigation cycle started.');
+                startIrrigationBtn.innerText = 'Start Irrigation Cycle';
+                startIrrigationBtn.disabled = false;
+            }, 1500);
+        });
+
+        const scheduleReportBtn = document.getElementById('scheduleReportBtn');
+        scheduleReportBtn.addEventListener('click', () => {
+            scheduleReportBtn.disabled = true;
+            scheduleReportBtn.innerText = 'Scheduling...';
+            setTimeout(() => {
+                alert('Report export scheduled.');
+                scheduleReportBtn.innerText = 'Schedule Report Export';
+                scheduleReportBtn.disabled = false;
+            }, 1500);
+        });
+
+        // Simple search input filtering of Alerts (only description)
+        const searchInput = document.getElementById('searchInput');
+        const alertsTableRows = document.querySelectorAll('tbody tr');
+
+        searchInput.addEventListener('input', (e) => {
+            const filter = e.target.value.toLowerCase();
+            alertsTableRows.forEach(row => {
+                const descriptionCell = row.children[1].textContent.toLowerCase();
+                if (descriptionCell.includes(filter)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
+    <style>
+        /* Override default material icons outline for better look */
+        .material-icons-outlined {
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 200,
+                'GRAD' 0,
+                'opsz' 40;
+            font-feature-settings: "liga";
+        }
+
+        /* Sidebar active link highlight */
+        .sidebar-link.active {
+            background-color: #E9F4E9;
+            color: #3E6B36;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+</body>
+
+</html>
