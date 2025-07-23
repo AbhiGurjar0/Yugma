@@ -1,3 +1,5 @@
+
+
 class ChatBot {
     constructor() {
         this.isOpen = false;
@@ -91,41 +93,29 @@ class ChatBot {
         // Show typing indicator and generate bot response
         this.showTypingIndicator();
 
-        setTimeout(() => {
-            this.generateResponse(message);
-            this.hideTypingIndicator();
-        }, Math.random() * 2000 + 1000); // Random delay between 1-3 seconds
+
+        this.generateResponse(message);
+
     }
 
     addMessage(text, sender) {
         const messageElement = document.createElement('div');
         messageElement.classList.add('message', sender);
         messageElement.textContent = text;
-
+        this.hideTypingIndicator();
         this.chatMessages.appendChild(messageElement);
         this.scrollToBottom();
     }
 
-    generateResponse(userMessage) {
+    async generateResponse(userMessage) {
         const message = userMessage.toLowerCase();
-        let responses;
-
-        if (message.includes('hello') || message.includes('hi') || message.includes('hey')) {
-            responses = this.responses.greetings;
-        } else if (message.includes('help') || message.includes('support')) {
-            responses = this.responses.help;
-        } else if (message.includes('service') || message.includes('what do you do')) {
-            responses = this.responses.services;
-        } else if (message.includes('price') || message.includes('cost') || message.includes('pricing')) {
-            responses = this.responses.pricing;
-        } else if (message.includes('contact') || message.includes('email') || message.includes('phone')) {
-            responses = this.responses.contact;
-        } else {
-            responses = this.responses.default;
-        }
-
-        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-        this.addMessage(randomResponse, 'bot');
+        let responses = await fetch("/genai", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message }),
+        });
+        responses = await responses.json();
+        this.addMessage(responses.reply, 'bot');
     }
 
     showTypingIndicator() {

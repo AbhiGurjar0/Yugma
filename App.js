@@ -5,6 +5,7 @@ import axios from "axios";
 import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
+import { error } from "console";
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Middlewares
+app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
@@ -52,16 +54,23 @@ app.post("/trans", async (req, res) => {
 });
 
 // Gemini API
-const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY); // Use API key from .env
+app.post("/genai", async (req, res) => {
+    let { message } = req.body;
+    console.log(message)
+    const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY); // Use API key from .env
 
-async function main(text) {
-    const model = ai.getGenerativeModel({ model: "gemini-1.5-flash" }); // adjust to your model
-    const result = await model.generateContent(text);
-    const response = await result.response;
-    console.log(response.text());
-}
+    async function main(mes = "hi") {
+        const model = ai.getGenerativeModel({ model: "gemini-1.5-flash" }); // adjust to your model
+        const result = await model.generateContent(mes);
+        const response = await result.response;
+        const text = await response.text();
+        res.status(200).json({ reply: text });
 
-main('HI how are you').catch(console.error);
+    }
+
+    main(message).catch((err) => console.log(err));
+    // res.send(0);
+});
 
 // Start server
 app.listen(PORT, () => {
