@@ -3,30 +3,22 @@
   "version": "1.0.0",
   "description": "",
   "main": "App.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-<<<<<<< Updated upstream
-    "ejs": "^3.1.10",
-    "express": "^5.1.0",
-    "mongoose": "^8.16.3",
-    "path": "^0.12.7"
-=======
     "@google-cloud/translate": "^9.2.0",
     "@google/genai": "^1.10.0",
     "@google/generative-ai": "^0.24.1",
-    "axios": "^1.11.0",
-    "console": "^0.7.2",
+    "axios": "^1.10.0",
     "dotenv": "^17.2.0",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "mongoose": "^8.16.3",
     "openai": "^5.10.1",
-    "path": "^0.12.7",
-    "url": "^0.11.4"
->>>>>>> Stashed changes
+    "path": "^0.12.7"
   }
 }

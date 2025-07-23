@@ -8,46 +8,32 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../stylesheets/responsive.css">
     <link rel="stylesheet" href="../stylesheets/style.css">
+    <link rel="stylesheet" href="../stylesheets/bot.css">
+
 </head>
 
 <body class="bg-gray-200 min-h-screen flex flex-col">
 
-    <!-- HEADER with Logo and Profile Icon -->
-    <header class="flex items-center justify-between px-6 py-4 bg-white shadow">
-        <div class="text-2xl font-bold text-gray-700 select-none">Logo</div>
-        <div class="flex gap-4 items-center">
-            <div class="last_update flex gap-1 bg-gray-200 px-4 py-2 rounded-full last-update">
-                <p>Last Updated:
-                <p id="dynamic_update">Just Now</p>
-                </p>
-            </div>
-            <button aria-label="User Profile"
-                class="w-10 h-10 rounded-full bg-gray-300 hover:bg-gray-400 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                <svg class="w-6 h-6 text-gray-600" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path
-                        d="M12 12c2.7 0 4.9-2.2 4.9-4.9S14.7 2.2 12 2.2 7.1 4.4 7.1 7.1 9.3 12 12 12zm0 2.2c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
-                </svg>
-            </button>
-        </div>
-    </header>
-
-    <!-- BANNER SECTION -->
     <section class="banner flex flex-col items-center justify-center mx-5 mt-6">
-        <div
-            class="banner_component w-full max-w-7xl h-48 md:h-64 flex items-center justify-center text-3xl font-semibold text-gray-700 select-none">
-            <button aria-label="Previous Banner"
-                class="bg-white z-10 p-2 h-24 md:h-48 shadow hover:bg-gray-100 focus:outline-none">
+        <div id="banner-container"
+            class="banner_component w-full max-w-7xl h:48 sm:h-60 md:h-64 lg:h-96 overflow-hidden flex items-center justify-center text-3xl font-semibold text-gray-700 select-none">
+            <button aria-label="Previous Banner" id="prevSlide"
+                class="bg-white md:block hidden z-10 p-2 h-24 md:h-48 shadow hover:bg-gray-100 focus:outline-none">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
             </button>
             <div
-                class="bg-gray-300 rounded shadow-lg overflow-hidden z-50 w-full max-w-7xl h-48 md:h-64 flex items-center justify-center text-3xl font-semibold text-gray-700 select-none">
-                BANNER
+                class="bg-gray-300 rounded shadow-lg overflow-hidden z-40 w-full max-w-7xl h-48 sm:h-60 md:h-64 lg:h-96 flex items-center justify-center text-3xl font-semibold text-gray-700 select-none">
+                <img id="banner-img" class="w-full h-full object-cover" src="../images/banner/banner.jpg"
+                    alt="banner_img">
+                <!-- <div class="text-3xl font-semibold text-gray-700 select-none">
+                        
+                    </div> -->
             </div>
-            <button aria-label="Next Banner"
-                class="bg-white p-2 h-24 md:h-48 z-10 shadow hover:bg-gray-100 focus:outline-none">
+            <button aria-label="Next Banner" id="nextSlide"
+                class="bg-white md:block hidden p-2 h-24 md:h-48 z-10 shadow hover:bg-gray-100 focus:outline-none">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
@@ -56,26 +42,26 @@
         </div>
 
         <div class="flex space-x-2 justify-center p-5">
-            <span class="actice w-9 h-3 rounded-full bg-gray-700"></span>
-            <span class=" w-3 h-3 rounded-full bg-gray-400"></span>
-            <span class="w-3 h-3 rounded-full bg-gray-400"></span>
-            <span class="w-3 h-3 rounded-full bg-gray-400"></span>
-            <span class="w-3 h-3 rounded-full bg-gray-400"></span>
+            <span id="dot-0" class="active w-9 h-3 rounded-full bg-gray-700 transition-all"></span>
+            <span id="dot-1" class=" w-3 h-3 rounded-full bg-gray-400 transition-all"></span>
+            <span id="dot-2" class="w-3 h-3 rounded-full bg-gray-400 transition-all"></span>
+            <span id="dot-3" class="w-3 h-3 rounded-full bg-gray-400 transition-all"></span>
+            <span id="dot-4" class="w-3 h-3 rounded-full bg-gray-400 transition-all"></span>
         </div>
     </section>
+    <!-- NOW COPY & PASTE  -->
 
 
-
-    <main class="flex flex-col md:flex-row max-w-7xl mx-auto mt-8 px-4 md:px-0 gap-6 flex-grow">
+    <main class="flex flex-col lg:flex-row max-w-7xl mx-auto mt-8 px-4 md:px-0 gap-6 flex-grow">
 
         <!-- Left Column -->
         <section class="flex flex-col space-y-6 flex-1 min-w-0">
 
+            <!-- Select from here -->
             <!-- Smart Irrigation -->
-            <div
-                class="bg-white rounded-xl border border-red-400 p-6 flex-1 min-w-[300px] hover:-translate-y-1 transition">
+            <div class="bg-white rounded-xl border border-gray-300 p-6 flex-1 min-w-[300px]">
                 <h3 class="text-xl font-semibold mb-4">Smart Irrigation</h3>
-                <div class="main-box flex flex-col md:flex-row  gap-4 pt-4 items-center">
+                <div class="main-box flex flex-col md:flex-row justify-around  gap-4 pt-4 items-center">
                     <div class="flex items-center justify-center mb-4">
                         <div class="relative w-48 h-48 md:w-64 md:h-64">
                             <svg class="w-48 h-48 md:w-64 md:h-64" viewBox="0 0 36 36">
@@ -92,29 +78,21 @@
                         </div>
                     </div>
                     <div class="space-y-3">
-                        <button class="w-full bg-indigo-600 text-white py-2 rounded-lg">Start Water Pump</button>
-                        <button
-                            class="w-full border border-indigo-600 text-indigo-600 py-2 bg-indigo-50 rounded-lg">Setup
-                            Water Pump</button>
-                        <button class="w-full border border-red-600 text-red-600 py-2 bg-red-50 rounded-lg">Emergency
+                        <button class="w-full bg-indigo-600 text-white py-2 rounded-lg" id="setup-waterpump"> Setup
+                            Irrigation </button>
+                        <button id="start-irrigation"
+                            class="w-full border border-indigo-600 text-indigo-600 py-2 bg-indigo-50 rounded-lg"> Start
+                            Irrigation </button>
+                        <button id="stop-irrigation"
+                            class="w-full border border-red-600 text-red-600 py-2 bg-red-50 rounded-lg">Emergency
                             Stop</button>
                     </div>
                 </div>
 
             </div>
+            <!-- NOW COPY & PASTE -->
 
-            <!-- Waste Reuse Suggestions -->
-            <div class="bg-white p-6 rounded-lg shadow-md flex flex-col select-none">
-                <h2 class="text-lg font-semibold text-gray-700 mb-4">Waste Reuse Suggestions</h2>
-                <div class="flex flex-col gap-4">
-                    <div class="border border-gray-300 rounded-lg px-4 py-3 bg-gray-50 text-gray-600 text-base">
-                        Suggestion 1</div>
-                    <div class="border border-gray-300 rounded-lg px-4 py-3 bg-gray-50 text-gray-600 text-base">
-                        Suggestion 2</div>
-                    <div class="border border-gray-300 rounded-lg px-4 py-3 bg-gray-50 text-gray-600 text-base">
-                        Suggestion 3</div>
-                </div>
-            </div>
+
 
         </section>
 
@@ -122,44 +100,594 @@
         <aside class="flex flex-col space-y-6 w-full md:w-96 min-w-[280px]">
 
             <!-- Illustration and Weather Update -->
-            <div class="bg-white p-4 rounded-lg shadow-md">
-                <h3 class="text-md font-semibold text-gray-700 mb-2 select-none">Illustration</h3>
-                <div class="rounded-md overflow-hidden mb-3 bg-gray-100 aspect-video flex items-center justify-center">
-                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2c3c9ce0-1e98-4435-a445-4d1cc96d194b.png"
-                        alt="Minimalist illustration style image with soft pastel colors showing irrigation system concept"
-                        class="object-contain max-h-full max-w-full" onerror="this.style.display='none'" />
+            <div
+                class="flex flex-col justify-center items-center  w-full max-w-6xl mx-auto gap-4 rounded-xl bg-white p-6 shadow-lg">
+
+                <h1 class="text-3xl font-extrabold text-black font-sans mb-2">🌤️ Weather Details</h1>
+
+                <div
+                    class="w-full flex items-center justify-between px-4 py-3 bg-zinc-100 rounded-md text-gray-600 text-sm shadow-inner">
+                    <span class="font-semibold">Last Update:</span>
+                    <p id="w-date" class="text-red-600 font-medium">Date: </p>
                 </div>
-                <p class="text-gray-700 select-none">Weather Update <span class="font-semibold">30°C</span></p>
-                <div class="bg-gray-50 p-3 rounded-lg shadow-md flex justify-between items-center select-none">
-                    <span class="text-gray-600 font-medium">Instruction</span>
-                    <button class="text-indigo-600 hover:underline focus:outline-none">Show ></button>
-                </div>
+
+                <p id="w-temp"
+                    class="w-full px-4 py-3 bg-gradient-to-r from-blue-100 to-blue-200 rounded-md text-center text-blue-800 text-base font-semibold shadow">
+                    🌡️ Today’s temperature is:
+                </p>
+
+                <p id="w-humidity"
+                    class="w-full px-4 py-3 bg-gradient-to-r from-emerald-100 to-emerald-200 rounded-md text-center text-emerald-800 text-base font-semibold shadow">
+                    💧 Humidity:
+                </p>
+
+                <p id="w-des"
+                    class="w-full px-4 py-3 bg-gradient-to-r from-purple-100 to-purple-200 rounded-md text-center text-purple-800 text-base font-semibold shadow">
+                    📝 Description:
+                </p>
+
+                <p id="w-windSpeed"
+                    class="w-full px-4 py-3 bg-gradient-to-r from-yellow-100 to-yellow-200 rounded-md text-center text-yellow-800 text-base font-semibold shadow">
+                    🍃 Wind Speed:
+                </p>
+
+                <p id="w-visibility"
+                    class="w-full px-4 py-3 bg-gradient-to-r from-gray-100 to-gray-200 rounded-md text-center text-gray-700 text-base font-semibold shadow">
+                    👀 Visibility:
+                </p>
+
+                <p id="w-windDirection"
+                    class="w-full px-4 py-3 bg-gradient-to-r from-indigo-100 to-indigo-200 rounded-md text-center text-indigo-800 text-base font-semibold shadow">
+                    🧭 Wind Direction:
+                </p>
+
+                <p id="w-pressure"
+                    class="w-full px-4 py-3 bg-gradient-to-r from-pink-100 to-pink-200 rounded-md text-center text-pink-800 text-base font-semibold shadow">
+                    ⚖️ Pressure:
+                </p>
+
             </div>
-
-            <!-- Instruction Box -->
-
-
-            <!-- Alerts -->
-            <div class="bg-white p-4 rounded-lg shadow-md select-none">
-                <h3 class="text-md font-semibold text-gray-700 mb-3">Alert</h3>
-                <div class="space-y-3">
-                    <div class="border border-red-400 text-red-700 bg-red-50 rounded-md px-4 py-2">Alert 1</div>
-                    <div class="border border-red-400 text-red-700 bg-red-50 rounded-md px-4 py-2">Alert 2</div>
-                </div>
-            </div>
-
-            <!-- Alert System Setup -->
-            <div class="bg-white p-4 rounded-lg shadow-md select-none">
-                <h3 class="text-md font-semibold text-gray-700 mb-3">Alert system setup</h3>
-                <button
-                    class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">Setup
-                    Alert</button>
-            </div>
-
         </aside>
 
     </main>
+    <div class="bg-white p-6 rounded-xl shadow-lg select-none w-[80vw]  mx-auto mt-6">
+        <h3 class="text-2xl font-bold text-red-600 mb-4 flex items-center gap-2">
+            ⚠️ Weather-Based Crop Suggestions
+        </h3>
+
+        <div class="space-y-4">
+
+            <!-- Suggestion Card 1 -->
+            <div
+                class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-md shadow hover:shadow-md transition duration-300">
+                <div class="flex items-center justify-between">
+                    <p class="text-yellow-800 font-semibold text-base">🌧️ Rain expected in 2 days</p>
+                    <span class="text-xs text-gray-500">Updated: Today</span>
+                </div>
+                <p class="mt-2 text-sm text-gray-700">Harvest mature crops like wheat or mustard now to avoid water
+                    damage.</p>
+            </div>
+
+            <!-- Suggestion Card 2 -->
+            <div
+                class="bg-green-50 border-l-4 border-green-400 p-4 rounded-md shadow hover:shadow-md transition duration-300">
+                <div class="flex items-center justify-between">
+                    <p class="text-green-800 font-semibold text-base">🌾 Good conditions for paddy transplantation</p>
+                    <span class="text-xs text-gray-500">Next 3–5 days</span>
+                </div>
+                <p class="mt-2 text-sm text-gray-700">The moisture in soil and upcoming showers are ideal for planting
+                    paddy or maize.</p>
+            </div>
+
+            <!-- Suggestion Card 3 -->
+            <div
+                class="bg-red-50 border-l-4 border-red-500 p-4 rounded-md shadow hover:shadow-md transition duration-300">
+                <div class="flex items-center justify-between">
+                    <p class="text-red-700 font-semibold text-base">🌀 Storm Alert: High wind speeds expected</p>
+                    <span class="text-xs text-gray-500">Valid for: 24 hours</span>
+                </div>
+                <p class="mt-2 text-sm text-gray-700">Avoid pesticide spraying. Secure greenhouse materials and young
+                    saplings.</p>
+            </div>
+
+        </div>
+    </div>
+    <!-- Waste Reuse Suggestions -->
+    <div class="w-[80vw] bg-white p-6 rounded-lg shadow-md flex flex-col select-none mx-auto mt-6">
+        <h2 class="text-lg font-semibold text-gray-700 mb-4">Waste Reuse Suggestions</h2>
+        <div class="grid gap-4">
+
+            <!-- Option1: Composting & Organic Matter Recycling -->
+            <div class="border overflow-hidden rounded-lg shadow flex flex-col justify-between">
+                <div class="h-32 bg-gradient-to-r from-green-400 to-emerald-600 flex items-center justify-center">
+                    <div class="text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24"
+                            fill="rgba(255,255,255,1)">
+                            <path
+                                d="M20.998 3V5C20.998 14.6274 15.6255 19 8.99805 19L5.24077 18.9999C5.0786 19.912 4.99805 20.907 4.99805 22H2.99805C2.99805 20.6373 3.11376 19.3997 3.34381 18.2682C3.1133 16.9741 2.99805 15.2176 2.99805 13C2.99805 7.47715 7.4752 3 12.998 3C14.998 3 16.998 4 20.998 3ZM12.998 5C8.57977 5 4.99805 8.58172 4.99805 13C4.99805 13.3624 5.00125 13.7111 5.00759 14.0459C6.26198 12.0684 8.09902 10.5048 10.5019 9.13176L11.4942 10.8682C8.6393 12.4996 6.74554 14.3535 5.77329 16.9998L8.99805 17C15.0132 17 18.8692 13.0269 18.9949 5.38766C17.6229 5.52113 16.3481 5.436 14.7754 5.20009C13.6243 5.02742 13.3988 5 12.998 5Z">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">
+                        Composting & Organic Matter Recycling
+                    </h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        Convert crop residues into nutrient-rich compost through controlled decomposition.
+                        This sustainable method transforms agricultural waste into valuable organic
+                        fertilizer.
+                    </p>
+
+                    <div class="mb-6">
+                        <h4 class="font-semibold text-gray-800 mb-2">Key Benefits:</h4>
+                        <ul class="space-y-1" id="ul-bullet">
+                            <li class="flex items-center text-sm text-gray-600">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 flex-shrink-0"></i>
+                                Reduces landfill waste
+                            </li>
+                            <li class="flex items-center text-sm text-gray-600">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 flex-shrink-0"></i>
+                                Creates natural fertilizer
+                            </li>
+                            <li class="flex items-center text-sm text-gray-600">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 flex-shrink-0"></i>
+                                Improves soil health
+                            </li>
+                            <li class="flex items-center text-sm text-gray-600">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 flex-shrink-0"></i>
+                                Cost-effective solution
+                            </li>
+                        </ul>
+                    </div>
+
+                    <button onclick="openForm(this,1)"
+                        class="w-full bg-gradient-to-r from-green-400 to-emerald-600 text-white py-3 px-6 rounded-lg font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200">
+                        Use Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Option 2: Biomass Energy Generation -->
+            <div class="border overflow-hidden rounded-lg shadow flex flex-col justify-between">
+                <div class="h-32 bg-gradient-to-r from-blue-400 to-cyan-600 flex items-center justify-center">
+                    <div class="text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8  h-8" viewBox="0 0 24 24"
+                            fill="rgba(255,255,255,1)">
+                            <path
+                                d="M10 10.1111V1L21 7V21H3V7L10 10.1111ZM12 4.36908V13.1886L5 10.0775V19H19V8.18727L12 4.36908Z">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">
+                        Biomass Energy Generation
+                    </h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        Transform agricultural residues into renewable energy through biogas production or
+                        biomass burning. Convert waste into electricity or heat for farm operations.
+                    </p>
+
+                    <div class="mb-6">
+                        <h4 class="font-semibold text-gray-800 mb-2">Key Benefits:</h4>
+                        <ul class="space-y-1" id="ul-bullet">
+                            <li class="flex items-center text-sm text-gray-600">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 flex-shrink-0"></i>
+                                Generates renewable energy
+                            </li>
+                            <li class="flex items-center text-sm text-gray-600">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 flex-shrink-0"></i>
+                                Reduces carbon footprint
+                            </li>
+                            <li class="flex items-center text-sm text-gray-600">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 flex-shrink-0"></i>
+                                Creates additional income
+                            </li>
+                            <li class="flex items-center text-sm text-gray-600">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 flex-shrink-0"></i>
+                                Eliminates waste disposal costs
+                            </li>
+                        </ul>
+                    </div>
+
+                    <button onclick="openForm(this,2)"
+                        class="w-full bg-gradient-to-r from-blue-400 to-cyan-600 text-white py-3 px-6 rounded-lg font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200">
+                        Use Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Option 3: Bio-degradable Material Production -->
+            <div class="border overflow-hidden rounded-lg shadow flex flex-col justify-between">
+                <div class="h-32 bg-gradient-to-r from-purple-400 to-indigo-600 flex items-center justify-center">
+                    <div class="text-white">
+                        <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                            fill="rgba(255,255,255,1)">
+                            <path
+                                d="M19.5611 12.0985L21.0926 14.7501C22.0591 16.4241 21.4855 18.5647 19.8115 19.5312C19.2794 19.8384 18.6759 20.0001 18.0615 20.0001L15.9993 19.9995V22.0001L10.9993 18.5001L15.9993 15.0001V16.9995L18.0615 17.0001C18.1493 17.0001 18.2355 16.977 18.3115 16.9331C18.5241 16.8104 18.6124 16.5551 18.5325 16.332L18.4945 16.2501L16.9631 13.5985L19.5611 12.0985ZM7.73617 9.38407L8.26726 15.4642L6.53571 14.4645L5.50412 16.2501C5.46023 16.3261 5.43713 16.4123 5.43713 16.5001C5.43713 16.7456 5.614 16.9497 5.84725 16.992L5.93713 17.0001L8.99919 16.9997V19.9996L5.93713 20.0001C4.00413 20.0001 2.43713 18.4331 2.43713 16.5001C2.43713 15.8857 2.59885 15.2822 2.90604 14.7501L3.93763 12.9645L2.20508 11.9642L7.73617 9.38407ZM13.7493 2.96901C14.2814 3.2762 14.7232 3.71803 15.0304 4.2501L16.061 6.03629L17.7935 5.03599L17.2624 11.1161L11.7314 8.53599L13.4629 7.53629L12.4323 5.7501C12.3884 5.67409 12.3253 5.61097 12.2493 5.56708C12.0367 5.44435 11.7715 5.49546 11.6182 5.67629L11.5663 5.7501L10.0356 8.40209L7.4376 6.90216L8.96822 4.2501C9.93472 2.57607 12.0753 2.00251 13.7493 2.96901Z">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">
+                        Bio-degradable Material Production
+                    </h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        Process agricultural waste into biodegradable packaging materials, mulch films, or
+                        construction materials. Creates value-added products from farm residues.
+                    </p>
+
+                    <div class="mb-6">
+                        <h4 class="font-semibold text-gray-800 mb-2">Key Benefits:</h4>
+                        <ul class="space-y-1" id="ul-bullet">
+                            <li class="flex items-center text-sm text-gray-600">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="lucide lucide-circle-check-big w-4 h-4 text-green-500 mr-2 flex-shrink-0">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <path d="m9 11 3 3L22 4"></path>
+                                </svg>
+                                Creates new revenue streams
+                            </li>
+                            <li class="flex items-center text-sm text-gray-600">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 flex-shrink-0"></i>
+                                Reduces plastic pollution
+                            </li>
+                            <li class="flex items-center text-sm text-gray-600">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 flex-shrink-0"></i>
+                                Supports circular economy
+                            </li>
+                            <li class="flex items-center text-sm text-gray-600">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-green-500 mr-2 flex-shrink-0"></i>
+                                Innovative waste utilization
+                            </li>
+                        </ul>
+                    </div>
+
+                    <button onclick="openForm(this,3)"
+                        class="w-full bg-gradient-to-r from-purple-400 to-indigo-600 text-white py-3 px-6 rounded-lg font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-200">
+                        Use Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </section>
+    <!-- 📄 Modal Form -->
+    <div id="suggestion-form-modal"
+        class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6 relative">
+
+            <!-- Close Button -->
+            <button onclick="closeForm()"
+                class="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-lg">&times;</button>
+
+            <h3 class="text-xl font-bold mb-4 text-green-700">🌾 Submit Your Details</h3>
+
+            <form onsubmit="submitForm(event)">
+                <input type="hidden" id="selected-option" name="suggestionType">
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-600 mb-1">Your Name</label>
+                    <input required name="name"
+                        class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400"
+                        placeholder="Enter your name">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-600 mb-1">Crop Type</label>
+                    <input required name="crop"
+                        class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400"
+                        placeholder="e.g., Wheat, Rice">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-600 mb-1">Location</label>
+                    <input required name="location"
+                        class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400"
+                        placeholder="Enter your village or town">
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-600 mb-1">Contact Number</label>
+                    <input required name="contact"
+                        class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-400"
+                        placeholder="Phone number">
+                </div>
+
+                <button type="submit"
+                    class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 w-full mt-2">Submit</button>
+            </form>
+        </div>
+    </div>
+    <section class="form _store">
+        <div
+            class="setup-irrigation hidden p-3 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div
+                class="setup-box max-w-md mx-auto bg-gray-200 rounded shadow overflow-hidden transform transition-all duration-500 -translate-y-full opacity-0">
+                <div class="top-panel bg-indigo-600 text-gray-200 p-4 flex justify-between shadow-md shadow-gray-400">
+                    <div class="title">
+                        <h2 class="text-lg font-bold">Setup Smart Irrigation</h2>
+                    </div>
+                    <div class="close" id="close-waterpump-setup">
+                        <svg class="fill-gray-200 hover:fill-red-600 cursor-pointer transition-colors" width="32px"
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path fill="none" d="M0 0h24v24H0z"></path>
+                            <path
+                                d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM12 10.5858L14.8284 7.75736L16.2426 9.17157L13.4142 12L16.2426 14.8284L14.8284 16.2426L12 13.4142L9.17157 16.2426L7.75736 14.8284L10.5858 12L7.75736 9.17157L9.17157 7.75736L12 10.5858Z">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="input-data py-4 px-6 mt-2">
+                    <form class="flex flex-col space-y-4">
+                        <div class="flex md:flex-row flex-col gap-2 items-center">
+                            <label class="text-gray-800 font-medium mb-1 md:w-36">Title: </label>
+                            <input type="text"
+                                class="bg-gray-50 w-64 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Enter Title">
+                        </div>
+                        <div class="flex md:flex-row flex-col gap-2 items-center">
+                            <label class="text-gray-800 font-medium mb-1 w-36">Choose Category: </label>
+                            <select
+                                class="bg-gray-50 w-64 text-gray-500 focus:text-black border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option class="text-gray-400" value="" disabled selected>Select Crop</option>
+                                <option value="wheat">Wheat</option>
+                                <option value="rice">Rice</option>
+                                <option value="maize">Maize</option>
+                                <option value="cotton">Cotton</option>
+                                <option value="fruits">Fruits</option>
+                            </select>
+                        </div>
+                        <div class="flex md:flex-row flex-col gap-2 items-center">
+                            <label class="text-gray-800 font-medium mb-1">Start irrigation at moisture level (%):
+                            </label>
+                            <div class="relative">
+                                <input type="number"
+                                    class="md:w-32 border px-4 py-2 rounded focus:ring-2 focus:ring-green-500 pr-10"
+                                    placeholder="0">
+                                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">%</span>
+                            </div>
+                        </div>
+                        <div class="flex md:flex-row flex-col gap-2 items-center">
+                            <label class="text-gray-800 font-medium mb-1">Stop irrigation at moisture level (%):
+                            </label>
+                            <div class="relative">
+                                <input type="number"
+                                    class="md:w-32 border px-4 py-2 rounded focus:ring-2 focus:ring-green-500 pr-10"
+                                    placeholder="0">
+                                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">%</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="save-data my-4 flex justify-center">
+                    <button class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                        type="button">Save</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal Form -->
+        <div id="modalForm"
+            class="fixed inset-0 bg-black bg-opacity-50 modal-backdrop hidden items-center justify-center z-50 p-4">
+            <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <div id="form-title" class="flex items-center justify-between p-6 border-b">
+                    <h2 id="modalTitle" class="text-lg font-bold">
+                        Application Form
+                    </h2>
+                    <div onclick="closeForm()">
+                        <svg class="fill-gray-200 hover:fill-red-600 cursor-pointer transition-colors" width="32px"
+                            xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM12 10.5858L14.8284 7.75736L16.2426 9.17157L13.4142 12L16.2426 14.8284L14.8284 16.2426L12 13.4142L9.17157 16.2426L7.75736 14.8284L10.5858 12L7.75736 9.17157L9.17157 7.75736L12 10.5858Z">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="p-6 space-y-4">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Farmer Name *
+                            </label>
+                            <input type="text" id="farmerName" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="Enter your full name" />
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Location *
+                            </label>
+                            <input type="text" id="location" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="City, State" />
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Crop Type *
+                            </label>
+                            <select id="cropType" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Select crop type</option>
+                                <option value="wheat">Wheat</option>
+                                <option value="rice">Rice</option>
+                                <option value="corn">Corn</option>
+                                <option value="sugarcane">Sugarcane</option>
+                                <option value="cotton">Cotton</option>
+                                <option value="vegetables">Vegetables</option>
+                                <option value="fruits">Fruits</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Estimated Waste Amount (tons) *
+                            </label>
+                            <input type="number" id="wasteAmount" required min="0" step="0.1"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="0.0" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                            Current Disposal Method
+                        </label>
+                        <input type="text" id="currentDisposal"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="e.g., Burning, Landfill, etc." />
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Contact Number *
+                            </label>
+                            <input type="tel" id="contactNumber" required
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="+91 9876543210" />
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">
+                                Email Address
+                            </label>
+                            <input type="email" id="email"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="farmer@example.com" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
+                            Additional Notes
+                        </label>
+                        <textarea id="additionalNotes" rows="3"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            placeholder="Any additional information or special requirements..."></textarea>
+                    </div>
+
+                    <div class="flex flex-col-reverse gap-4 pt-4">
+                        <button onclick="closeForm()"
+                            class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                            Cancel
+                        </button>
+                        <button id="submitBtn" onclick="submitForm()"
+                            class="flex-1 px-6 py-3 text-white rounded-lg hover:shadow-lg transition-all">
+                            Submit Application
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- NOW COPY & PASTE -->
+
+
+    <section class="bot">
+        <!-- Chat Widget -->
+        <div class="chat-widget">
+            <div class="chat-window" id="chatWindow">
+                <!-- Chat Header -->
+                <div class="chat-header">
+                    <div class="chat-header-content">
+                        <div class="chat-title">AgraConnect Chat Support</div>
+                        <div class="chat-subtitle">We're here to help!</div>
+                    </div>
+                    <div class="online-indicator"></div>
+                </div>
+
+                <!-- Chat Messages -->
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot">
+                        👋 Hello! Welcome to our website. How can I help you today?
+                    </div>
+                </div>
+
+                <!-- Typing Indicator -->
+                <div class="typing-indicator" id="typingIndicator">
+                    <span>Bot is typing</span>
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+
+                <!-- Chat Input -->
+                <div class="chat-input-container">
+                    <div class="chat-input-wrapper">
+                        <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..."
+                            autocomplete="off">
+                        <button class="send-button" id="sendButton">
+                            <svg class="send-icon" viewBox="0 0 24 24">
+                                <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Toggle Button -->
+            <button class="chat-toggle" id="chatToggle">
+                <svg class="chat-icon" viewBox="0 0 24 24">
+                    <path
+                        d="M12,3C17.5,3 22,6.58 22,11C22,15.42 17.5,19 12,19C10.76,19 9.57,18.82 8.47,18.5C5.55,21 2,21 2,21C4.33,18.67 4.7,17.1 4.75,16.5C3.05,15.07 2,13.13 2,11C2,6.58 6.5,3 12,3Z" />
+                </svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- 🌐 Script -->
+    <script>
+        function openForm(option) {
+            document.getElementById('suggestion-form-modal').classList.remove('hidden');
+            document.getElementById('suggestion-form-modal').classList.add('flex');
+            document.getElementById('selected-option').value = option;
+        }
+
+        function closeForm() {
+            document.getElementById('suggestion-form-modal').classList.add('hidden');
+            document.getElementById('suggestion-form-modal').classList.remove('flex');
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            const form = event.target;
+            const data = {
+                suggestionType: form.suggestionType.value,
+                name: form.name.value,
+                crop: form.crop.value,
+                location: form.location.value,
+                contact: form.contact.value
+            };
+            console.log("Submitted Data:", data);
+            alert("Details submitted successfully!"); // Replace with your backend POST logic
+            form.reset();
+            closeForm();
+        }
+    </script>
+
+
+
 
 </body>
+<script src="../javascripts/script.js"></script>
+<script src="../javascripts/bot.js"></script>
 
 </html>

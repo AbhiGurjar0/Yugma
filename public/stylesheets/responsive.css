@@ -20,10 +20,8 @@
 }
 
 /* Large devices (≥992px) */
-@media (min-width: 992px) {
-    
-}
+@media (min-width: 992px) {}
 
 /* Extra large devices (≥1200px) */
-@media (min-width: 1200px) {
-}   
+@media (min-width: 1024px) {
+}
