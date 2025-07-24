@@ -115,6 +115,7 @@ class ChatBot {
             body: JSON.stringify({ message }),
         });
         responses = await responses.json();
+        responses = responses.reply.replace('*','<br>')
         this.addMessage(responses.reply, 'bot');
     }
 
