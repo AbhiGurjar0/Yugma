@@ -102,12 +102,55 @@ class ChatBot {
         const messageElement = document.createElement('div');
         messageElement.classList.add('message', sender);
         messageElement.textContent = text;
+        messageElement.innerHTML = text;
+
         this.hideTypingIndicator();
         this.chatMessages.appendChild(messageElement);
         this.scrollToBottom();
     }
 
+
     async generateResponse(userMessage) {
+
+    textintohtml(text) {
+        text += '0';
+        let result = "<p>";
+        let checker = false;
+        for (let index = 1; index < text.length; index++) {
+            var char = text[index - 1] + text[index];
+            if (char == '* ') {
+                result += '<br>'
+            } else if (char == '**') {
+                if (checker) {
+                    result += '</b>'
+                    checker = false;
+                } else {
+                    result += '<b>';
+                    checker = true;
+                }
+            } else {
+                if (text[index - 1] != '*') {
+                    result += text[index - 1];
+                }
+            }
+        }
+        result += '</p>'
+        return result;
+    }
+
+    async generateResponse(userMessage) {
+        // this var is tester which is use for check textintohtml function working properal or not
+        let tester = `Please tell me more about what kind of help you need with your crop!  To help me assist you, please provide more information, such as:
+* **What crop are you growing?** (e.g., tomatoes, corn, wheat, cannabis)
+* **What is the problem you're experiencing?** (e.g., disease, pests, poor yield, nutrient deficiency, weed infestation)
+* **What is your growing environment?** (e.g., indoor, outdoor, greenhouse, hydroponic)
+* **What is your location?** (This helps determine climate and potential pests/diseases)
+* **What is your growing method?** (e.g., soil, coco coir, soilless mix)
+* **What have you already tried?** (This helps avoid suggesting solutions you've already ruled out)
+* **Can you provide pictures?** (Pictures are incredibly helpful for diagnosing problems)`
+
+// AI Based result
+
         const message = userMessage.toLowerCase();
         let responses = await fetch("/genai", {
             method: "POST",
@@ -115,7 +158,12 @@ class ChatBot {
             body: JSON.stringify({ message }),
         });
         responses = await responses.json();
+
         this.addMessage(responses.reply, 'bot');
+
+        responses = this.textintohtml(responses.reply);
+        this.addMessage(responses, 'bot');
+
     }
 
     showTypingIndicator() {
