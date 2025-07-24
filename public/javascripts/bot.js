@@ -101,11 +101,16 @@ class ChatBot {
     addMessage(text, sender) {
         const messageElement = document.createElement('div');
         messageElement.classList.add('message', sender);
+        messageElement.textContent = text;
         messageElement.innerHTML = text;
+
         this.hideTypingIndicator();
         this.chatMessages.appendChild(messageElement);
         this.scrollToBottom();
     }
+
+
+    async generateResponse(userMessage) {
 
     textintohtml(text) {
         text += '0';
@@ -145,6 +150,7 @@ class ChatBot {
 * **Can you provide pictures?** (Pictures are incredibly helpful for diagnosing problems)`
 
 // AI Based result
+
         const message = userMessage.toLowerCase();
         let responses = await fetch("/genai", {
             method: "POST",
@@ -152,8 +158,12 @@ class ChatBot {
             body: JSON.stringify({ message }),
         });
         responses = await responses.json();
+
+        this.addMessage(responses.reply, 'bot');
+
         responses = this.textintohtml(responses.reply);
         this.addMessage(responses, 'bot');
+
     }
 
     showTypingIndicator() {
