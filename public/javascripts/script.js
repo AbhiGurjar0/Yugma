@@ -363,3 +363,18 @@ if (document.readyState === 'loading') {
 } else {
     initializePage();
 }
+
+
+
+function AddIR(element) {
+    element.classList.add('hidden');
+    element.nextElementSibling.classList.remove('hidden');
+
+}
+function openAddFieldModal(element) {
+    // Open the modal for adding a new field
+    var modal = document.getElementById('AddFieldForm');
+    var main = document.getElementById('mainContent');
+    main.classList.add('blur-sm');
+    modal.classList.remove('hidden');
+}

@@ -1,16 +1,33 @@
 import express from "express";
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 import { GoogleGenerativeAI } from "@google/generative-ai"; // Corrected import
 import axios from "axios";
 import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import { error } from "console";
+import cookieParser from "cookie-parser";
+import { registerUser, loginUser } from './controllers/controller.js';
+import flash from "connect-flash";
+import session from "express-session";
+import mongoose from "mongoose";
+import connection from './config/mongoose-connection.js'; // Adjusted import path
+import Field from './models/Fields.js'; // Adjusted import path
 
-dotenv.config();
+// Adjusted import path
 
 const app = express();
+app.use(flash());
 const PORT = process.env.PORT || 3000;
+app.use(session({
+    secret: process.env.SESSION_SECRET || "your_secret_key",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false } // set to true if using HTTPS
+}));
+
+
+
 
 // __dirname equivalent in ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -21,7 +38,9 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
-
+app.use(cookieParser());
+app.use("/register", registerUser);
+app.use("/loginUser", loginUser);
 // Routes
 app.get("/", (req, res) => {
     res.render("App"); // make sure views/App.ejs exists
@@ -30,6 +49,53 @@ app.get("/", (req, res) => {
 app.get("/dash", (req, res) => {
     res.render("Dash"); // make sure views/Dash.ejs exists
 });
+app.get('/dash/weather', (req, res) => {
+    res.render('Weather');
+});
+app.get('/dash/waste', (req, res) => {
+    res.render('Waste');
+});
+app.get('/dash/field', async (req, res) => {
+    let field = await Field.find({});
+    res.render('Fields', { field }); // make sure views/Fields.ejs exists
+});
+app.get("/login", (req, res) => {
+    res.render("login"); // make sure views/App.ejs exists
+});
+app.post('/fields', async (req, res) => {
+    try {
+        const { cropName, Area } = req.body;
+        const newField = new Field({ cropName, Area });
+        await newField.save();
+        res.redirect('/dash'); // or render success page
+    } catch (err) {
+        console.error(err);
+        res.status(400).send("Error saving field data");
+    }
+});
+app.post('/addIR', async (req, res) => {
+    try {
+        const { Id } = req.body;
+        console.log(Id)
+        const fields = await Field.findById(Id);
+        if (!fields) {
+            return res.status(404).send("Field not found");
+        }
+        fields.isIrrigationAdded = true;
+        await fields.save();
+        let field = await Field.find({});
+
+        res.redirect('/dash/field'); // or render success page
+    } catch (err) {
+        console.error(err);
+        res.status(400).send("Error saving field data");
+    }
+});
+
+
+
+
+
 
 // Translate API
 app.post("/trans", async (req, res) => {

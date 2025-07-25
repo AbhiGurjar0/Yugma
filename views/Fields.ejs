@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Interactive Farm Health Map</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        agriGreen: "#22c55e",
+                        agriDarkGreen: "#15803d",
+                        agriLightGreen: "#bbf7d0",
+                        agriYellow: "#facc15"
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .pattern-yellow {
+            background-image: repeating-linear-gradient(45deg,
+                    rgba(255, 255, 0, 0.15),
+                    rgba(255, 255, 0, 0.15) 5px,
+                    transparent 5px,
+                    transparent 10px);
+        }
+
+        .pattern-green {
+            background-image: repeating-linear-gradient(45deg,
+                    rgba(34, 197, 94, 0.15),
+                    rgba(34, 197, 94, 0.15) 5px,
+                    transparent 5px,
+                    transparent 10px);
+        }
+
+        .tooltip-arrow {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background: inherit;
+            transform: rotate(45deg);
+            bottom: -7px;
+            left: 50%;
+            margin-left: -7px;
+            box-shadow: inset 1px -1px 1px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+</head>
+
+<body class="w-full min-h-screen bg-gray-900 flex items-center justify-center text-sm">
+    <div class="flex min-h-screen relative">
+        <aside
+            class="fixed  w-[10vw] h-[100vh]  flex flex-col bg-white  md:w-64 shadow-lg transition-all duration-300 group hover:w-64">
+            <div class="flex items-center gap-2 px-5 py-6 border-b border-gray-200">
+                <div class="text-agriGreen font-extrabold text-3xl select-none">🌿</div>
+                <h1 class="hidden md:block text-2xl font-extrabold select-none leading-none text-agriDarkGreen">
+                    AgriConnect
+                </h1>
+            </div>
+
+            <nav class="mt-8 flex flex-col gap-2 tracking-wide text-sm font-medium flex-grow">
+                <a href="/dash"
+                    class="sidebar-link active group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
+                    <span class="material-icons-outlined text-agriGreen text-lg mr-4">dashboard</span>
+                    <span class="hidden md:inline">Dashboard</span>
+                    <span
+                        class="absolute md:relative left-0 top-0 bottom-0 w-1 bg-agriGreen rounded-tr-md rounded-br-md hidden group-hover:block"></span>
+                </a>
+                <a href="/dash/field"
+                    class="sidebar-link group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
+                    <span class="material-icons-outlined text-gray-400 text-lg mr-4">grass</span>
+                    <span class="hidden md:inline">Fields</span>
+                    <span
+                        class="absolute md:relative left-0 top-0 bottom-0 w-1 bg-agriGreen rounded-tr-md rounded-br-md hidden group-hover:block"></span>
+                </a>
+                <a href="/dash/waste"
+                    class="sidebar-link group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
+                    <span class="material-icons-outlined text-gray-400 text-lg mr-4">tune</span>
+                    <span class="hidden md:inline">Waste Management</span>
+                    <span
+                        class="absolute md:relative left-0 top-0 bottom-0 w-1 bg-agriGreen rounded-tr-md rounded-br-md hidden group-hover:block"></span>
+                </a>
+                <a href="/dash/weather"
+                    class="sidebar-link group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
+                    <span class="material-icons-outlined text-gray-400 text-lg mr-4">assignment</span>
+                    <span class="hidden md:inline">Weather</span>
+                    <span
+                        class="absolute md:relative left-0 top-0 bottom-0 w-1 bg-agriGreen rounded-tr-md rounded-br-md hidden group-hover:block"></span>
+                </a>
+                <a href="/dash/tasks"
+                    class="sidebar-link group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
+                    <span class="material-icons-outlined text-gray-400 text-lg mr-4">task</span>
+                    <span class="hidden md:inline">Tasks</span>
+                    <span
+                        class="absolute md:relative left-0 top-0 bottom-0 w-1 bg-agriGreen rounded-tr-md rounded-br-md hidden group-hover:block"></span>
+                </a>
+                <a href="/dash/settings"
+                    class="sidebar-link group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
+                    <span class="material-icons-outlined text-gray-400 text-lg mr-4">settings</span>
+                    <span class="hidden md:inline">Settings</span>
+                    <span
+                        class="absolute md:relative left-0 top-0 bottom-0 w-1 bg-agriGreen rounded-tr-md rounded-br-md hidden group-hover:block"></span>
+                </a>
+            </nav>
+            <div
+                class="flex items-center gap-3 px-6 py-5 border-t border-gray-200 cursor-pointer group hover:bg-agriLightGreen transition-colors duration-300">
+                <div
+                    class="w-10 h-10 rounded-full bg-gray-300 overflow-hidden border-2 border-agriGreen flex items-center justify-center">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/86ee3f1f-9ae1-44a0-a583-609d6644e300.png"
+                        alt="Profile avatar of John Doe smiling man with brown hair and beard" class="object-cover"
+                        onerror="this.style.display='none'" />
+                    <svg class="w-10 h-10 text-gray-300" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10" />
+                        <path fill="#fff"
+                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM12 14c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                    </svg>
+                </div>
+                <div class="hidden md:block">
+                    <p class="text-gray-700 font-semibold leading-tight">John Doe</p>
+                    <p class="text-xs text-gray-400">Farmer</p>
+                </div>
+            </div>
+        </aside>
+        <main class="w-[82vw] ml-[18vw]">
+
+
+            <div id="AddFieldForm"
+                class="absolute top-[15vw] left-[35vw] bg-white p-8 rounded-2xl shadow-lg w-full max-w-md hidden z-10">
+                <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Add Field Details</h2>
+
+                <form action="/fields" method="POST" class="space-y-6">
+                    Crop Name Field
+                    <div class="relative">
+                        <input type="text" id="cropName" name="cropName" required
+                            class="peer w-full px-4 pt-6 pb-2 border border-gray-300 rounded-lg placeholder-transparent focus:outline-none focus:ring-2 focus:ring-green-500"
+                            placeholder="Crop Name" />
+                        <label for="cropName"
+                            class="absolute left-4 top-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-sm peer-focus:text-green-600">
+                            Crop Name
+                        </label>
+                    </div>
+
+                    Area Field
+                    <div class="relative">
+                        <input type="text" id="Area" name="Area" required
+                            class="peer w-full px-4 pt-6 pb-2 border border-gray-300 rounded-lg placeholder-transparent focus:outline-none focus:ring-2 focus:ring-green-500"
+                            placeholder="Area" />
+                        <label for="Area"
+                            class="absolute left-4 top-2 text-gray-500 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-sm peer-focus:text-green-600">
+                            Area
+                        </label>
+                    </div>
+
+                    Submit Button
+                    <div>
+                        <button type="submit"
+                            class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="mainContent" class="w-full bg-gray-100 text-gray-800">
+
+
+                <!-- Main Content -->
+                <main class="container mx-auto px-4 py-8">
+                    <!-- Fields Grid -->
+                    <section>
+                        <div class="flex justify-between items-center ">
+                            <h2 class="text-xl font-semibold mb-4">All Fields</h2>
+                            <button onclick="openAddFieldModal(this)"
+                                class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition">Add
+                                Field</button>
+                        </div>
+
+                        <%field.forEach((crop,index)=>{%>
+
+                            <div class="flex flex-col gap-6">
+                                <div
+                                    class="flex  flex-col sm:grid-cols-2 lg:grid-cols-3 gap-6 bg-white p-6 rounded-lg shadow-md">
+                                    <h1 class="text-xl font-semibold mb-4">Field <%= index+1 %>
+                                    </h1>
+                                    <div
+                                        class=" bg-white p-5 rounded-2xl shadow hover:shadow-lg transition cursor-pointer">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <h3 class="text-lg font-semibold">
+                                                <%=crop.cropName%> Field
+                                            </h3>
+                                            <a href="/fields/edit"
+                                                class="text-sm text-blue-500 hover:underline">Edit</a>
+                                        </div>
+                                        <p class="text-sm text-gray-500">Area: <%=crop.Area%> hectares</p>
+                                        <p class="text-sm text-gray-500">Crop: <%=crop.cropName%>
+                                        </p>
+                                        <p class="text-sm text-gray-500">Last Irrigated:
+                                        </p>
+
+                                        <!-- Status Card -->
+
+                                        <!-- View Historical -->
+                                        <div class="mt-4">
+                                            <a href="/fields/history" class="text-green-600 hover:underline text-sm">📊
+                                                View
+                                                Historical
+                                                Data</a>
+                                        </div>
+                                    </div>
+                                    <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+                                        <% if (!crop.isIrrigationAdded) { %>
+                                            <button onclick="AddIR(this)" class="bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-2 rounded-full font-semibold shadow-md 
+         hover:from-green-600 hover:to-green-700 hover:shadow-lg 
+         active:scale-95 transition transform duration-200 ease-in-out">
+                                                💧 Add Irrigation
+                                            </button>
+                                            <form class="flex flex-col gap-2 hidden" method="POST" action="/addIR">
+                                                <input value="<%= crop._id %>" type="text"
+                                                    placeholder="Enter Irrigation ID"
+                                                    class="border border-gray-300 rounded-lg px-4 py-2 w-full mt-2"
+                                                    name="Id" />
+                                                <button class="bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-2 rounded-full font-semibold shadow-md 
+         hover:from-green-600 hover:to-green-700 hover:shadow-lg 
+         active:scale-95 transition transform duration-200 ease-in-out">Add</button>
+                                            </form>
+
+                                            <% } else { %>
+
+
+
+                                                <!-- Soil -->
+                                                <div
+                                                    class="bg-white rounded-xl shadow p-5 flex items-center gap-4 cursor-pointer transition hover:shadow-md hover:ring-2 hover:ring-agriGreen">
+                                                    <div class="bg-agriLightGreen rounded-full p-4 shadow-inner">
+                                                        <span
+                                                            class="material-icons-outlined text-agriGreen text-3xl">opacity</span>
+                                                    </div>
+                                                    <div>
+                                                        <p class="font-semibold text-gray-900">Soil</p>
+                                                        <p class="text-2xl font-extrabold text-agriDarkGreen">23%</p>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Temperature -->
+                                                <div
+                                                    class="bg-white rounded-xl shadow p-5 flex items-center gap-4 cursor-pointer transition hover:shadow-md hover:ring-2 hover:ring-agriGreen">
+                                                    <div class="bg-agriLightGreen rounded-full p-4 shadow-inner">
+                                                        <span
+                                                            class="material-icons-outlined text-agriGreen text-3xl">device_thermostat</span>
+                                                    </div>
+                                                    <div>
+                                                        <p class="font-semibold text-gray-900">Temperature</p>
+                                                        <p class="text-2xl font-extrabold text-agriDarkGreen">18.7°C</p>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Crop Health -->
+                                                <div
+                                                    class="bg-white rounded-xl shadow p-5 flex items-center gap-4 cursor-pointer transition hover:shadow-md hover:ring-2 hover:ring-agriGreen">
+                                                    <div class="bg-agriLightGreen rounded-full p-4 shadow-inner">
+                                                        <span
+                                                            class="material-icons-outlined text-agriGreen text-3xl">eco</span>
+                                                    </div>
+                                                    <div>
+                                                        <p class="font-semibold text-gray-900">Crop Health</p>
+                                                        <p class="text-2xl font-extrabold text-agriDarkGreen">Good</p>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Energy -->
+                                                <div
+                                                    class="bg-white rounded-xl shadow p-5 flex items-center gap-4 cursor-pointer transition hover:shadow-md hover:ring-2 hover:ring-agriGreen">
+                                                    <div class="bg-agriLightGreen rounded-full p-4 shadow-inner">
+                                                        <span
+                                                            class="material-icons-outlined text-yellow-400 text-3xl">bolt</span>
+                                                    </div>
+                                                    <div>
+                                                        <p class="font-semibold text-gray-900">Energy</p>
+                                                        <p class="text-2xl font-extrabold text-agriYellow">45%</p>
+                                                    </div>
+                                                </div>
+                                    </section>
+                                    <%} %>
+                                        <%})%>
+
+
+
+
+                                </div>
+
+                            </div>
+                    </section>
+
+
+                </main>
+            </div>
+        </main>
+    </div>
+
+    <script>
+            (() => {
+                const tooltip = document.getElementById('tooltip');
+                const fields = {
+                    field1: { dosage: '24 kg/h', area: '14 ha', plantHealth: '98%', waterDepth: '56%', soil: '75%', pest: '3%', position: { x: 465, y: 440 } },
+                    field2: { dosage: '18 kg/h', area: '12 ha', plantHealth: '92%', waterDepth: '70%', soil: '80%', pest: '5%', position: { x: 575, y: 385 } },
+                    field3: { dosage: '20 kg/h', area: '8 ha', plantHealth: '90%', waterDepth: '40%', soil: '60%', pest: '7%', position: { x: 605, y: 590 } }
+                };
+
+                function updateTooltipContent(data) {
+                    document.getElementById('dosage').textContent = data.dosage;
+                    document.getElementById('area').textContent = data.area;
+                    document.getElementById('plantHealth').textContent = data.plantHealth;
+                    document.getElementById('waterDepth').textContent = data.waterDepth;
+                    document.getElementById('soil').textContent = data.soil;
+                    document.getElementById('pest').textContent = data.pest;
+                }
+
+                function showTooltip(fieldId) {
+                    const data = fields[fieldId];
+                    updateTooltipContent(data);
+
+                    tooltip.style.left = `${data.position.x}px`;
+                    tooltip.style.top = `${data.position.y}px`;
+                    tooltip.style.opacity = '1';
+                    tooltip.style.transform = 'translate(-50%, -120%) scale(1)';
+                }
+
+                function hideTooltip() {
+                    tooltip.style.opacity = '0';
+                    tooltip.style.transform = 'translate(-50%, -110%) scale(0.9)';
+                }
+
+                Object.entries(fields).forEach(([fieldId]) => {
+                    const el = document.getElementById(fieldId);
+                    el.setAttribute('tabindex', '0');
+                    el.setAttribute('role', 'button');
+                    el.setAttribute('aria-label', `Field ${fieldId}`);
+                    el.addEventListener('mouseenter', () => showTooltip(fieldId));
+                    el.addEventListener('mouseleave', hideTooltip);
+                    el.addEventListener('focus', () => showTooltip(fieldId));
+                    el.addEventListener('blur', hideTooltip);
+                });
+            })();
+    </script>
+    <script src="../javascripts/script.js"></script>
+</body>
+
+</html>

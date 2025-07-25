@@ -1,15 +1,15 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const farmerSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        trim: true
+        trim: true 
     },
     email: {
         type: String,
         required: true,
         unique: true,
-        trim: true
+        trim: true 
     },
     password: {
         type: String,
@@ -18,8 +18,7 @@ const farmerSchema = new mongoose.Schema({
     },
     phone: {
         type: String,
-        required: true,
-        unique: true,
+        // unique: true,
         trim: true
     },
     address: {
@@ -32,5 +31,5 @@ const farmerSchema = new mongoose.Schema({
     },
 })
 
-const Farmer = mongoose.model('Farmer', farmerSchema);
-module.exports = Farmer;
+const User = mongoose.model('User', farmerSchema);
+export default User;

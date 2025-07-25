@@ -28,48 +28,57 @@
 </head>
 
 <body class="bg-agriLightGreen text-gray-800 font-sans">
+
+  
+
     <div class="flex min-h-screen">
         <!-- Sidebar -->
         <aside class="flex flex-col bg-white w-20 md:w-64 shadow-lg transition-all duration-300 group hover:w-64">
             <div class="flex items-center gap-2 px-5 py-6 border-b border-gray-200">
                 <div class="text-agriGreen font-extrabold text-3xl select-none">🌿</div>
-                <h1 class="hidden md:block text-2xl font-extrabold select-none leading-none text-agriDarkGreen">AgriConnect
+                <h1 class="hidden md:block text-2xl font-extrabold select-none leading-none text-agriDarkGreen">
+                    AgriConnect
                 </h1>
             </div>
 
             <nav class="mt-8 flex flex-col gap-2 tracking-wide text-sm font-medium flex-grow">
-                <a href="#"
+                <a href="/dash"
                     class="sidebar-link active group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
                     <span class="material-icons-outlined text-agriGreen text-lg mr-4">dashboard</span>
                     <span class="hidden md:inline">Dashboard</span>
                     <span
                         class="absolute md:relative left-0 top-0 bottom-0 w-1 bg-agriGreen rounded-tr-md rounded-br-md hidden group-hover:block"></span>
                 </a>
-                <a href="#" class="sidebar-link group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
+                <a href="/dash/field"
+                    class="sidebar-link group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
                     <span class="material-icons-outlined text-gray-400 text-lg mr-4">grass</span>
                     <span class="hidden md:inline">Fields</span>
                     <span
                         class="absolute md:relative left-0 top-0 bottom-0 w-1 bg-agriGreen rounded-tr-md rounded-br-md hidden group-hover:block"></span>
                 </a>
-                <a href="#" class="sidebar-link group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
+                <a href="/dash/waste"
+                    class="sidebar-link group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
                     <span class="material-icons-outlined text-gray-400 text-lg mr-4">tune</span>
-                    <span class="hidden md:inline">Sepsors</span>
+                    <span class="hidden md:inline">Waste Management</span>
                     <span
                         class="absolute md:relative left-0 top-0 bottom-0 w-1 bg-agriGreen rounded-tr-md rounded-br-md hidden group-hover:block"></span>
                 </a>
-                <a href="#" class="sidebar-link group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
+                <a href="/dash/weather"
+                    class="sidebar-link group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
                     <span class="material-icons-outlined text-gray-400 text-lg mr-4">assignment</span>
-                    <span class="hidden md:inline">Reports</span>
+                    <span class="hidden md:inline">Weather</span>
                     <span
                         class="absolute md:relative left-0 top-0 bottom-0 w-1 bg-agriGreen rounded-tr-md rounded-br-md hidden group-hover:block"></span>
                 </a>
-                <a href="#" class="sidebar-link group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
+                <a href="/dash/tasks"
+                    class="sidebar-link group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
                     <span class="material-icons-outlined text-gray-400 text-lg mr-4">task</span>
                     <span class="hidden md:inline">Tasks</span>
                     <span
                         class="absolute md:relative left-0 top-0 bottom-0 w-1 bg-agriGreen rounded-tr-md rounded-br-md hidden group-hover:block"></span>
                 </a>
-                <a href="#" class="sidebar-link group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
+                <a href="/dash/settings"
+                    class="sidebar-link group relative flex items-center px-6 py-3 hover:bg-agriLightGreen">
                     <span class="material-icons-outlined text-gray-400 text-lg mr-4">settings</span>
                     <span class="hidden md:inline">Settings</span>
                     <span
@@ -97,7 +106,7 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 p-6 md:p-10 overflow-y-auto bg-gradient-to-b from-white to-agriLightGreen">
+        <main class="flex flex-col p-6 md:p-10 overflow-y-auto bg-gradient-to-b from-white to-agriLightGreen gap-6">
             <!-- Topbar: Search and Profile -->
             <div class="flex justify-between items-center mb-8">
                 <form class="relative w-full max-w-lg" id="searchForm" onsubmit="return false;">
@@ -218,9 +227,8 @@
                     </div>
                 </div>
             </section>
+            <div class="w-full flex flex-col  gap-8 mt-8">
 
-            <!-- Alerts and Quick Actions -->
-            <section class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-10">
                 <!-- Alerts -->
                 <div class="bg-white rounded-xl shadow p-6 overflow-x-auto">
                     <h2 class="text-lg font-semibold mb-4 select-none">Alerts</h2>
@@ -271,6 +279,11 @@
                     </table>
                 </div>
 
+
+
+
+
+
                 <!-- Quick Actions 1 -->
                 <div class="bg-white rounded-xl shadow p-6 flex flex-col gap-4">
                     <h2 class="text-lg font-semibold select-none">Quick Actions</h2>
@@ -281,18 +294,7 @@
                         class="bg-agriLightGreen text-agriDarkGreen py-3 rounded-lg shadow hover:bg-agriGreen hover:text-white transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-agriGreen"
                         aria-label="Schedule Report Export">Schedule Report Export</button>
                 </div>
-
-                <!-- Quick Actions 2 with Map Mini -->
-                <div class="bg-white rounded-xl shadow p-6">
-                    <h2 class="text-lg font-semibold mb-4 select-none">Quick Actions</h2>
-                    <div class="w-full h-44 rounded-lg overflow-hidden relative">
-                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/436a9278-8395-43c2-a963-06c9c94ed255.png"
-                            alt="Miniature stylized farm field view with green patches and subtle gradient"
-                            class="w-full h-full object-cover rounded-lg" onerror="this.style.display='none'"
-                            loading="lazy" />
-                    </div>
-                </div>
-            </section>
+            </div>
 
         </main>
     </div>

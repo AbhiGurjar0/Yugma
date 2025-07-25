@@ -110,8 +110,6 @@ class ChatBot {
     }
 
 
-    async generateResponse(userMessage) {
-
     textintohtml(text) {
         text += '0';
         let result = "<p>";
@@ -149,7 +147,7 @@ class ChatBot {
 * **What have you already tried?** (This helps avoid suggesting solutions you've already ruled out)
 * **Can you provide pictures?** (Pictures are incredibly helpful for diagnosing problems)`
 
-// AI Based result
+        // AI Based result
 
         const message = userMessage.toLowerCase();
         let responses = await fetch("/genai", {
@@ -183,6 +181,7 @@ class ChatBot {
         }, 100);
     }
 }
+
 
 // Initialize the chatbot
 document.addEventListener('DOMContentLoaded', () => {
