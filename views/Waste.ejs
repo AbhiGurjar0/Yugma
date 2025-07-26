@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../stylesheets/responsive.css">
     <link rel="stylesheet" href="../stylesheets/style.css">
     <link rel="stylesheet" href="../stylesheets/bot.css">
+
     <script>
         tailwind.config = {
             theme: {
@@ -59,9 +60,11 @@
 
 <body>
 
-    <div class="flex min-h-screen relative">
+
+
+    <div class="flex flex-col gap-6 min-h-screen relative">
         <aside
-            class="fixed  w-[10vw] h-[100vh]  flex flex-col bg-white  md:w-64 shadow-lg transition-all duration-300 group hover:w-64">
+            class="fixed w-[10vw] h-[100vh]  flex flex-col bg-white  md:w-64 shadow-lg transition-all duration-300 group hover:w-64">
             <div class="flex items-center gap-2 px-5 py-6 border-b border-gray-200">
                 <div class="text-agriGreen font-extrabold text-3xl select-none">🌿</div>
                 <h1 class="hidden md:block text-2xl font-extrabold select-none leading-none text-agriDarkGreen">
@@ -299,7 +302,69 @@
             </div>
         </div>
 
-        <!-- 📄 Modal Form -->
+        <div class="ml-[18vw] w-[82vw] bg-gradient-to-br from-green-50 to-green-100 min-h-screen font-sans py-10 px-6">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-3xl font-bold text-gray-800 mb-6">📑 Submitted Applications</h1>
+
+                <% WasteForms.forEach((waste)=> { %>
+                    <% if(waste) { %>
+                        <div
+                            class="bg-white rounded-3xl shadow-2xl p-6 mb-10 space-y-6 transition-all duration-300 hover:shadow-xl">
+                            <!-- Application Status -->
+                            <div>
+                                <h2 class="text-xl font-semibold text-gray-800 border-b pb-2 mb-2">🚦 Application Status
+                                </h2>
+                                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 text-lg">
+                                    <span
+                                        class="inline-block px-4 py-1 text-sm font-semibold rounded-full bg-yellow-300 text-yellow-900 animate-pulse shadow">
+                                        Scheduled
+                                    </span>
+                                    <div class="text-gray-700">📅 Visit Date: <span class="font-semibold">August 2,
+                                            2025</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Officer Info -->
+                            <div>
+                                <h2 class="text-xl font-semibold text-gray-800 border-b pb-2 mb-2">👨‍🌾 Assigned
+                                    Officer</h2>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
+                                    <div><strong>🧑 Officer Name:</strong> Mahesh Yadav</div>
+                                    <div><strong>📞 Contact:</strong> +91 9988776655</div>
+                                </div>
+                            </div>
+
+                            <!-- Timeline -->
+                            <div>
+                                <h2 class="text-xl font-semibold text-gray-800 border-b pb-2 mb-2">📆 Timeline</h2>
+                                <ol class="relative border-l border-green-400 ml-4">
+                                    <li class="mb-6 ml-6">
+                                        <span
+                                            class="absolute w-4 h-4 bg-green-600 border-2 border-white rounded-full -left-2"></span>
+                                        <p class="text-sm font-semibold text-green-700">July 25, 2025</p>
+                                        <p class="text-gray-700">✅ Application submitted</p>
+                                    </li>
+                                    <li class="mb-6 ml-6">
+                                        <span
+                                            class="absolute w-4 h-4 bg-yellow-500 border-2 border-white rounded-full -left-2"></span>
+                                        <p class="text-sm font-semibold text-yellow-700">July 26, 2025</p>
+                                        <p class="text-gray-700">📌 Assigned to Mahesh Yadav</p>
+                                    </li>
+                                    <li class="ml-6">
+                                        <span
+                                            class="absolute w-4 h-4 bg-blue-500 border-2 border-white rounded-full -left-2"></span>
+                                        <p class="text-sm font-semibold text-blue-700">August 2, 2025</p>
+                                        <p class="text-gray-700">📅 Scheduled visit</p>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                        <% } else { %>
+                            <p class="text-red-500">No application found.</p>
+                            <% } %>
+                                <% }); %>
+            </div>
+        </div>
 
         <section class="form _store">
             <div
@@ -333,7 +398,8 @@
                                 <label class="text-gray-800 font-medium mb-1 w-36">Choose Category: </label>
                                 <select
                                     class="bg-gray-50 w-64 text-gray-500 focus:text-black border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                    <option class="text-gray-400" value="" disabled selected>Select Crop</option>
+                                    <option class="text-gray-400" value="" disabled selected>Select Crop
+                                    </option>
                                     <option value="wheat">Wheat</option>
                                     <option value="rice">Rice</option>
                                     <option value="maize">Maize</option>
@@ -342,7 +408,8 @@
                                 </select>
                             </div>
                             <div class="flex md:flex-row flex-col gap-2 items-center">
-                                <label class="text-gray-800 font-medium mb-1">Start irrigation at moisture level (%):
+                                <label class="text-gray-800 font-medium mb-1">Start irrigation at moisture level
+                                    (%):
                                 </label>
                                 <div class="relative">
                                     <input type="number"
@@ -352,7 +419,8 @@
                                 </div>
                             </div>
                             <div class="flex md:flex-row flex-col gap-2 items-center">
-                                <label class="text-gray-800 font-medium mb-1">Stop irrigation at moisture level (%):
+                                <label class="text-gray-800 font-medium mb-1">Stop irrigation at moisture level
+                                    (%):
                                 </label>
                                 <div class="relative">
                                     <input type="number"
@@ -390,108 +458,114 @@
                         </div>
                     </div>
 
-                    <div class="p-6 space-y-4">
-                        <div class="grid md:grid-cols-2 gap-4">
+                    <form method="post" action="/dash/waste/formsubmit">
+                        <div class="p-6 space-y-4">
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                                        Farmer Name *
+                                    </label>
+                                    <input type="text" id="farmerName" required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        placeholder="Enter your full name" name="fName" />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                                        Location *
+                                    </label>
+                                    <input type="text" id="location" required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        placeholder="City, State" name="location" />
+                                </div>
+                            </div>
+
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                                        Crop Type *
+                                    </label>
+                                    <select id="cropType" required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        name="cropType">
+                                        <option value="">Select crop type</option>
+                                        <option value="wheat">Wheat</option>
+                                        <option value="rice">Rice</option>
+                                        <option value="corn">Corn</option>
+                                        <option value="sugarcane">Sugarcane</option>
+                                        <option value="cotton">Cotton</option>
+                                        <option value="vegetables">Vegetables</option>
+                                        <option value="fruits">Fruits</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                                        Estimated Waste Amount (tons) *
+                                    </label>
+                                    <input type="number" id="wasteAmount" required min="0" step="0.1"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        placeholder="0.0" name="amount" />
+                                </div>
+                            </div>
+
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">
-                                    Farmer Name *
+                                    Current Disposal Method
                                 </label>
-                                <input type="text" id="farmerName" required
+                                <input type="text" id="currentDisposal"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                    placeholder="Enter your full name" />
+                                    placeholder="e.g., Burning, Landfill, etc." name="duration" />
+                            </div>
+
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                                        Contact Number *
+                                    </label>
+                                    <input type="tel" id="contactNumber" required
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        placeholder="+91 9876543210" name="contact" />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                                        Email Address
+                                    </label>
+                                    <input type="email" id="email"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        placeholder="farmer@example.com" name="email" />
+                                </div>
                             </div>
 
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">
-                                    Location *
+                                    Additional Notes
                                 </label>
-                                <input type="text" id="location" required
+
+                                <input type="textarea" id="additionalNotes" rows="3"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                    placeholder="City, State" />
-                            </div>
-                        </div>
-
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">
-                                    Crop Type *
-                                </label>
-                                <select id="cropType" required
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                    <option value="">Select crop type</option>
-                                    <option value="wheat">Wheat</option>
-                                    <option value="rice">Rice</option>
-                                    <option value="corn">Corn</option>
-                                    <option value="sugarcane">Sugarcane</option>
-                                    <option value="cotton">Cotton</option>
-                                    <option value="vegetables">Vegetables</option>
-                                    <option value="fruits">Fruits</option>
-                                    <option value="other">Other</option>
-                                </select>
+                                    placeholder="Any additional information or special requirements..."
+                                    name="addDetails" />
                             </div>
 
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">
-                                    Estimated Waste Amount (tons) *
-                                </label>
-                                <input type="number" id="wasteAmount" required min="0" step="0.1"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                    placeholder="0.0" />
+                            <div class="flex flex-col-reverse gap-4 pt-4">
+                                <button onclick="closeForm()"
+                                    class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+                                    Cancel
+                                </button>
+                                <button id="submitBtn" onclick="submitForm()"
+                                    class="flex-1 px-6 py-3 text-white rounded-lg hover:shadow-lg transition-all">
+                                    Submit Application
+                                </button>
                             </div>
                         </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Current Disposal Method
-                            </label>
-                            <input type="text" id="currentDisposal"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                placeholder="e.g., Burning, Landfill, etc." />
-                        </div>
-
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">
-                                    Contact Number *
-                                </label>
-                                <input type="tel" id="contactNumber" required
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                    placeholder="+91 9876543210" />
-                            </div>
-
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">
-                                    Email Address
-                                </label>
-                                <input type="email" id="email"
-                                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                    placeholder="farmer@example.com" />
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">
-                                Additional Notes
-                            </label>
-                            <textarea id="additionalNotes" rows="3"
-                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                placeholder="Any additional information or special requirements..."></textarea>
-                        </div>
-
-                        <div class="flex flex-col-reverse gap-4 pt-4">
-                            <button onclick="closeForm()"
-                                class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
-                                Cancel
-                            </button>
-                            <button id="submitBtn" onclick="submitForm()"
-                                class="flex-1 px-6 py-3 text-white rounded-lg hover:shadow-lg transition-all">
-                                Submit Application
-                            </button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </section>
+
     </div>
 
 </body>

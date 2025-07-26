@@ -13,42 +13,41 @@
 // }
 
 
-// async function getWeather(city) {
-//     const apiKey = 'fab1287105dc652116091b8007a1638a';
-//     const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
-//     const data = await res.json();
-//     console.log(data);
-//     let rainLevel = data.rain && data.rain["1h"] ? data.rain["1h"] : 0;
-//     let text = "";
-//     if (rainLevel === 0) {
-//         text = "🌤 No recent rain. Weather is clear.";
-//     } else if (rainLevel < 2.5) {
-//         text = `🌧 Light rain: ${rainLevel} mm in last 1h.`;
-//     } else if (rainLevel < 7.6) {
-//         text = `🌧🌧 Moderate rain: ${rainLevel} mm in last 1h. Carry an umbrella.`;
-//     } else {
-//         text = `🌧🌧🌧 Heavy rain alert! ${rainLevel} mm in last 1h. Stay safe.`;
-//     }
-//     console.log(text);
-//     // alerts(text, "eng_Latn", "hin_Deva");
+async function getWeather(city) {
+    const apiKey = 'fab1287105dc652116091b8007a1638a';
+    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
+    const data = await res.json();
+    console.log(data);
+    let rainLevel = data.rain && data.rain["1h"] ? data.rain["1h"] : 0;
+    let text = "";
+    if (rainLevel === 0) {
+        text = "🌤 No recent rain. Weather is clear.";
+    } else if (rainLevel < 2.5) {
+        text = `🌧 Light rain: ${rainLevel} mm in last 1h.`;
+    } else if (rainLevel < 7.6) {
+        text = `🌧🌧 Moderate rain: ${rainLevel} mm in last 1h. Carry an umbrella.`;
+    } else {
+        text = `🌧🌧🌧 Heavy rain alert! ${rainLevel} mm in last 1h. Stay safe.`;
+    }
 
 
 
-//     return {
-//         city: data.name,
-//         country: data.sys.country,
-//         temperature: Math.floor(data.main.temp),
-//         humidity: data.main.humidity,
-//         description: data.weather[0].description,
-//         icon: data.weather[0].icon,
-//         windSpeed: (data.wind.speed * (5 / 18)).toFixed(2),
-//         windDirection: data.wind.deg,
-//         pressure: data.main.pressure,
-//         visibility: (data.visibility / 1000),
-//         dateTime: new Date(data.dt * 1000).toLocaleString(),
-//         rainChance: data.rain && data.rain["1h"] ? `${data.rain["1h"]} mm (last 1h)` : "No recent rain"
-//     }
-// }
+
+    return {
+        city: data.name,
+        country: data.sys.country,
+        temperature: Math.floor(data.main.temp),
+        humidity: data.main.humidity,
+        description: data.weather[0].description,
+        icon: data.weather[0].icon,
+        windSpeed: (data.wind.speed * (5 / 18)).toFixed(2),
+        windDirection: data.wind.deg,
+        pressure: data.main.pressure,
+        visibility: (data.visibility / 1000),
+        dateTime: new Date(data.dt * 1000).toLocaleString(),
+        rainChance: data.rain && data.rain["1h"] ? `${data.rain["1h"]} mm (last 1h)` : "No recent rain"
+    }
+}
 
 // // let Weather = getWeather('hindaun');
 // Weather.then(data => {
@@ -271,21 +270,21 @@ ul_li_bullet.forEach(ul_bullet => {
 // Form Functionality of Waste reuse suggestion
 var currentOptionId = null;
 
-var wasteOptions = {};
-wasteOptions[1] = {
-    title: "Composting & Organic Matter Recycling",
-    color: "bg-gradient-to-r from-green-400 to-emerald-600"
-};
-wasteOptions[2] = {
-    title: "Biomass Energy Generation",
-    color: "bg-gradient-to-r from-blue-400 to-cyan-600"
-};
-wasteOptions[3] = {
-    title: "Bio-degradable Material Production",
-    color: "bg-gradient-to-r from-purple-400 to-indigo-600"
-};
 
 function openForm(element, optionId) {
+    var wasteOptions = {};
+    wasteOptions[1] = {
+        title: "Composting & Organic Matter Recycling",
+        color: "bg-gradient-to-r from-green-400 to-emerald-600"
+    };
+    wasteOptions[2] = {
+        title: "Biomass Energy Generation",
+        color: "bg-gradient-to-r from-blue-400 to-cyan-600"
+    };
+    wasteOptions[3] = {
+        title: "Bio-degradable Material Production",
+        color: "bg-gradient-to-r from-purple-400 to-indigo-600"
+    };
 
     var modal = document.getElementById('modalForm');
     var modalTitle = document.getElementById('modalTitle');
@@ -378,3 +377,43 @@ function openAddFieldModal(element) {
     main.classList.add('blur-sm');
     modal.classList.remove('hidden');
 }
+
+
+async function Aisugg() {
+    try {
+        // Wait for weather API data
+        const Api = await getWeather('hindaun');
+        console.log("Weather Data:", Api);
+
+        // Create a formatted message for backend AI
+        const text = `
+I am giving you the API response. Now give me 3–4 crop suggestions according to the weather details in this format:  
+Format → Date\tAlert\tCrop\tSeverity  
+
+Example:  
+26 Jul\t🌧️ Heavy rain expected – avoid harvesting wheat today.\tWheat\tCritical
+
+Weather Data: ${JSON.stringify(Api)}
+`;
+
+        // Send to backend
+        const res = await fetch("/genaisugg", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ text, Api })
+        });
+
+        // Handle response
+        if (!res.ok) throw new Error(`Server error: ${res.status}`);
+        const data = await res.json();
+        
+
+    } catch (err) {
+        console.error("Aisugg() failed:", err);
+    }
+}
+
+// Call the function
+document.addEventListener("DOMContentLoaded", function () { Aisugg(); });

@@ -156,9 +156,6 @@ class ChatBot {
             body: JSON.stringify({ message }),
         });
         responses = await responses.json();
-
-        this.addMessage(responses.reply, 'bot');
-
         responses = this.textintohtml(responses.reply);
         this.addMessage(responses, 'bot');
 

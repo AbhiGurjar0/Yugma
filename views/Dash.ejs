@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AgriNova Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../stylesheets/bot.css">
     <script>
         tailwind.config = {
             theme: {
@@ -29,11 +30,12 @@
 
 <body class="bg-agriLightGreen text-gray-800 font-sans">
 
-  
+
 
     <div class="flex min-h-screen">
         <!-- Sidebar -->
-        <aside class="flex flex-col bg-white w-20 md:w-64 shadow-lg transition-all duration-300 group hover:w-64">
+        <aside
+            class="fixed w-[20vw] h-full flex flex-col bg-white w-20 md:w-64 shadow-lg transition-all duration-300 group hover:w-64">
             <div class="flex items-center gap-2 px-5 py-6 border-b border-gray-200">
                 <div class="text-agriGreen font-extrabold text-3xl select-none">🌿</div>
                 <h1 class="hidden md:block text-2xl font-extrabold select-none leading-none text-agriDarkGreen">
@@ -106,7 +108,8 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex flex-col p-6 md:p-10 overflow-y-auto bg-gradient-to-b from-white to-agriLightGreen gap-6">
+        <main
+            class="ml-[20vw] w-[80vw] flex flex-col p-6 md:p-10 overflow-y-auto bg-gradient-to-b from-white to-agriLightGreen gap-6">
             <!-- Topbar: Search and Profile -->
             <div class="flex justify-between items-center mb-8">
                 <form class="relative w-full max-w-lg" id="searchForm" onsubmit="return false;">
@@ -136,156 +139,253 @@
                 </div>
             </div>
 
-            <!-- Stats Cards -->
-            <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-10">
-                <div
-                    class="bg-white rounded-xl shadow p-5 flex items-center gap-4 cursor-pointer transition hover:shadow-md hover:ring-2 hover:ring-agriGreen">
-                    <div class="bg-agriLightGreen rounded-full p-4 shadow-inner">
-                        <span class="material-icons-outlined text-agriGreen text-3xl select-none">opacity</span>
+            <div class="rounded bg-gray-100 text-gray-800">
+
+                <div class="p-6 max-w-7xl mx-auto">
+                    <!-- Header -->
+                    <div class="mb-6">
+                        <h1 class="text-3xl font-bold text-gray-800">🌱 Smart Agriculture Dashboard</h1>
+                        <p class="text-gray-500">Real-time IoT soil monitoring & automation</p>
                     </div>
-                    <div>
-                        <p class="font-semibold text-gray-900 select-none">Soil</p>
-                        <p class="text-2xl font-extrabold text-agriDarkGreen select-none">23%</p>
+
+                    <!-- Overview Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                        <div class="bg-white rounded-xl p-4 shadow hover:shadow-md transition">
+                            <h2 class="text-sm font-semibold text-gray-600">Total Devices</h2>
+                            <p class="text-2xl font-bold text-green-600 mt-1">12</p>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 shadow hover:shadow-md transition">
+                            <h2 class="text-sm font-semibold text-gray-600">Active Devices</h2>
+                            <p class="text-2xl font-bold text-blue-600 mt-1">9</p>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 shadow hover:shadow-md transition">
+                            <h2 class="text-sm font-semibold text-gray-600">Moisture Alerts</h2>
+                            <p class="text-2xl font-bold text-red-500 mt-1">3</p>
+                        </div>
+                        <div class="bg-white rounded-xl p-4 shadow hover:shadow-md transition">
+                            <h2 class="text-sm font-semibold text-gray-600">Auto-Start Enabled</h2>
+                            <p class="text-2xl font-bold text-purple-600 mt-1">Yes</p>
+                        </div>
                     </div>
+
+                    <!-- Devices Table -->
+                    <div class="bg-white rounded-xl shadow p-6">
+                        <h2 class="text-xl font-semibold mb-4">📍 Field Device Status</h2>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full text-sm text-left">
+                                <thead class="bg-green-100 text-gray-700 font-semibold">
+                                    <tr>
+                                        <th class="py-2 px-4">Field</th>
+                                        <th class="py-2 px-4">Device ID</th>
+                                        <th class="py-2 px-4">Soil Moisture (%)</th>
+                                        <th class="py-2 px-4">Status</th>
+                                        <th class="py-2 px-4">Auto Start</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200">
+                                    <tr class="hover:bg-gray-50 transition">
+                                        <td class="py-2 px-4">North Field</td>
+                                        <td class="py-2 px-4">DEV-001</td>
+                                        <td class="py-2 px-4">18%</td>
+                                        <td class="py-2 px-4">
+                                            <span class="bg-red-500 text-white text-xs px-2 py-1 rounded">Moisture
+                                                Low</span>
+                                        </td>
+                                        <td class="py-2 px-4">
+                                            <button
+                                                class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 text-xs">Auto
+                                                ON</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition">
+                                        <td class="py-2 px-4">South Zone</td>
+                                        <td class="py-2 px-4">DEV-007</td>
+                                        <td class="py-2 px-4">35%</td>
+                                        <td class="py-2 px-4">
+                                            <span
+                                                class="bg-yellow-400 text-black text-xs px-2 py-1 rounded">Normal</span>
+                                        </td>
+                                        <td class="py-2 px-4">
+                                            <button
+                                                class="bg-gray-300 text-gray-700 px-3 py-1 rounded text-xs cursor-not-allowed">Auto
+                                                OFF</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition">
+                                        <td class="py-2 px-4">East Orchard</td>
+                                        <td class="py-2 px-4">DEV-004</td>
+                                        <td class="py-2 px-4">22%</td>
+                                        <td class="py-2 px-4">
+                                            <span class="bg-red-500 text-white text-xs px-2 py-1 rounded">Moisture
+                                                Low</span>
+                                        </td>
+                                        <td class="py-2 px-4">
+                                            <button
+                                                class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 text-xs">Auto
+                                                ON</button>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-gray-50 transition">
+                                        <td class="py-2 px-4">West Terrace</td>
+                                        <td class="py-2 px-4">DEV-003</td>
+                                        <td class="py-2 px-4">41%</td>
+                                        <td class="py-2 px-4">
+                                            <span
+                                                class="bg-green-500 text-white text-xs px-2 py-1 rounded">Healthy</span>
+                                        </td>
+                                        <td class="py-2 px-4">
+                                            <button
+                                                class="bg-gray-300 text-gray-700 px-3 py-1 rounded text-xs cursor-not-allowed">Auto
+                                                OFF</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
-                <div
-                    class="bg-white rounded-xl shadow p-5 flex items-center gap-4 cursor-pointer transition hover:shadow-md hover:ring-2 hover:ring-agriGreen">
-                    <div class="bg-agriLightGreen rounded-full p-4 shadow-inner">
-                        <span
-                            class="material-icons-outlined text-agriGreen text-3xl select-none">device_thermostat</span>
-                    </div>
-                    <div>
-                        <p class="font-semibold text-gray-900 select-none">Temperature</p>
-                        <p class="text-2xl font-extrabold text-agriDarkGreen select-none">18.7°C</p>
-                    </div>
-                </div>
-                <div
-                    class="bg-white rounded-xl shadow p-5 flex items-center gap-4 cursor-pointer transition hover:shadow-md hover:ring-2 hover:ring-agriGreen">
-                    <div class="bg-agriLightGreen rounded-full p-4 shadow-inner">
-                        <!-- <span class=" text-agriGreen text-xl select-none">sprout</span> -->
-                    </div>
-                    <div>
-                        <p class="font-semibold text-gray-900 select-none">Crop Health</p>
-                        <p class="text-2xl font-extrabold text-agriDarkGreen select-none">Good</p>
-                    </div>
-                </div>
-                <div
-                    class="bg-white rounded-xl shadow p-5 flex items-center gap-4 cursor-pointer transition hover:shadow-md hover:ring-2 hover:ring-agriGreen">
-                    <div class="bg-agriLightGreen rounded-full p-4 shadow-inner">
-                        <span class="material-icons-outlined text-yellow-400 text-3xl select-none">bolt</span>
-                    </div>
-                    <div>
-                        <p class="font-semibold text-gray-900 select-none">Energy</p>
-                        <p class="text-2xl font-extrabold text-agriYellow select-none">45%</p>
-                    </div>
-                </div>
-            </section>
+
+            </div>
+
+
 
             <!-- Data Area -->
-            <section class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Moisture Over Time -->
-                <div class="bg-white rounded-xl shadow p-6 md:col-span-2">
-                    <h2 class="text-lg font-semibold mb-4 ">Moisture Over Time</h2>
-                    <canvas id="moistureChart" class="w-full h-44"></canvas>
-                </div>
 
-                <!-- Field Overview -->
-                <div class="bg-white rounded-xl shadow p-4">
-                    <h2 class="text-lg font-semibold mb-4 select-none">Field Overview</h2>
-                    <div class="w-full h-44 rounded-lg overflow-hidden relative">
-                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d4a5c83a-e803-488e-bfbc-27849c84d4ae.png"
-                            alt="A stylized illustration map of farm fields in various shades of green and yellow with crop sensors indicated as location pins"
-                            class="w-full h-full object-cover rounded-lg" onerror="this.style.display='none'"
-                            loading="lazy" />
-                        <div aria-hidden="true" class="absolute top-8 left-16 text-agriGreen select-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 drop-shadow-lg" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 11c1.656 0 3-1.567 3-3.5S13.656 4 12 4 9 5.567 9 7.5 10.344 11 12 11z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 22c-4-7-7-7-7-11a7 7 0 0 1 14 0c0 3.996-3 4-7 11z" />
-                            </svg>
-                        </div>
-                        <div aria-hidden="true" class="absolute top-20 left-40 text-agriGreen select-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 drop-shadow-lg" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 11c1.656 0 3-1.567 3-3.5S13.656 4 12 4 9 5.567 9 7.5 10.344 11 12 11z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 22c-4-7-7-7-7-11a7 7 0 0 1 14 0c0 3.996-3 4-7 11z" />
-                            </svg>
-                        </div>
-                        <div aria-hidden="true" class="absolute top-28 left-24 text-agriGreen select-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 drop-shadow-lg" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 11c1.656 0 3-1.567 3-3.5S13.656 4 12 4 9 5.567 9 7.5 10.344 11 12 11z" />
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 22c-4-7-7-7-7-11a7 7 0 0 1 14 0c0 3.996-3 4-7 11z" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <div class="w-full flex flex-col  gap-8 mt-8">
+            <div class="w-full flex flex-col gap-8 mt-8">
 
                 <!-- Alerts -->
-                <div class="bg-white rounded-xl shadow p-6 overflow-x-auto">
-                    <h2 class="text-lg font-semibold mb-4 select-none">Alerts</h2>
-                    <table class="w-full text-left table-fixed border-collapse border border-gray-100">
-                        <thead class="bg-agriLightGreen text-sm text-gray-600 font-semibold select-none">
-                            <tr>
-                                <th class="py-2 px-4">Date <button
-                                        class="text-agriGreen hover:text-agriDarkGreen focus:outline-none"
-                                        title="Sort Date" aria-label="Sort Alerts by Date">▲</button></th>
-                                <th class="py-2 px-4">Description</th>
-                                <th class="py-2 px-4">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="hover:bg-agriLightGreen cursor-pointer transition-colors duration-150">
-                                <td class="py-3 px-4 text-sm text-gray-700 select-text">10 Apr</td>
-                                <td class="py-3 px-4 text-sm select-text">Low Soil Moisture</td>
-                                <td class="py-3 px-4 text-sm">
-                                    <span
-                                        class="inline-block bg-agriOrange text-white text-xs px-2 py-0.5 rounded-md select-none">Critical</span>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-agriLightGreen cursor-pointer transition-colors duration-150">
-                                <td class="py-3 px-4 text-sm text-gray-700 select-text">08 Apr</td>
-                                <td class="py-3 px-4 text-sm select-text">High Temperature</td>
-                                <td class="py-3 px-4 text-sm">
-                                    <span
-                                        class="inline-block bg-yellow-300 text-gray-700 text-xs px-2 py-0.5 rounded-md select-none">Warning</span>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-agriLightGreen cursor-pointer transition-colors duration-150">
-                                <td class="py-3 px-4 text-sm text-gray-700 select-text">02 Apr</td>
-                                <td class="py-3 px-4 text-sm select-text">Low Soil Moisture</td>
-                                <td class="py-3 px-4 text-sm">
-                                    <span
-                                        class="inline-block bg-yellow-300 text-gray-700 text-xs px-2 py-0.5 rounded-md select-none">Warning</span>
-                                </td>
-                            </tr>
-                            <tr class="hover:bg-agriLightGreen cursor-pointer transition-colors duration-150">
-                                <td class="py-3 px-4 text-sm text-gray-700 select-text">28 Dec</td>
-                                <td class="py-3 px-4 text-sm select-text">Device Disconnected</td>
-                                <td class="py-3 px-4 text-sm">
-                                    <span
-                                        class="inline-block bg-gray-300 text-gray-700 text-xs px-2 py-0.5 rounded-md select-none">Disabled</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="w-full bg-white shadow p-6 rounded-lg">
+                    <h1 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">Alerts</h1>
+                    <divc class="w-full flex  flex-col gap-6">
+                        <!-- Weather Alerts Card -->
+                        <div class="bg-white rounded-xl shadow-lg p-6 transition hover:shadow-xl">
+                            <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                                🌤️ Weather-Based Crop Alerts
+                            </h2>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full text-sm border border-gray-200 rounded-lg overflow-hidden">
+                                    <thead class="bg-green-100 text-gray-700 font-semibold">
+                                        <tr>
+                                            <th class="py-2 px-4 text-left">Date</th>
+                                            <th class="py-2 px-4 text-left">Alert</th>
+                                            <th class="py-2 px-4 text-left">Crop</th>
+                                            <th class="py-2 px-4 text-left">Severity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="weatherAlert" class="divide-y divide-gray-100">
+                                        <tr class="hover:bg-green-50 transition">
+                                            <td class="py-2 px-4">26 Jul</td>
+                                            <td class="py-2 px-4">🌧️ Heavy rain expected – avoid harvesting wheat
+                                                today.</td>
+                                            <td class="py-2 px-4">Wheat</td>
+                                            <td class="py-2 px-4">
+                                                <span
+                                                    class="bg-red-500 text-white px-2 py-1 rounded text-xs font-medium">Critical</span>
+                                            </td>
+                                        </tr>
+                                        <tr class="hover:bg-green-50 transition">
+                                            <td class="py-2 px-4">26 Jul</td>
+                                            <td class="py-2 px-4">🌡️ High humidity – fungal risk detected, apply
+                                                fungicide.</td>
+                                            <td class="py-2 px-4">Tomato</td>
+                                            <td class="py-2 px-4">
+                                                <span
+                                                    class="bg-yellow-400 text-gray-800 px-2 py-1 rounded text-xs font-medium">Warning</span>
+                                            </td>
+                                        </tr>
+                                        <tr class="hover:bg-green-50 transition">
+                                            <td class="py-2 px-4">25 Jul</td>
+                                            <td class="py-2 px-4">❄️ Cold wave alert – cover banana plants to avoid
+                                                damage.</td>
+                                            <td class="py-2 px-4">Banana</td>
+                                            <td class="py-2 px-4">
+                                                <span
+                                                    class="bg-yellow-400 text-gray-800 px-2 py-1 rounded text-xs font-medium">Warning</span>
+                                            </td>
+                                        </tr>
+                                        <tr class="hover:bg-green-50 transition">
+                                            <td class="py-2 px-4">25 Jul</td>
+                                            <td class="py-2 px-4">☀️ Strong winds expected – delay pesticide spray.</td>
+                                            <td class="py-2 px-4">Cotton</td>
+                                            <td class="py-2 px-4">
+                                                <span
+                                                    class="bg-yellow-400 text-gray-800 px-2 py-1 rounded text-xs font-medium">Moderate</span>
+                                            </td>
+                                        </tr>
+                                        <tr class="hover:bg-green-50 transition">
+                                            <td class="py-2 px-4">24 Jul</td>
+                                            <td class="py-2 px-4">🔥 Extreme heat forecast – increase irrigation
+                                                frequency.</td>
+                                            <td class="py-2 px-4">Chili</td>
+                                            <td class="py-2 px-4">
+                                                <span
+                                                    class="bg-orange-500 text-white px-2 py-1 rounded text-xs font-medium">Alert</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                        <!-- Crop Alerts Card -->
+                        <div class="bg-white rounded-xl shadow-lg p-6 transition hover:shadow-xl">
+                            <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                                🌾 Crop Alerts
+                            </h2>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full text-sm border border-gray-200 rounded-lg overflow-hidden">
+                                    <thead class="bg-green-100 text-gray-700 font-semibold">
+                                        <tr>
+                                            <th class="py-2 px-4 text-left">Date</th>
+                                            <th class="py-2 px-4 text-left">Description</th>
+                                            <th class="py-2 px-4 text-left">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-100">
+                                        <tr class="hover:bg-green-50 transition">
+                                            <td class="py-2 px-4">10 Apr</td>
+                                            <td class="py-2 px-4">Low Soil Moisture</td>
+                                            <td class="py-2 px-4">
+                                                <span
+                                                    class="bg-red-500 text-white px-2 py-1 rounded text-xs font-medium">Critical</span>
+                                            </td>
+                                        </tr>
+                                        <tr class="hover:bg-green-50 transition">
+                                            <td class="py-2 px-4">08 Apr</td>
+                                            <td class="py-2 px-4">High Temperature</td>
+                                            <td class="py-2 px-4">
+                                                <span
+                                                    class="bg-yellow-300 text-gray-800 px-2 py-1 rounded text-xs font-medium">Warning</span>
+                                            </td>
+                                        </tr>
+                                        <tr class="hover:bg-green-50 transition">
+                                            <td class="py-2 px-4">02 Apr</td>
+                                            <td class="py-2 px-4">Low Soil Moisture</td>
+                                            <td class="py-2 px-4">
+                                                <span
+                                                    class="bg-yellow-300 text-gray-800 px-2 py-1 rounded text-xs font-medium">Warning</span>
+                                            </td>
+                                        </tr>
+                                        <tr class="hover:bg-green-50 transition">
+                                            <td class="py-2 px-4">28 Dec</td>
+                                            <td class="py-2 px-4">Device Disconnected</td>
+                                            <td class="py-2 px-4">
+                                                <span
+                                                    class="bg-gray-300 text-gray-800 px-2 py-1 rounded text-xs font-medium">Disabled</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                 </div>
+            </div>
 
-
-
-
-
-
-                <!-- Quick Actions 1 -->
-                <div class="bg-white rounded-xl shadow p-6 flex flex-col gap-4">
+            <!-- Quick Actions 1 -->
+            <div class="w-full  flex gap-6">
+                <div class="w-[40vw] bg-white rounded-xl shadow p-6 flex flex-col gap-4 box-border">
                     <h2 class="text-lg font-semibold select-none">Quick Actions</h2>
                     <button id="startIrrigationBtn"
                         class="bg-agriGreen text-white py-3 rounded-lg shadow hover:bg-agriDarkGreen transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-agriGreen"
@@ -294,64 +394,125 @@
                         class="bg-agriLightGreen text-agriDarkGreen py-3 rounded-lg shadow hover:bg-agriGreen hover:text-white transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-agriGreen"
                         aria-label="Schedule Report Export">Schedule Report Export</button>
                 </div>
-            </div>
+                <div class="w-[40vw] bg-white shadow-md rounded-2xl p-6 max-w-3xl  box-border">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4">Waste from Process</h2>
 
+                    <div class="space-y-4">
+
+                        <!-- Process 1 -->
+                        <div class="bg-gray-50 p-4 rounded-xl hover:shadow transition-shadow duration-300">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="text-sm font-medium text-gray-700">Plastic Processing</h3>
+                                <span class="text-xs text-green-600 font-semibold">Paid ₹8,000</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="bg-green-500 h-3 rounded-full" style="width: 85%"></div>
+                            </div>
+                            <div class="flex justify-between mt-1 text-xs text-gray-500">
+                                <span>85% Completed</span>
+                                <span>Expected ₹9,000</span>
+                            </div>
+                        </div>
+
+                        <!-- Process 2 -->
+                        <div class="bg-gray-50 p-4 rounded-xl hover:shadow transition-shadow duration-300">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="text-sm font-medium text-gray-700">Metal Recycling</h3>
+                                <span class="text-xs text-yellow-600 font-semibold">Paid ₹3,500</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="bg-yellow-400 h-3 rounded-full" style="width: 45%"></div>
+                            </div>
+                            <div class="flex justify-between mt-1 text-xs text-gray-500">
+                                <span>45% Completed</span>
+                                <span>Expected ₹7,000</span>
+                            </div>
+                        </div>
+
+                        <!-- Process 3 -->
+                        <div class="bg-gray-50 p-4 rounded-xl hover:shadow transition-shadow duration-300">
+                            <div class="flex justify-between items-center mb-2">
+                                <h3 class="text-sm font-medium text-gray-700">E-waste Separation</h3>
+                                <span class="text-xs text-gray-600 font-semibold">Not Paid</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="bg-red-400 h-3 rounded-full" style="width: 15%"></div>
+                            </div>
+                            <div class="flex justify-between mt-1 text-xs text-gray-500">
+                                <span>15% Completed</span>
+                                <span>Expected ₹5,000</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 
+
+    <section class="bot">
+        <!-- Chat Widget -->
+        <div class="chat-widget">
+            <div class="chat-window" id="chatWindow">
+                <!-- Chat Header -->
+                <div class="chat-header">
+                    <div class="chat-header-content">
+
+                        <div class="chat-title">AgraConnect Chat Support</div>
+
+                        <div class="chat-title"> Krishi-Sarthi Chat Bot</div>
+
+                        <div class="chat-subtitle">We're here to help!</div>
+                    </div>
+                    <div class="online-indicator"></div>
+                </div>
+
+                <!-- Chat Messages -->
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot">
+                        👋 Hello! Welcome to our website. How can I help you today?
+                    </div>
+                </div>
+
+                <!-- Typing Indicator -->
+                <div class="typing-indicator" id="typingIndicator">
+                    <span>Bot is typing</span>
+                    <div class="typing-dots">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+
+                <!-- Chat Input -->
+                <div class="chat-input-container">
+                    <div class="chat-input-wrapper">
+                        <input type="text" class="chat-input" id="chatInput" placeholder="Type your message..."
+                            autocomplete="off">
+                        <button class="send-button" id="sendButton">
+                            <svg class="send-icon" viewBox="0 0 24 24">
+                                <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Toggle Button -->
+            <button class="chat-toggle" id="chatToggle">
+                <svg class="chat-icon" viewBox="0 0 24 24">
+                    <path
+                        d="M12,3C17.5,3 22,6.58 22,11C22,15.42 17.5,19 12,19C10.76,19 9.57,18.82 8.47,18.5C5.55,21 2,21 2,21C4.33,18.67 4.7,17.1 4.75,16.5C3.05,15.07 2,13.13 2,11C2,6.58 6.5,3 12,3Z" />
+                </svg>
+            </button>
+        </div>
+    </section>
+
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Chart.js line chart for Moisture Over Time
-        // const ctx = document.getElementById('moistureChart').getContext('2d');
-        const moistureChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-                datasets: [{
-                    label: 'Moisture %',
-                    data: [20, 22, 21, 23, 20, 24, 26],
-                    borderColor: 'rgba(92, 158, 85, 0.8)',
-                    backgroundColor: 'rgba(92, 158, 85, 0.1)',
-                    fill: true,
-                    tension: 0.4,
-                    pointRadius: 3,
-                    pointHoverRadius: 6,
-                    borderWidth: 3,
-                    hoverBorderWidth: 4,
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                interaction: {
-                    intersect: false,
-                    mode: 'nearest',
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        backgroundColor: '#5C9E55',
-                        titleColor: 'white',
-                        bodyColor: 'white',
-                        cornerRadius: 6,
-                        padding: 8
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: false,
-                        max: 30,
-                    },
-                    x: {
-                        grid: {
-                            display: false
-                        }
-                    }
-                }
-            }
-        });
+
 
 
         // Voice search interaction (stub)
@@ -417,6 +578,7 @@
         }
     </style>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
+    <script src="../javascripts/bot.js"></script>
 </body>
 
 </html>

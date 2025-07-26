@@ -13,6 +13,8 @@ import session from "express-session";
 import mongoose from "mongoose";
 import connection from './config/mongoose-connection.js'; // Adjusted import path
 import Field from './models/Fields.js'; // Adjusted import path
+import { isLoggedIn } from './middlewares/isLoggedIn.js'
+import Waste from './models/Waste.js'
 
 // Adjusted import path
 
@@ -52,8 +54,9 @@ app.get("/dash", (req, res) => {
 app.get('/dash/weather', (req, res) => {
     res.render('Weather');
 });
-app.get('/dash/waste', (req, res) => {
-    res.render('Waste');
+app.get('/dash/waste', isLoggedIn, async (req, res) => {
+    let WasteForms = await Waste.find({ Id: req.user._id })
+    res.render('Waste', { WasteForms });
 });
 app.get('/dash/field', async (req, res) => {
     let field = await Field.find({});
@@ -62,6 +65,9 @@ app.get('/dash/field', async (req, res) => {
 app.get("/login", (req, res) => {
     res.render("login"); // make sure views/App.ejs exists
 });
+app.get('/dash/settings', (req, res) => {
+    res.render("setting");
+})
 app.post('/fields', async (req, res) => {
     try {
         const { cropName, Area } = req.body;
@@ -137,7 +143,50 @@ app.post("/genai", async (req, res) => {
     main(message).catch((err) => console.log(err));
     // res.send(0);
 });
+app.post("/genaisugg", async (req, res) => {
+    let { text} = req.body;
+    // console.log(message)
+    const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY); // Use API key from .env
 
+    async function main(text, Api) {
+        const model = ai.getGenerativeModel({ model: "gemini-1.5-flash" }); // adjust to your model
+        const result = await model.generateContent(text);
+        const response = await result.response;
+        const data = await response.text();
+        res.status(200).json({ reply: data });
+
+    }
+
+    main(text).catch((err) => console.log(err));
+    // res.send(0);
+});
+
+
+app.post("/dash/waste/formsubmit", isLoggedIn, async (req, res) => {
+    try {
+        let { fName, location, cropType, amount, duration, contact, email, addDetails } = req.body;
+        let cropDetails = await Waste.create({
+            Id: req.user._id,
+            fName,
+            email,
+            location,
+            cropType,
+            amount,
+            duration,
+            contact,
+            addDetails,
+
+        });
+        res.redirect("/dash/waste");
+
+    }
+    catch (err) {
+        console.log(err)
+    }
+
+
+
+})
 // Start server
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);

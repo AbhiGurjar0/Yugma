@@ -6,25 +6,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Interactive Modern Weather Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../stylesheets/responsive.css">
+    <link rel="stylesheet" href="../stylesheets/style.css">
+    <link rel="stylesheet" href="../stylesheets/bot.css">
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        agriGreen: '#5C9E55',
-                        agriLightGreen: '#E9F4E9',
-                        agriYellow: '#F8E877',
-                        agriOrange: '#F0B429',
-                        agriRed: '#F87171',
-                        agriDarkGreen: '#3E6B36',
+                        agriGreen: "#22c55e",
+                        agriDarkGreen: "#15803d",
+                        agriLightGreen: "#bbf7d0",
+                        agriYellow: "#facc15"
                     }
-                },
-                fontFamily: {
-                    sans: ['Inter', 'sans-serif'],
                 }
             }
         }
     </script>
+    <style>
+        .pattern-yellow {
+            background-image: repeating-linear-gradient(45deg,
+                    rgba(255, 255, 0, 0.15),
+                    rgba(255, 255, 0, 0.15) 5px,
+                    transparent 5px,
+                    transparent 10px);
+        }
+
+        .pattern-green {
+            background-image: repeating-linear-gradient(45deg,
+                    rgba(34, 197, 94, 0.15),
+                    rgba(34, 197, 94, 0.15) 5px,
+                    transparent 5px,
+                    transparent 10px);
+        }
+
+        .tooltip-arrow {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background: inherit;
+            transform: rotate(45deg);
+            bottom: -7px;
+            left: 50%;
+            margin-left: -7px;
+            box-shadow: inset 1px -1px 1px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+
     <style>
         /* For temperature prediction line */
         .temp-curve {
@@ -128,367 +159,142 @@
                 </div>
             </div>
         </aside>
-        <main class="w-[82vw] ml-[18vw]">
+        <main class="w-[82vw] ml-[18vw] bg-white min-h-screen font-sans text-gray-800">
+            <section class="mt-8 p-4">
+                <div class="bg-white rounded-3xl shadow-xl p-6 space-y-8">
 
+                    <!-- Current Weather -->
+                    <div class="flex flex-col md:flex-row items-center md:items-start md:gap-8">
+                        <div class="bg-indigo-100 text-indigo-900 p-6 rounded-3xl w-40 text-center">
+                            <h1 class="text-6xl font-bold">23<span class="text-2xl align-top">°C</span></h1>
+                            <p class="uppercase text-xs mt-2 font-semibold">Today</p>
+                            <p class="text-lg font-medium">Thunderclouds</p>
+                        </div>
 
-            <!-- Header bar -->
-            <header class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <!-- Forecast Cards -->
+                        <div class="flex overflow-x-auto gap-4 mt-6 md:mt-0 md:overflow-visible">
+                            <!-- Forecast Card Template -->
+                            <div
+                                class="w-28 text-center bg-white border rounded-xl p-4 shadow hover:shadow-lg transition cursor-pointer">
+                                <img src="https://cdn.weatherbit.io/static/img/icons/c01d.png" class="mx-auto mb-2" />
+                                <p class="text-indigo-700 font-semibold text-lg">16°</p>
+                                <p class="text-sm font-medium">Tuesday</p>
+                                <p class="text-xs text-gray-500">Feb 07</p>
+                            </div>
+                            <div
+                                class="w-28 text-center bg-white border rounded-xl p-4 shadow hover:shadow-lg transition cursor-pointer">
+                                <img src="https://cdn.weatherbit.io/static/img/icons/r01d.png" class="mx-auto mb-2" />
+                                <p class="text-indigo-700 font-semibold text-lg">22°</p>
+                                <p class="text-sm font-medium">Wednesday</p>
+                                <p class="text-xs text-gray-500">Feb 08</p>
+                            </div>
+                            <div
+                                class="w-28 text-center bg-white border rounded-xl p-4 shadow hover:shadow-lg transition cursor-pointer">
+                                <img src="https://cdn.weatherbit.io/static/img/icons/a01d.png" class="mx-auto mb-2" />
+                                <p class="text-indigo-700 font-semibold text-lg">23°</p>
+                                <p class="text-sm font-medium">Thursday</p>
+                                <p class="text-xs text-gray-500">Feb 09</p>
+                            </div>
 
-                <!-- Location and Search -->
-                <div
-                    class="flex items-center gap-3 max-w-md w-full md:flex-grow md:max-w-none bg-white/80 dark:bg-gray-800/80 rounded-full px-4 shadow-lg ring-1 ring-slate-300 dark:ring-gray-700">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-600 dark:text-indigo-400"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M12 11c0-2.5 3-6 3-6a3 3 0 1 0-6 0s3 3.5 3 6z" />
-                    </svg>
-                    <span class="font-semibold text-indigo-600 dark:text-indigo-400">Dhaka, Bangladesh</span>
-                    <div class="flex-grow relative">
-                        <input type="search" placeholder="Type city here..." aria-label="Search city"
-                            class="w-full py-2 pl-10 pr-4 rounded-full border border-transparent bg-gray-100 focus:bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none text-sm text-gray-700 dark:bg-gray-700 dark:text-gray-200 dark:focus:bg-gray-800"
-                            id="searchInput" autocomplete="off" />
-                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500 pointer-events-none"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                            stroke-width="2" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1 0 6.925 6.925a7.5 7.5 0 0 0 9.725 9.725z" />
-                        </svg>
+                            <!-- Stats Button -->
+                            <div
+                                class="w-28 text-center bg-white border rounded-xl p-4 shadow hover:shadow-lg transition cursor-pointer">
+                                <img src="https://cdn.weatherbit.io/static/img/icons/a01d.png" class="mx-auto mb-2" />
+                                <p class="text-indigo-700 font-semibold text-lg">23°</p>
+                                <p class="text-sm font-medium">Thursday</p>
+                                <p class="text-xs text-gray-500">Feb 10</p>
+                            </div>
+                            <div
+                                class="w-28 text-center bg-white border rounded-xl p-4 shadow hover:shadow-lg transition cursor-pointer">
+                                <img src="https://cdn.weatherbit.io/static/img/icons/a01d.png" class="mx-auto mb-2" />
+                                <p class="text-indigo-700 font-semibold text-lg">23°</p>
+                                <p class="text-sm font-medium">Thursday</p>
+                                <p class="text-xs text-gray-500">Feb 11</p>
+                            </div>
+                            <div
+                                class="w-28 text-center bg-white border rounded-xl p-4 shadow hover:shadow-lg transition cursor-pointer">
+                                <img src="https://cdn.weatherbit.io/static/img/icons/a01d.png" class="mx-auto mb-2" />
+                                <p class="text-indigo-700 font-semibold text-lg">23°</p>
+                                <p class="text-sm font-medium">Thursday</p>
+                                <p class="text-xs text-gray-500">Feb 12</p>
+                            </div>
+                        </div>
                     </div>
+
+                    <!-- Highlights -->
+                    <div>
+                        <h2 class="text-xl font-semibold mb-4">Today's Highlights</h2>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+                            <!-- Highlight Card -->
+                            <div class="bg-white border rounded-2xl shadow p-4 text-center">
+                                <svg class="w-6 h-6 mx-auto text-indigo-500 mb-2" fill="none" stroke="currentColor"
+                                    stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M14 14V9a4 4 0 1 0-8 0v5" />
+                                </svg>
+                                <p class="text-xs uppercase text-gray-500">Feels Like</p>
+                                <p class="text-xl font-semibold text-indigo-900">06°C</p>
+                                <p class="text-xs text-gray-400">Normal</p>
+                            </div>
+                            <!-- Repeat for Wind, Rain, Humidity, etc. -->
+                            <div class="bg-white border rounded-2xl shadow p-4 text-center">
+                                <svg class="w-6 h-6 mx-auto text-indigo-500 mb-2" fill="none" stroke="currentColor"
+                                    stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M5 12h12M12 5l7 7-7 7" />
+                                </svg>
+                                <p class="text-xs uppercase text-gray-500">Wind</p>
+                                <p class="text-xl font-semibold text-indigo-900">26 km/h</p>
+                                <p class="text-xs text-gray-400">Heavy</p>
+                            </div>
+
+                            <div class="bg-white border rounded-2xl shadow p-4 text-center">
+                                <svg class="w-6 h-6 mx-auto text-indigo-500 mb-2" fill="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path d="M8 16l-3 4h12l-3-4m2-3a2 2 0 1 1-4 0 2 2 0 1 1 4 0z" />
+                                </svg>
+                                <p class="text-xs uppercase text-gray-500">Rain</p>
+                                <p class="text-xl font-semibold text-indigo-900">16.7 cm</p>
+                                <p class="text-xs text-gray-400">Heavy</p>
+                            </div>
+
+                            <div class="bg-white border rounded-2xl shadow p-4 text-center">
+                                <svg class="w-6 h-6 mx-auto text-indigo-500 mb-2" fill="none" stroke="currentColor"
+                                    stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M12 2c0 4-5 8-5 13a5 5 0 0 0 10 0c0-5-5-9-5-13z" />
+                                </svg>
+                                <p class="text-xs uppercase text-gray-500">Humidity</p>
+                                <p class="text-xl font-semibold text-indigo-900">65%</p>
+                                <p class="text-xs text-gray-400">Heavy</p>
+                            </div>
+
+                            <div class="bg-white border rounded-2xl shadow p-4 text-center">
+                                <svg class="w-6 h-6 mx-auto text-indigo-500 mb-2" fill="none" stroke="currentColor"
+                                    stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M12 3v18M8 6h8M8 18h8" />
+                                </svg>
+                                <p class="text-xs uppercase text-gray-500">UV Index</p>
+                                <p class="text-xl font-semibold text-indigo-900">7</p>
+                                <p class="text-xs text-gray-400">High</p>
+                            </div>
+
+                            <div class="bg-white border rounded-2xl shadow p-4 text-center">
+                                <svg class="w-6 h-6 mx-auto text-indigo-500 mb-2" fill="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path d="M7 18h10a5 5 0 0 0-10-4 4 4 0 0 0-1 8z" />
+                                </svg>
+                                <p class="text-xs uppercase text-gray-500">Cloud Cover</p>
+                                <p class="text-xl font-semibold text-indigo-900">2%</p>
+                                <p class="text-xs text-gray-400">Clear</p>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
-
-                <!-- Icons: Notifications, Logo -->
-                <div class="flex items-center gap-5">
-                    <button aria-label="Notifications"
-                        class="p-2 rounded-full hover:bg-indigo-100 dark:hover:bg-indigo-800 transition">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600 dark:text-indigo-400"
-                            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15 17h5l-1.405-1.405A2.032 2.032 0 0 1 18 14.158V11a6 6 0 1 0-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 0 1-6 0v-1m6 0H9" />
-                        </svg>
-                    </button>
-                    <button aria-label="Toggle Theme" id="themeToggle"
-                        class="p-2 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-indigo-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" id="themeIcon" class="h-6 w-6" fill="currentColor"
-                            viewBox="0 0 24 24" aria-hidden="true">
-                            <path
-                                d="M12 3.75a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 12 3.75zM18.364 6.636a.75.75 0 0 1 1.061 1.06l-1.06 1.06a.75.75 0 0 1-1.061-1.06l1.06-1.06zM19.5 12a.75.75 0 0 1 .75.75h-1.5a.75.75 0 0 1 .75-.75zM18.364 17.364a.75.75 0 0 1-1.06 1.06l-1.061-1.06a.75.75 0 0 1 1.06-1.061l1.06 1.06zM12 18.75a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5a.75.75 0 0 1 .75-.75zM6.636 17.364a.75.75 0 0 1-1.06-1.06l1.06-1.061a.75.75 0 0 1 1.061 1.06l-1.06 1.06zM4.5 12a.75.75 0 0 1-.75-.75h1.5a.75.75 0 0 1-.75.75zm1.136-5.364a.75.75 0 1 1 1.061-1.06l1.06 1.06a.75.75 0 1 1-1.06 1.061l-1.06-1.06zM12 6a6 6 0 1 0 0 12a6 6 0 0 0 0-12z" />
-                        </svg>
-                    </button>
-                    <button aria-label="App Logo"
-                        class="rounded-full bg-gradient-to-tr from-indigo-600 to-purple-600 p-2 shadow-md hover:shadow-lg transition"
-                        disabled>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-white" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                            <path stroke-linejoin="round" stroke-linecap="round" d="M12 14l9-5-9-5-9 5 9 5z" />
-                            <path stroke-linejoin="round" stroke-linecap="round"
-                                d="M12 14l6.16-3.422A12.083 12.083 0 0 1 12 21.5a12.08 12.08 0 0 1-6.16-10.922L12 14z" />
-                        </svg>
-                    </button>
-                </div>
-            </header>
-
-            <!-- Main Panel -->
-            <section class="mt-8 grid grid-cols-1 lg:grid-cols-[auto_320px] gap-8">
-
-                <!-- Left Big Panel -->
-                <div class="bg-indigo-50 dark:bg-gray-800 rounded-3xl p-5 shadow-xl flex flex-col gap-5">
-
-                    <!-- Top: Current weather + Upcoming days -->
-                    <div class="flex flex-col md:flex-row items-center md:items-start md:gap-6">
-
-                        <!-- Current weather left side -->
-                        <div
-                            class="flex flex-col items-center justify-center bg-indigo-200 dark:bg-indigo-900 text-indigo-900 dark:text-indigo-200 p-6 rounded-3xl flex-shrink-0 w-40 select-none">
-                            <h1 class="text-8xl font-black leading-none">23<span class="text-3xl align-top">°C</span>
-                            </h1>
-                            <p class="mt-3 text-xs uppercase tracking-wide opacity-80 font-semibold">Today</p>
-                            <p class="text-xl font-semibold tracking-tight leading-none select-text">Thunderclouds</p>
-                        </div>
-
-                        <!-- Forecast cards -->
-                        <div class="flex gap-4 overflow-x-auto md:overflow-visible flex-grow mt-6 md:mt-0 px-1 md:px-0">
-
-                            <div tabindex="0"
-                                aria-label="Tuesday February 7, Temperature 16 degrees Celsius with snow and sun"
-                                class="flex-shrink-0 cursor-pointer rounded-2xl bg-white dark:bg-gray-700 p-4 w-28 text-center shadow-md hover:shadow-lg transition flex flex-col items-center outline-none ring-2 ring-transparent focus:ring-indigo-400">
-                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/fc81df89-402b-414c-ab53-036725548579.png"
-                                    alt="Icon showing light snow and sun clouds" class="mb-1" />
-                                <p class="font-semibold text-lg text-indigo-700 dark:text-indigo-300">16°</p>
-                                <p class="mt-1 font-semibold text-sm">Tuesday</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">February 07, 2023</p>
-                            </div>
-
-                            <div tabindex="0"
-                                aria-label="Wednesday February 8, Temperature 22 degrees Celsius with wind and sun"
-                                class="flex-shrink-0 cursor-pointer rounded-2xl bg-white dark:bg-gray-700 p-4 w-28 text-center shadow-md hover:shadow-lg transition flex flex-col items-center outline-none ring-2 ring-transparent focus:ring-indigo-400">
-                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/f60c2375-5e91-4cb0-a645-8bda65c31974.png"
-                                    alt="Icon showing wind clouds and sun" class="mb-1" />
-                                <p class="font-semibold text-lg text-indigo-700 dark:text-indigo-300">22°</p>
-                                <p class="mt-1 font-semibold text-sm">Wednesday</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">February 08, 2023</p>
-                            </div>
-
-                            <div tabindex="0"
-                                aria-label="Thursday February 9, Temperature 23 degrees Celsius with cloudy sun"
-                                class="flex-shrink-0 cursor-pointer rounded-2xl bg-white dark:bg-gray-700 p-4 w-28 text-center shadow-md hover:shadow-lg transition flex flex-col items-center outline-none ring-2 ring-transparent focus:ring-indigo-400">
-                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/05cd5a0a-2ec5-4c1c-90d2-539ecdc409fe.png"
-                                    alt="Icon showing cloud with sun" class="mb-1" />
-                                <p class="font-semibold text-lg text-indigo-700 dark:text-indigo-300">23°</p>
-                                <p class="mt-1 font-semibold text-sm">Thursday</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">February 09, 2023</p>
-                            </div>
-
-                            <!-- Interactive "Check Full Stats" card -->
-                            <button aria-label="Check Full Weather Stats" id="fullStatsBtn"
-                                class="flex-shrink-0 rounded-2xl bg-indigo-600 text-white text-left p-6 w-32 shadow-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition focus:outline-none focus:ring-4 focus:ring-indigo-400 relative">
-                                <span class="text-lg font-semibold whitespace-nowrap">Check <br />Full Stats</span>
-                                <span class="absolute bottom-3 right-3 inline-block bg-indigo-400 rounded-full p-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-900" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                    </svg>
-                                </span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Weather Highlights grid -->
-                    <h2 class="text-lg font-semibold mt-2 mb-4 select-none">Today's Highlights</h2>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-
-                        <div class="bg-white dark:bg-gray-700 rounded-2xl p-5 flex flex-col items-center gap-2 justify-center shadow hover:shadow-lg transition cursor-default"
-                            tabindex="0" aria-label="Feels Like temperature 6 degrees Celsius, normal">
-                            <svg class="h-8 w-8 text-indigo-500" fill="none" stroke="currentColor" stroke-width="1.8"
-                                stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M14 14V9a4 4 0 1 0-8 0v5" />
-                            </svg>
-                            <p class="text-xs uppercase opacity-70 select-text">Feel Like</p>
-                            <p class="font-bold text-indigo-900 dark:text-indigo-300 text-2xl select-text">06°C</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">Normal</p>
-                        </div>
-
-                        <div class="bg-white dark:bg-gray-700 rounded-2xl p-5 flex flex-col items-center gap-2 justify-center shadow hover:shadow-lg transition cursor-default"
-                            tabindex="0" aria-label="Wind speed 26 kilometers per hour, heavy">
-                            <svg class="h-8 w-8 text-indigo-400" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M5 12h12M12 5l7 7-7 7" />
-                            </svg>
-                            <p class="text-xs uppercase opacity-70 select-text">Wind</p>
-                            <p class="font-bold text-indigo-900 dark:text-indigo-300 text-2xl select-text">26 km/h</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">Heavy</p>
-                        </div>
-
-                        <div class="bg-white dark:bg-gray-700 rounded-2xl p-5 flex flex-col items-center gap-2 justify-center shadow hover:shadow-lg transition cursor-default"
-                            tabindex="0" aria-label="Rain amount 16.7 centimeters, heavy">
-                            <svg class="h-8 w-8 text-indigo-300" fill="currentColor" viewBox="0 0 24 24"
-                                aria-hidden="true">
-                                <path d="M8 16l-3 4h12l-3-4m2-3a2 2 0 1 1-4 0 2 2 0 1 1 4 0z" />
-                            </svg>
-                            <p class="text-xs uppercase opacity-70 select-text">Rain Amount</p>
-                            <p class="font-bold text-indigo-900 dark:text-indigo-300 text-2xl select-text">16.7 cm</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">Heavy</p>
-                        </div>
-
-                        <div class="bg-white dark:bg-gray-700 rounded-2xl p-5 flex flex-col items-center gap-2 justify-center shadow hover:shadow-lg transition cursor-default"
-                            tabindex="0" aria-label="Humidity 65 percent, heavy">
-                            <svg class="h-8 w-8 text-indigo-400" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M12 2c0 4-5 8-5 13a5 5 0 0 0 10 0c0-5-5-9-5-13z" />
-                            </svg>
-                            <p class="text-xs uppercase opacity-70 select-text">Humidity</p>
-                            <p class="font-bold text-indigo-900 dark:text-indigo-300 text-2xl select-text">65%</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">Heavy</p>
-                        </div>
-
-                        <div class="bg-white dark:bg-gray-700 rounded-2xl p-5 flex flex-col items-center gap-2 justify-center shadow hover:shadow-lg transition cursor-default"
-                            tabindex="0" aria-label="Ultraviolet index 7, heavy">
-                            <svg class="h-8 w-8 text-indigo-600" fill="none" stroke="currentColor" stroke-width="2.5"
-                                stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M12 3v18M8 6h8M8 18h8" />
-                            </svg>
-                            <p class="text-xs uppercase opacity-70 select-text">Ultraviolet</p>
-                            <p class="font-bold text-indigo-900 dark:text-indigo-300 text-2xl select-text">7</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">Heavy</p>
-                        </div>
-
-                        <div class="bg-white dark:bg-gray-700 rounded-2xl p-5 flex flex-col items-center gap-2 justify-center shadow hover:shadow-lg transition cursor-default"
-                            tabindex="0" aria-label="Cloud cover 2 percent, normal">
-                            <svg class="h-8 w-8 text-indigo-400" fill="currentColor" viewBox="0 0 24 24"
-                                aria-hidden="true">
-                                <path d="M7 18h10a5 5 0 0 0-10-4 4 4 0 0 0-1 8z" />
-                            </svg>
-                            <p class="text-xs uppercase opacity-70 select-text">Cloud Cover</p>
-                            <p class="font-bold text-indigo-900 dark:text-indigo-300 text-2xl select-text">2%</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">Normal</p>
-                        </div>
-                    </div>
-
-                    <!-- Temperature predictions graph -->
-                    <div class="mt-6 p-4 bg-white dark:bg-gray-700 rounded-3xl shadow-lg select-none">
-                        <h3 class="text-indigo-700 dark:text-indigo-300 font-semibold text-lg mb-3 select-none">Today
-                            Temperature predictions</h3>
-                        <svg viewBox="0 0 320 100" class="w-full h-28" aria-hidden="true" role="img"
-                            aria-label="Graph showing temperature changes between 8 AM and 1 PM">
-                            <path d="M0 40 C40 15, 80 80, 120 75, 160 85, 200 45, 240 60, 280 50, 320 50"
-                                class="temp-curve" />
-                            <!-- Points -->
-                            <circle cx="0" cy="40" r="6" class="temp-point" data-temp="16" aria-label="8 AM: 16℃" />
-                            <circle cx="60" cy="15" r="6" class="temp-point" data-temp="20" aria-label="9 AM: 20℃" />
-                            <circle cx="120" cy="80" r="6" class="temp-point active" data-temp="16"
-                                aria-label="10 AM: 16℃" />
-                            <circle cx="160" cy="75" r="6" class="temp-point" data-temp="17" aria-label="11 AM: 17℃" />
-                            <circle cx="200" cy="85" r="6" class="temp-point" data-temp="22" aria-label="12 PM: 22℃" />
-                            <circle cx="260" cy="60" r="6" class="temp-point" data-temp="20" aria-label="1 PM: 20℃" />
-                        </svg>
-                        <div class="flex justify-between mt-3 px-2 font-mono text-indigo-700 dark:text-indigo-400">
-                            <span>08:00 AM</span>
-                            <span>09:00 AM</span>
-                            <span>10:00 AM</span>
-                            <span>11:00 AM</span>
-                            <span>12:00 PM</span>
-                            <span>01:00 PM</span>
-                        </div>
-                        <p id="selectedTempDisplay"
-                            class="mt-2 text-center font-semibold text-indigo-900 dark:text-indigo-300"
-                            aria-live="polite">
-                            Selected Time Temp: 16°C at 10:00 AM
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Right Sidebar -->
-                <aside class="flex flex-col gap-6">
-
-                    <!-- Other Cities -->
-                    <section
-                        class="bg-white dark:bg-gray-700 rounded-3xl ring-1 ring-indigo-100 dark:ring-indigo-900 p-4 shadow-lg select-none">
-                        <div class="flex justify-between items-center mb-3">
-                            <h3 class="font-semibold text-indigo-700 dark:text-indigo-300 text-lg">Other Cities</h3>
-                            <button id="viewAllBtn"
-                                class="text-indigo-600 dark:text-indigo-400 font-semibold text-sm hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded">View
-                                All</button>
-                        </div>
-                        <ul class="space-y-3 max-h-72 overflow-y-auto"
-                            aria-label="List of Other Cities with their temperatures and weather status">
-                            <li class="rounded-xl overflow-hidden cursor-pointer group hover:ring-2 hover:ring-indigo-400 transition relative"
-                                tabindex="0" aria-label="London, cloudy, 23 degrees Celsius, high 25, low 20">
-                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/304d3819-e277-46e5-b73d-e1acdbc6a20c.png"
-                                    alt="Cityscape of London with cloudy weather and dusk lighting"
-                                    class="w-full h-20 object-cover brightness-75 group-hover:brightness-90 transition" />
-                                <div class="absolute top-3 left-4 text-white font-semibold text-lg tracking-wide">London
-                                </div>
-                                <div class="absolute bottom-3 left-4 text-white text-xs">Cloudy</div>
-                                <div class="absolute top-3 right-4 text-white font-bold text-2xl">23°</div>
-                                <div class="absolute bottom-3 right-4 text-white text-xs">High: 25° Low: 20°</div>
-                            </li>
-                            <li class="rounded-xl overflow-hidden cursor-pointer group hover:ring-2 hover:ring-indigo-400 transition relative"
-                                tabindex="0" aria-label="Paris, thundercloud, 15 degrees Celsius, high 18, low 13">
-                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a7000447-ec56-479f-8f94-91a8134413e3.png"
-                                    alt="Paris city view with thundercloud skies during sunset"
-                                    class="w-full h-20 object-cover brightness-75 group-hover:brightness-90 transition" />
-                                <div class="absolute top-3 left-4 text-white font-semibold text-lg tracking-wide">Paris
-                                </div>
-                                <div class="absolute bottom-3 left-4 text-white text-xs">Thundercloud</div>
-                                <div class="absolute top-3 right-4 text-white font-bold text-2xl">15°</div>
-                                <div class="absolute bottom-3 right-4 text-white text-xs">High: 18° Low: 13°</div>
-                            </li>
-                            <li class="rounded-xl overflow-hidden cursor-pointer group hover:ring-2 hover:ring-indigo-400 transition relative"
-                                tabindex="0" aria-label="Bangladesh, cloudy, 22 degrees Celsius, high 25, low 20">
-                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ecdfd133-825e-464f-b6de-f09f842b18d4.png"
-                                    alt="Landscape view of Bangladesh with cloudy skies"
-                                    class="w-full h-20 object-cover brightness-75 group-hover:brightness-90 transition" />
-                                <div class="absolute top-3 left-4 text-white font-semibold text-lg tracking-wide">
-                                    Bangladesh
-                                </div>
-                                <div class="absolute bottom-3 left-4 text-white text-xs">Cloudy</div>
-                                <div class="absolute top-3 right-4 text-white font-bold text-2xl">22°</div>
-                                <div class="absolute bottom-3 right-4 text-white text-xs">High: 25° Low: 20°</div>
-                            </li>
-                            <li class="rounded-xl overflow-hidden cursor-pointer group hover:ring-2 hover:ring-indigo-400 transition relative"
-                                tabindex="0" aria-label="Canada, showers, 4 degrees Celsius, high 2, low 8">
-                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d701b101-8093-4df1-9c9e-6c13ae7784ef.png"
-                                    alt="Snow covered trees indicating showers weather in Canada"
-                                    class="w-full h-20 object-cover brightness-75 group-hover:brightness-90 transition" />
-                                <div class="absolute top-3 left-4 text-white font-semibold text-lg tracking-wide">Canada
-                                </div>
-                                <div class="absolute bottom-3 left-4 text-white text-xs">Showers</div>
-                                <div class="absolute top-3 right-4 text-white font-bold text-2xl">4°</div>
-                                <div class="absolute bottom-3 right-4 text-white text-xs">High: 2° Low: 8°</div>
-                            </li>
-                        </ul>
-                    </section>
-
-                    <!-- Sunrise / Sunset & Timer -->
-                    <section
-                        class="bg-indigo-50 dark:bg-gray-800 rounded-3xl p-6 shadow-xl select-none ring-1 ring-indigo-200 dark:ring-indigo-600">
-
-                        <div class="relative flex flex-col items-center w-full">
-                            <svg viewBox="0 0 220 110" class="w-full max-w-xs" aria-hidden="true" role="img"
-                                aria-label="Sunrise to sunset progress arc with current time">
-                                <!-- Arc background -->
-                                <path d="M20 90 A90 90 0 0 1 200 90" stroke="#a5b4fc" stroke-width="8" fill="none" />
-                                <!-- Arc progress - will animate -->
-                                <path id="progressArc" d="M20 90 A90 90 0 0 1 200 90" stroke="#4f46e5" stroke-width="8"
-                                    fill="none" stroke-linecap="round" />
-                                <!-- Sun Icon -->
-                                <circle id="sunPos" cx="20" cy="90" r="10" fill="#4f46e5" />
-                                <circle id="sunPosOuter" cx="20" cy="90" r="18" fill="none" stroke="#818cf8"
-                                    stroke-width="2" />
-                            </svg>
-                            <p id="countdown"
-                                class="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 text-indigo-700 dark:text-indigo-300 font-bold text-3xl font-mono tabular-nums"
-                                aria-live="polite" aria-atomic="true">02:35:46</p>
-                        </div>
-
-                        <div
-                            class="flex justify-between mt-2 text-sm font-semibold text-indigo-700 dark:text-indigo-300">
-                            <div>
-                                <p>Sunrise</p>
-                                <p class="mt-0.5 text-xs font-normal" id="sunriseTime">06:24 AM</p>
-                            </div>
-                            <div>
-                                <p>Sunset</p>
-                                <p class="mt-0.5 text-xs font-normal" id="sunsetTime">05:15 PM</p>
-                            </div>
-                        </div>
-
-                        <div
-                            class="mt-5 bg-white dark:bg-gray-700 rounded-lg p-3 font-semibold text-indigo-900 dark:text-indigo-300 flex justify-between items-center shadow cursor-default">
-                            <span class="select-text">Sunrise</span>
-                            <span>06:24 AM</span>
-                            <span class="font-normal text-gray-500 dark:text-gray-400 px-2">Tomorrow</span>
-                            <span>05:15 PM</span>
-                            <span class="select-text">Sunset</span>
-                        </div>
-                    </section>
-                </aside>
             </section>
-
-            <!-- Modal for Full Stats -->
-            <div id="fullStatsModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"
-                aria-describedby="modalDesc" tabindex="-1"
-                class="fixed inset-0 z-50 overflow-y-auto hidden bg-black bg-opacity-40 flex justify-center items-center p-4">
-                <div class="bg-white dark:bg-gray-800 rounded-3xl max-w-xl w-full p-6 shadow-lg relative">
-                    <h2 id="modalTitle" class="text-indigo-700 dark:text-indigo-300 text-2xl font-semibold mb-2">Full
-                        Weather Stats</h2>
-                    <p id="modalDesc" class="mb-6 text-gray-700 dark:text-gray-300 select-text">Comprehensive weather
-                        details for the next 7 days, including temperature, precipitation, wind, humidity and more...
-                    </p>
-                    <button id="closeModalBtn" aria-label="Close full stats"
-                        class="absolute top-4 right-4 p-2 rounded-lg text-indigo-600 hover:bg-indigo-100 dark:hover:bg-indigo-700 transition focus:outline-none focus:ring-2 focus:ring-indigo-400">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linejoin="round" stroke-linecap="round" viewBox="0 0 24 24"
-                            aria-hidden="true">
-                            <path d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                    <div class="mt-4 text-sm text-gray-600 dark:text-gray-400">This modal is just a placeholder for
-                        extended
-                        stats and can be connected to real data or APIs for full details.</div>
-                </div>
-            </div>
         </main>
+
+
+
 
         <script>
 
