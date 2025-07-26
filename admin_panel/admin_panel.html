@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriTech Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'green-earth': '#4a7c59',
+                        'cream': '#f5f5dc'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 font-sans">
+    <!-- Sidebar -->
+    <div class="fixed inset-y-0 left-0 z-50 w-64 bg-green-earth shadow-lg transform -translate-x-full md:translate-x-0 transition-transform duration-200 ease-in-out"
+        id="sidebar">
+        <div class="flex items-center justify-between h-16 px-6 bg-green-800">
+            <h1 class="text-white font-bold text-lg">AgriConnect Admin</h1>
+            <button class="md:hidden text-white" onclick="toggleSidebar()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
+        </div>
+
+        <nav class="mt-6">
+            <a href="#" onclick="showSection('dashboard')"
+                class="nav-item flex items-center px-6 py-3 text-gray-300 hover:bg-green-700 hover:text-white transition-colors duration-200 bg-green-700 text-white">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                </svg>
+                Dashboard
+            </a>
+            <a href="#" onclick="showSection('banners')"
+                class="nav-item flex items-center px-6 py-3 text-gray-300 hover:bg-green-700 hover:text-white transition-colors duration-200">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                    </path>
+                </svg>
+                Banners
+            </a>
+            <a href="#" onclick="showSection('waste')"
+                class="nav-item flex items-center px-6 py-3 text-gray-300 hover:bg-green-700 hover:text-white transition-colors duration-200">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                    </path>
+                </svg>
+                Waste Management
+            </a>
+            <a href="#" onclick="showSection('alerts')"
+                class="nav-item flex items-center px-6 py-3 text-gray-300 hover:bg-green-700 hover:text-white transition-colors duration-200">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.664-.833-2.464 0L4.34 16.5c-.77.833.192 2.5 1.732 2.5z">
+                    </path>
+                </svg>
+                Crop Alerts
+            </a>
+            <a href="#" onclick="showSection('submissions')"
+                class="nav-item flex items-center px-6 py-3 text-gray-300 hover:bg-green-700 hover:text-white transition-colors duration-200">
+                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                    </path>
+                </svg>
+                Submissions
+            </a>
+        </nav>
+    </div>
+
+    <!-- Mobile menu button -->
+    <div class="md:hidden fixed top-4 left-4 z-60">
+        <button onclick="toggleSidebar()" class="bg-green-earth text-white p-2 rounded-md shadow-lg">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                </path>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Main content -->
+    <div class="md:ml-64 min-h-screen">
+        <!-- Header -->
+        <header class="bg-white shadow-sm border-b border-gray-200">
+            <div class="px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <h2 id="page-title" class="text-2xl font-semibold text-gray-800">Dashboard Overview</h2>
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm text-gray-600">Admin User</span>
+                        <div class="w-8 h-8 bg-green-earth rounded-full flex items-center justify-center">
+                            <span class="text-white text-sm font-medium">A</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Content Area -->
+        <main class="p-6">
+            <!-- Dashboard Section -->
+            <div id="dashboard-section" class="content-section">
+                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
+                    <!-- Stats Cards -->
+                    <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-green-500">
+                        <div class="flex items-center">
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-700">Total Crops</h3>
+                                <p class="text-3xl font-bold text-green-600">1,247</p>
+                            </div>
+                            <div class="bg-green-100 p-3 rounded-full">
+                                <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-blue-500">
+                        <div class="flex items-center">
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-700">Moisture Levels</h3>
+                                <p class="text-3xl font-bold text-blue-600">20%</p>
+                            </div>
+                            <div class="bg-blue-100 p-3 rounded-full">
+                                <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-yellow-500">
+                        <div class="flex items-center">
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-700">Pending Alerts</h3>
+                                <p class="text-3xl font-bold text-yellow-600">12</p>
+                            </div>
+                            <div class="bg-yellow-100 p-3 rounded-full">
+                                <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.664-.833-2.464 0L4.34 16.5c-.77.833.192 2.5 1.732 2.5z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-6 border-l-4 border-purple-500">
+                        <div class="flex items-center">
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-700">Form Submissions</h3>
+                                <p class="text-3xl font-bold text-purple-600">89</p>
+                            </div>
+                            <div class="bg-purple-100 p-3 rounded-full">
+                                <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Recent Activity</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg">
+                            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <div class="flex-1">
+                                <p class="text-sm text-gray-800">New waste management submission received</p>
+                                <p class="text-xs text-gray-500">2 minutes ago</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg">
+                            <div class="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                            <div class="flex-1">
+                                <p class="text-sm text-gray-800">Crop alert updated for wheat fields</p>
+                                <p class="text-xs text-gray-500">15 minutes ago</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4 p-3 bg-gray-50 rounded-lg">
+                            <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
+                            <div class="flex-1">
+                                <p class="text-sm text-gray-800">Banner image updated successfully</p>
+                                <p class="text-xs text-gray-500">1 hour ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Banner Management Section -->
+            <div id="banners-section" class="content-section hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Upload New Banner -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Upload New Banner</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Banner Title</label>
+                                <input type="text"
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    placeholder="Enter banner title">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Upload Image</label>
+                                <div
+                                    class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-green-500 transition-colors">
+                                    <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none"
+                                        viewBox="0 0 48 48">
+                                        <path
+                                            d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <p class="mt-2 text-sm text-gray-600">Click to upload or drag and drop</p>
+                                    <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                                </div>
+                            </div>
+                            <button
+                                class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors">Upload
+                                Banner</button>
+                        </div>
+                    </div>
+
+                    <!-- Current Banners -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Current Banners</h3>
+                        <div class="space-y-4">
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h4 class="font-medium text-gray-800">Banner 1</h4>
+                                    <span
+                                        class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Active</span>
+                                </div>
+                                <div class="bg-gray-200 h-24 rounded mb-3 flex items-center justify-center">
+                                    <span class="banners text-gray-500">
+                                        <img id="banner-img" class="w-full h-full object-cover"
+                                            src="image/banner/banner0.jpg" alt="banner_img">
+                                    </span>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button
+                                        class="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600">Edit</button>
+                                    <button
+                                        class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600">Delete</button>
+                                </div>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h4 class="font-medium text-gray-800">Banner 2</h4>
+                                    <span
+                                        class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">Scheduled</span>
+                                </div>
+                                <div class="bg-gray-200 h-24 rounded mb-3 flex items-center justify-center">
+                                    <span class="banners text-gray-500"><img id="banner-img"
+                                            class="w-full h-full object-cover" src="image/banner/banner0.jpg"
+                                            alt="banner_img"></span>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button
+                                        class="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600">Edit</button>
+                                    <button
+                                        class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600">Delete</button>
+                                </div>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h4 class="font-medium text-gray-800">Banner 3</h4>
+                                    <span
+                                        class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">Scheduled</span>
+                                </div>
+                                <div class="bg-gray-200 h-24 rounded mb-3 flex items-center justify-center">
+                                    <span class="banners text-gray-500"><img id="banner-img"
+                                            class="w-full h-full object-cover" src="image/banner/banner0.jpg"
+                                            alt="banner_img"></span>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button
+                                        class="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600">Edit</button>
+                                    <button
+                                        class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600">Delete</button>
+                                </div>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h4 class="font-medium text-gray-800">Banner 4</h4>
+                                    <span
+                                        class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">Scheduled</span>
+                                </div>
+                                <div class="bg-gray-200 h-24 rounded mb-3 flex items-center justify-center">
+                                    <span class="banners text-gray-500"><img id="banner-img"
+                                            class="w-full h-full object-cover" src="image/banner/banner0.jpg"
+                                            alt="banner_img"></span>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button
+                                        class="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600">Edit</button>
+                                    <button
+                                        class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600">Delete</button>
+                                </div>
+                            </div>
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <div class="flex justify-between items-center mb-2">
+                                    <h4 class="font-medium text-gray-800">Banner 5</h4>
+                                    <span
+                                        class="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">Scheduled</span>
+                                </div>
+                                <div class="bg-gray-200 h-24 rounded mb-3 flex items-center justify-center">
+                                    <span class="banners text-gray-500"><img id="banner-img"
+                                            class="w-full h-full object-cover" src="image/banner/banner0.jpg"
+                                            alt="banner_img"></span>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button
+                                        class="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600">Edit</button>
+                                    <button
+                                        class="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Waste Management Section -->
+            <div id="waste-section" class="content-section hidden">
+                <div class="bg-white rounded-lg shadow-md p-6 mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Create Waste Management Solutions</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Solution Title</label>
+                            <input type="text" placeholder="Enter Title"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                        </div>
+
+                    </div>
+                    <div class="mt-4">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Solution Description</label>
+                        <textarea
+                            class="w-full h-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                            placeholder="Enter Description"></textarea>
+                    </div>
+                    <div class="mt-4 flex flex-col gap-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Solution Key Benefits</label>
+                        <div class="key_benefit flex items-center gap-4">
+                            <input type="text" placeholder="Enter Benefit"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                        </div>
+                        <div class="key_benefit flex items-center gap-4">
+                            <input type="text" placeholder="Enter Benefit"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                        </div>
+                        <div class="key_benefit flex items-center gap-4">
+                            <input type="text" placeholder="Enter Benefit"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                        </div>
+                        <div class="key_benefit flex items-center gap-4">
+                            <input type="text" placeholder="Enter Benefit"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                        </div>
+                    </div>
+                    <button
+                        class="mt-4 px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">Publish</button>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-6">Waste Management Solutions</h3>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Composting & Organic Matter Recycling -->
+                        <div class="border border-gray-200 rounded-lg p-6">
+                            <div class="title mb-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                                <input class="text-lg font-medium text-gray-800 mb-3 w-full p-2"
+                                    value="Composting & Organic Matter Recycling">
+                            </div>
+
+                            <div class="description mb-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                                <textarea
+                                    class="w-full h-32 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    placeholder="Description for Composting & Organic Matter Recycling solution...">Convert crop residues into nutrient-rich compost through controlled decomposition. This sustainable method transforms agricultural waste into valuable organic fertilizer.</textarea>
+                            </div>
+
+                            <div class="key_benefits flex flex-col gap-2 mb-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Key Benefits</label>
+                                <div class="key_benefit flex items-center gap-4">
+                                    <input type="text" placeholder="Enter Benefit"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                        value="Reduces landfill waste">
+                                </div>
+                                <div class="key_benefit flex items-center gap-4">
+                                    <input type="text" placeholder="Enter Benefit"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                        value="Creates natural fertilizer">
+        
+                                </div>
+                                <div class="key_benefit flex items-center gap-4">
+                                    <input type="text" placeholder="Enter Benefit"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                        value="Improves soil health">
+        
+                                </div>
+                                <div class="key_benefit flex items-center gap-4">
+                                    <input type="text" placeholder="Enter Benefit"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                        value="Cost-effective solution">
+                    
+                                </div>
+                            </div>
+
+                            <button
+                                class="mt-3 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">Update
+                                Changes</button>
+                        </div>
+
+                        <!-- Biomass Energy Generation -->
+                        <div class="border border-gray-200 rounded-lg p-6">
+                            <div class="title mb-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                                <input class="text-lg font-medium text-gray-800 mb-3 w-full p-2"
+                                    value="Biomass Energy Generation">
+                            </div>
+
+                            <div class="description mb-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                                <textarea
+                                    class="w-full h-32 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    placeholder="Description for Biomass Energy Generation solution...">Transform agricultural residues into renewable energy through biogas production or biomass burning. Convert waste into electricity or heat for farm operations.</textarea>
+                            </div>
+
+                            <div class="key_benefits flex flex-col gap-2 mb-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Key Benefits</label>
+                                <div class="key_benefit flex items-center gap-4">
+                                    <input type="text" placeholder="Enter Benefit"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                        value="Generates renewable energy">
+                                </div>
+                                <div class="key_benefit flex items-center gap-4">
+                                    <input type="text" placeholder="Enter Benefit"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                        value="Reduces carbon footprint">
+        
+                                </div>
+                                <div class="key_benefit flex items-center gap-4">
+                                    <input type="text" placeholder="Enter Benefit"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                        value="Creates additional income">
+        
+                                </div>
+                                <div class="key_benefit flex items-center gap-4">
+                                    <input type="text" placeholder="Enter Benefit"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                        value="Eliminates waste disposal costs">
+                    
+                                </div>
+                            </div>
+
+                            <button
+                                class="mt-3 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">Update
+                                Changes</button>
+                        </div>
+
+                        <!-- Bio-degradable Material Production -->
+                        <div class="border border-gray-200 rounded-lg p-6">
+                            <div class="title mb-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                                <input class="text-lg font-medium text-gray-800 mb-3 w-full p-2"
+                                    value="Bio-degradable Material Production">
+                            </div>
+
+                            <div class="description mb-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                                <textarea
+                                    class="w-full h-32 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    placeholder="Description for Bio-degradable Material Production solution...">Process agricultural waste into biodegradable packaging materials, mulch films, or construction materials. Creates value-added products from farm residues.</textarea>
+                            </div>
+
+                            <div class="key_benefits flex flex-col gap-2 mb-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Key Benefits</label>
+                                <div class="key_benefit flex items-center gap-4">
+                                    <input type="text" placeholder="Enter Benefit"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                        value="Reduces landfill waste">
+                                </div>
+                                <div class="key_benefit flex items-center gap-4">
+                                    <input type="text" placeholder="Enter Benefit"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                        value="Creates new revenue streams">
+        
+                                </div>
+                                <div class="key_benefit flex items-center gap-4">
+                                    <input type="text" placeholder="Enter Benefit"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                        value="Supports circular economy">
+        
+                                </div>
+                                <div class="key_benefit flex items-center gap-4">
+                                    <input type="text" placeholder="Enter Benefit"
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                        value="Innovative waste utilization">
+                    
+                                </div>
+                            </div>
+
+                            <button
+                                class="mt-3 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">Update
+                                Changes</button>
+                        </div>
+
+                        <!-- Waste Reduction
+                        <div class="border border-gray-200 rounded-lg p-6">
+                            <h4 class="text-lg font-medium text-gray-800 mb-3">Waste Reduction</h4>
+                            <textarea
+                                class="w-full h-32 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                placeholder="Description for waste reduction solution...">Implement precision agriculture techniques to minimize input waste. Use smart irrigation and targeted fertilization to reduce excess materials.</textarea>
+                            <button
+                                class="mt-3 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">Update
+                                Description</button>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Crop Alerts Section -->
+            <div id="alerts-section" class="content-section hidden">
+                <div class="space-y-6">
+                    <!-- Add New Alert -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Create New Alert</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Alert Type</label>
+                                <select
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                                    <option>Weather Warning</option>
+                                    <option>Pest Alert</option>
+                                    <option>Disease Warning</option>
+                                    <option>Market Update</option>
+                                    <option>Seasonal Reminder</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Priority Level</label>
+                                <select
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                                    <option>High</option>
+                                    <option>Medium</option>
+                                    <option>Low</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Alert Message</label>
+                            <textarea
+                                class="w-full h-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                                placeholder="Enter alert message..."></textarea>
+                        </div>
+                        <button
+                            class="mt-4 px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors">Publish
+                            Alert</button>
+                    </div>
+
+                    <!-- Current Alerts -->
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">Current Alerts</h3>
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-red-500 bg-red-50 p-4 rounded-r-lg">
+                                <div class="flex justify-between items-start">
+                                    <div class="flex-1">
+                                        <div class="flex items-center mb-2">
+                                            <span
+                                                class="bg-red-500 text-white px-2 py-1 text-xs rounded-full mr-2">HIGH</span>
+                                            <h4 class="font-medium text-gray-800">Severe Weather Warning</h4>
+                                        </div>
+                                        <p class="text-gray-700 text-sm">Heavy rainfall expected in the next 48 hours.
+                                            Farmers should protect crops and ensure proper drainage.</p>
+                                        <p class="text-gray-500 text-xs mt-1">Published 2 hours ago</p>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button
+                                            class="px-3 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600">Edit</button>
+                                        <button
+                                            class="px-3 py-1 bg-red-500 text-white text-xs rounded hover:bg-red-600">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="border-l-4 border-yellow-500 bg-yellow-50 p-4 rounded-r-lg">
+                                <div class="flex justify-between items-start">
+                                    <div class="flex-1">
+                                        <div class="flex items-center mb-2">
+                                            <span
+                                                class="bg-yellow-500 text-white px-2 py-1 text-xs rounded-full mr-2">MEDIUM</span>
+                                            <h4 class="font-medium text-gray-800">Pest Alert: Aphids</h4>
+                                        </div>
+                                        <p class="text-gray-700 text-sm">Increased aphid activity reported in corn
+                                            fields. Monitor crops closely and apply treatment if necessary.</p>
+                                        <p class="text-gray-500 text-xs mt-1">Published 1 day ago</p>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button
+                                            class="px-3 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600">Edit</button>
+                                        <button
+                                            class="px-3 py-1 bg-red-500 text-white text-xs rounded hover:bg-red-600">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submissions Section -->
+            <div id="submissions-section" class="content-section hidden">
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-lg font-semibold text-gray-800">Form Submissions</h3>
+                        <div class="flex space-x-3">
+                            <input type="text" placeholder="Search submissions..."
+                                class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <select
+                                class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                                <option>All Types</option>
+                                <option>Waste Management</option>
+                                <option>Contact Forms</option>
+                                <option>Feedback</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full table-auto">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2025-07-23</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Waste
+                                            Management</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">John Farmer</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Composting solution
+                                        inquiry</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3">View</button>
+                                        <button class="text-green-600 hover:text-green-900 mr-3">Respond</button>
+                                        <button class="text-red-600 hover:text-red-900">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2025-07-22</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Contact
+                                            Form</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Sarah Mitchell</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Partnership
+                                        opportunity</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Responded</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3">View</button>
+                                        <button class="text-green-600 hover:text-green-900 mr-3">Follow-up</button>
+                                        <button class="text-red-600 hover:text-red-900">Archive</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2025-07-22</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">Feedback</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Mike Johnson</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Website improvement
+                                        suggestions</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">New</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3">View</button>
+                                        <button class="text-green-600 hover:text-green-900 mr-3">Respond</button>
+                                        <button class="text-red-600 hover:text-red-900">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2025-07-21</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Waste
+                                            Management</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Lisa Chen</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Biogas production
+                                        questions</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Responded</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3">View</button>
+                                        <button class="text-green-600 hover:text-green-900 mr-3">Follow-up</button>
+                                        <button class="text-red-600 hover:text-red-900">Archive</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">2025-07-21</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">Contact
+                                            Form</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">David Rodriguez</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Technical support
+                                        request</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">In
+                                            Progress</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <button class="text-indigo-600 hover:text-indigo-900 mr-3">View</button>
+                                        <button class="text-green-600 hover:text-green-900 mr-3">Update</button>
+                                        <button class="text-red-600 hover:text-red-900">Delete</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="flex items-center justify-between mt-6">
+                        <div class="flex-1 flex justify-between sm:hidden">
+                            <button
+                                class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">Previous</button>
+                            <button
+                                class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">Next</button>
+                        </div>
+                        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                            <div>
+                                <p class="text-sm text-gray-700">
+                                    Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of
+                                    <span class="font-medium">89</span> results
+                                </p>
+                            </div>
+                            <div>
+                                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+                                    <button
+                                        class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <span class="sr-only">Previous</span>
+                                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                            fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                    <button
+                                        class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">1</button>
+                                    <button
+                                        class="bg-green-50 border-green-500 text-green-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">2</button>
+                                    <button
+                                        class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">3</button>
+                                    <span
+                                        class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">...</span>
+                                    <button
+                                        class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">18</button>
+                                    <button
+                                        class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                        <span class="sr-only">Next</span>
+                                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                                            fill="currentColor">
+                                            <path fill-rule="evenodd"
+                                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile sidebar overlay -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black opacity-50 z-40 hidden md:hidden" onclick="toggleSidebar()">
+    </div>
+
+    <script src="adminpanel.js"></script>
+</body>
+
+</html>>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Submitter</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+</tr>
+</thead>
+<tbody class="bg-white divide-y divide-gray-200">
+    <tr
