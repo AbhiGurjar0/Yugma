@@ -15,6 +15,7 @@ import connection from './config/mongoose-connection.js'; // Adjusted import pat
 import Field from './models/Fields.js'; // Adjusted import path
 import { isLoggedIn } from './middlewares/isLoggedIn.js'
 import Waste from './models/Waste.js'
+import Weather from './models/Weather.js'
 
 // Adjusted import path
 
@@ -144,7 +145,7 @@ app.post("/genai", async (req, res) => {
     // res.send(0);
 });
 app.post("/genaisugg", async (req, res) => {
-    let { text} = req.body;
+    let { text } = req.body;
     // console.log(message)
     const ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY); // Use API key from .env
 
@@ -187,6 +188,14 @@ app.post("/dash/waste/formsubmit", isLoggedIn, async (req, res) => {
 
 
 })
+app.post("/weatherdata", (req, res) => {
+    const { replyText } = req.body
+    Weather.create({
+        data: replyText,
+
+    });
+    res.send(200);
+});
 // Start server
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);

@@ -76,175 +76,175 @@ async function getWeather(city) {
 // });
 
 // Moisture Update work using IOT
-function updateMoisture(moisture) {
-    const circle = document.getElementById('moisture-fill');
-    const text = document.getElementById('moisture-percentage');
-    const percentage = Math.max(0, Math.min(100, moisture));
-    circle.setAttribute('stroke-dasharray', `${percentage}, 100`);
-    text.textContent = `${percentage}%`;
-}
-// Example usage:
-updateMoisture(20);
+// function updateMoisture(moisture) {
+//     const circle = document.getElementById('moisture-fill');
+//     const text = document.getElementById('moisture-percentage');
+//     const percentage = Math.max(0, Math.min(100, moisture));
+//     circle.setAttribute('stroke-dasharray', `${percentage}, 100`);
+//     text.textContent = `${percentage}%`;
+// }
+// // Example usage:
+// updateMoisture(20);
 
 
 // Banner Functionality
-let banners = ["./images/banner/banner0.png", "./images/banner/banner1.png", "./images/banner/banner2.png", "./images/banner/banner3.png", "./images/banner/banner4.jpg"];
-let currentIndex = 0;
-let sliderInterval;
-const prevBtn = document.getElementById('prevSlide');
-const nextBtn = document.getElementById('nextSlide');
-const banner_box = document.getElementById('banner-img')
-console.log(banner_box);
+// let banners = ["./images/banner/banner0.png", "./images/banner/banner1.png", "./images/banner/banner2.png", "./images/banner/banner3.png", "./images/banner/banner4.jpg"];
+// let currentIndex = 0;
+// let sliderInterval;
+// const prevBtn = document.getElementById('prevSlide');
+// const nextBtn = document.getElementById('nextSlide');
+// const banner_box = document.getElementById('banner-img')
+// // console.log(banner_box);
 
-function functBtn() {
-    prevBtn.addEventListener("click", () => {
-        prevSlide();
-    });
-    nextBtn.addEventListener("click", () => {
-        nextSlide();
-    });
-}
+// function functBtn() {
+//     prevBtn.addEventListener("click", () => {
+//         prevSlide();
+//     });
+//     nextBtn.addEventListener("click", () => {
+//         nextSlide();
+//     });
+// }
 
-function updateBanner() {
-    banner_box.src = banners[currentIndex];
-    for (let i = 0; i < banners.length; i++) {
-        document.getElementById(`dot-${i}`).classList.remove('bg-gray-700');
-        document.getElementById(`dot-${i}`).classList.remove('w-9');
-        document.getElementById(`dot-${i}`).classList.remove('active');
-        document.getElementById(`dot-${i}`).classList.add('bg-gray-400');
-        document.getElementById(`dot-${i}`).classList.add('w-3');
-    }
-    document.getElementById(`dot-${currentIndex}`).classList.add('bg-gray-700');
-    document.getElementById(`dot-${currentIndex}`).classList.add('w-9');
-    document.getElementById(`dot-${currentIndex}`).classList.add('active');
-}
+// function updateBanner() {
+//     banner_box.src = banners[currentIndex];
+//     for (let i = 0; i < banners.length; i++) {
+//         document.getElementById(`dot-${i}`).classList.remove('bg-gray-700');
+//         document.getElementById(`dot-${i}`).classList.remove('w-9');
+//         document.getElementById(`dot-${i}`).classList.remove('active');
+//         document.getElementById(`dot-${i}`).classList.add('bg-gray-400');
+//         document.getElementById(`dot-${i}`).classList.add('w-3');
+//     }
+//     document.getElementById(`dot-${currentIndex}`).classList.add('bg-gray-700');
+//     document.getElementById(`dot-${currentIndex}`).classList.add('w-9');
+//     document.getElementById(`dot-${currentIndex}`).classList.add('active');
+// }
 
-function prevSlide() {
-    currentIndex = (currentIndex - 1 + banners.length) % banners.length;
-    updateBanner();
-    resetAutoSlider();
-}
+// function prevSlide() {
+//     currentIndex = (currentIndex - 1 + banners.length) % banners.length;
+//     updateBanner();
+//     resetAutoSlider();
+// }
 
-function nextSlide() {
-    currentIndex = (currentIndex + 1) % banners.length;
-    updateBanner();
-    resetAutoSlider();
-}
+// function nextSlide() {
+//     currentIndex = (currentIndex + 1) % banners.length;
+//     updateBanner();
+//     resetAutoSlider();
+// }
 
-function startAutoSlider() {
-    sliderInterval = setInterval(() => {
-        currentIndex = (currentIndex + 1) % banners.length;
-        updateBanner();
-    }, 3000); // Change slide every 3 seconds
-}
+// function startAutoSlider() {
+//     sliderInterval = setInterval(() => {
+//         currentIndex = (currentIndex + 1) % banners.length;
+//         updateBanner();
+//     }, 3000); // Change slide every 3 seconds
+// }
 
-function resetAutoSlider() {
-    clearInterval(sliderInterval);
-    startAutoSlider();
-}
+// function resetAutoSlider() {
+//     clearInterval(sliderInterval);
+//     startAutoSlider();
+// }
 
-// Touch swipe functionality
-let startX = 0;
-document.getElementById('banner-container').addEventListener('touchstart', function (e) {
-    startX = e.touches[0].clientX;
-});
+// // Touch swipe functionality
+// let startX = 0;
+// document.getElementById('banner-container').addEventListener('touchstart', function (e) {
+//     startX = e.touches[0].clientX;
+// });
 
-document.getElementById('banner-container').addEventListener('touchend', function (e) {
-    let endX = e.changedTouches[0].clientX;
-    if (startX - endX > 50) {
-        nextSlide();
-    } else if (endX - startX > 50) {
-        prevSlide();
-    }
-});
+// document.getElementById('banner-container').addEventListener('touchend', function (e) {
+//     let endX = e.changedTouches[0].clientX;
+//     if (startX - endX > 50) {
+//         nextSlide();
+//     } else if (endX - startX > 50) {
+//         prevSlide();
+//     }
+// });
 
-functBtn();
-updateBanner();
-startAutoSlider();
-
-
-// Irrigation: Water Supply Checker
-let waterSupply_checker = false;
+// functBtn();
+// updateBanner();
+// startAutoSlider();
 
 
-// Setup Water Pump
-const home_panel = document.getElementById("home-panel");
-const setup_irrigation = document.querySelector(".setup-irrigation");
-const btn_setup_waterpump = document.getElementById("setup-waterpump");
-const close_setup_waterpump = document.getElementById("close-waterpump-setup");
-const setup_box = setup_irrigation.querySelector(".setup-box");
-console.log(close_setup_waterpump);
-function openclose_setup(checker) {
-    if (checker) {
-        setup_irrigation.classList.remove('hidden');
-        home_panel.classList.add('blur-sm');
-        setTimeout(() => {
-            setup_box.classList.remove('-translate-y-full', 'opacity-0');
-            setup_box.classList.add('translate-y-0', 'opacity-100');
-        }, 50);
-    } else {
-        console.log("Happy")
-        setup_box.classList.remove('translate-y-0', 'opacity-100');
-        setup_box.classList.add('-translate-y-full', 'opacity-0');
-        home_panel.classList.remove('blur-sm');
-        setTimeout(() => {
-            setup_irrigation.classList.add('hidden');
-        }, 500);
-    }
-}
-
-btn_setup_waterpump.addEventListener("click", function () {
-    openclose_setup(1);
-});
-
-close_setup_waterpump.addEventListener("click", function () {
-    openclose_setup(0);
-});
+// // Irrigation: Water Supply Checker
+// let waterSupply_checker = false;
 
 
-// Notification Function
-function showToast(text) {
-    const toast = document.getElementById('toast');
-    toast.innerText = text;
-    toast.classList.remove('hidden');
-    setTimeout(() => {
-        toast.classList.add('hidden');
-    }, 3000); // auto hide after 3 seconds
-}
+// // Setup Water Pump
+// const home_panel = document.getElementById("home-panel");
+// const setup_irrigation = document.querySelector(".setup-irrigation");
+// const btn_setup_waterpump = document.getElementById("setup-waterpump");
+// const close_setup_waterpump = document.getElementById("close-waterpump-setup");
+// const setup_box = setup_irrigation.querySelector(".setup-box");
+// console.log(close_setup_waterpump);
+// function openclose_setup(checker) {
+//     if (checker) {
+//         setup_irrigation.classList.remove('hidden');
+//         home_panel.classList.add('blur-sm');
+//         setTimeout(() => {
+//             setup_box.classList.remove('-translate-y-full', 'opacity-0');
+//             setup_box.classList.add('translate-y-0', 'opacity-100');
+//         }, 50);
+//     } else {
+//         console.log("Happy")
+//         setup_box.classList.remove('translate-y-0', 'opacity-100');
+//         setup_box.classList.add('-translate-y-full', 'opacity-0');
+//         home_panel.classList.remove('blur-sm');
+//         setTimeout(() => {
+//             setup_irrigation.classList.add('hidden');
+//         }, 500);
+//     }
+// }
+
+// btn_setup_waterpump.addEventListener("click", function () {
+//     openclose_setup(1);
+// });
+
+// close_setup_waterpump.addEventListener("click", function () {
+//     openclose_setup(0);
+// });
 
 
-// Function that start irrigation manually
-const start_irrigation = document.getElementById('start-irrigation');
-
-function startIrrigation() {
-    showToast('Now, Irrigation Started');
-}
-
-start_irrigation.addEventListener("click", () => {
-    if (waterSupply_checker == false) {
-        waterSupply_checker = true;
-        startIrrigation();
-    } else {
-        showToast('Already, Irrigation Working');
-    }
-});
+// // Notification Function
+// function showToast(text) {
+//     const toast = document.getElementById('toast');
+//     toast.innerText = text;
+//     toast.classList.remove('hidden');
+//     setTimeout(() => {
+//         toast.classList.add('hidden');
+//     }, 3000); // auto hide after 3 seconds
+// }
 
 
-// Function that stop irrigation on emergency 
-const stop_irrigation = document.getElementById("stop-irrigation");
+// // Function that start irrigation manually
+// const start_irrigation = document.getElementById('start-irrigation');
 
-function stopIrrigation() {
-    showToast('Successfully, Irrigation Stopped');
-}
+// function startIrrigation() {
+//     showToast('Now, Irrigation Started');
+// }
 
-stop_irrigation.addEventListener("click", () => {
-    if (waterSupply_checker) {
-        waterSupply_checker = false;
-        stopIrrigation();
-    } else {
-        showToast('Already, Irrigation Not Stopped');
-    }
-});
+// start_irrigation.addEventListener("click", () => {
+//     if (waterSupply_checker == false) {
+//         waterSupply_checker = true;
+//         startIrrigation();
+//     } else {
+//         showToast('Already, Irrigation Working');
+//     }
+// });
+
+
+// // Function that stop irrigation on emergency 
+// const stop_irrigation = document.getElementById("stop-irrigation");
+
+// function stopIrrigation() {
+//     showToast('Successfully, Irrigation Stopped');
+// }
+
+// stop_irrigation.addEventListener("click", () => {
+//     if (waterSupply_checker) {
+//         waterSupply_checker = false;
+//         stopIrrigation();
+//     } else {
+//         showToast('Already, Irrigation Not Stopped');
+//     }
+// });
 
 // Waste Management form 
 function openWasteForm(option) {
@@ -348,7 +348,7 @@ function submitForm() {
 }
 
 function initializePage() {
-    lucide.createIcons();
+    // lucide.createIcons();
 
     document.getElementById('modalForm').addEventListener('click', function (e) {
         if (e.target === this) {
@@ -392,7 +392,8 @@ Format → Date\tAlert\tCrop\tSeverity
 
 Example:  
 26 Jul\t🌧️ Heavy rain expected – avoid harvesting wheat today.\tWheat\tCritical
-
+format is same but add some modern ness in output.  i am showing this output in every reload d=so you don't want to change data everytime .
+if you see any difference in weather then change the data otherwise you can give same output.don't change the format
 Weather Data: ${JSON.stringify(Api)}
 `;
 
@@ -402,13 +403,62 @@ Weather Data: ${JSON.stringify(Api)}
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ text, Api })
+            body: JSON.stringify({ text })
         });
 
         // Handle response
         if (!res.ok) throw new Error(`Server error: ${res.status}`);
+
         const data = await res.json();
-        
+        console.log(data)
+        const replyText = data.reply;
+        await fetch("/weatherdata", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ replyText }),
+
+        });
+
+        // Step 1: Extract the TSV section using split
+        const tableLines = replyText
+            .split('\n')
+            .filter(line => line.includes('\t') && !line.startsWith('**'));
+
+        // Step 2: Remove the header
+        const [header, ...rows] = tableLines;
+
+        const alertBody = document.getElementById('weatherAlert');
+        alertBody.innerHTML = '';
+
+        const severityClass = {
+            'Critical': 'bg-red-500 text-white',
+            'Warning': 'bg-yellow-400 text-gray-800',
+            'Moderate': 'bg-yellow-400 text-gray-800',
+            'Low': 'bg-green-400 text-white',
+            'Alert': 'bg-orange-500 text-white'
+        };
+
+        rows.forEach(row => {
+            const [date, alert, crop, severity] = row.split('\t');
+            const spanClass = severityClass[severity] || 'bg-gray-300 text-black';
+
+            const tr = document.createElement('tr');
+            tr.className = 'hover:bg-green-50 transition';
+
+            tr.innerHTML = `
+        <td class="py-2 px-4">${date}</td>
+        <td class="py-2 px-4">${alert}</td>
+        <td class="py-2 px-4">${crop}</td>
+        <td class="py-2 px-4">
+            <span class="${spanClass} px-2 py-1 rounded text-xs font-medium">${severity}</span>
+        </td>
+    `;
+            alertBody.appendChild(tr);
+        });
+
+
+
+
 
     } catch (err) {
         console.error("Aisugg() failed:", err);
@@ -416,4 +466,7 @@ Weather Data: ${JSON.stringify(Api)}
 }
 
 // Call the function
-document.addEventListener("DOMContentLoaded", function () { Aisugg(); });
+// setTimeout(() => {
+//     Aisugg();
+
+// }, 1000)  
