@@ -1,14 +1,13 @@
 import mongoose from 'mongoose';
 const fieldSchema = new mongoose.Schema({
     Id: {
-        type: String,
-        // required: true,
-        trim: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
     },
     Area: {
         type: String,
         required: true,
-        unique: true,
         trim: true
     },
     soil: {

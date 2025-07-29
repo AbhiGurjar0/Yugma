@@ -68,8 +68,16 @@ export const loginUser = async (req, res) => {
         return res.redirect("/login");
     }
 }
-async function logoutUser(req, res) {
-    res.status(501).json({ message: "Logout not implemented yet." });
+export const logoutUser = async (req, res) => {
+    try {
+        res.cookie("token", "");
+        res.redirect("/login");
+    }
+    catch (err) {
+        console.log(err);
+        res.redirect('/dash')
+    }
+
 }
 
 

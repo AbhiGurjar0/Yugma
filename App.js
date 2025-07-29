@@ -7,7 +7,7 @@ import { fileURLToPath } from "url";
 import { dirname } from "path";
 import { error } from "console";
 import cookieParser from "cookie-parser";
-import { registerUser, loginUser } from './controllers/controller.js';
+import { registerUser, loginUser, logoutUser } from './controllers/controller.js';
 import flash from "connect-flash";
 import session from "express-session";
 import mongoose from "mongoose";
@@ -16,6 +16,7 @@ import Field from './models/Fields.js'; // Adjusted import path
 import { isLoggedIn } from './middlewares/isLoggedIn.js'
 import Waste from './models/Waste.js'
 import Weather from './models/Weather.js'
+import User from './models/Farmer.js'
 
 // Adjusted import path
 
@@ -44,13 +45,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/register", registerUser);
 app.use("/loginUser", loginUser);
+app.use("/logout", logoutUser);
 // Routes
 app.get("/", (req, res) => {
     res.render("App"); // make sure views/App.ejs exists
 });
 
-app.get("/dash", (req, res) => {
-    res.render("Dash"); // make sure views/Dash.ejs exists
+app.get("/dash", isLoggedIn, async (req, res) => {
+    let user = await User.find({ _id: req.user._id });
+    res.render("Dash", { user }); // make sure views/Dash.ejs exists
 });
 app.get('/dash/weather', (req, res) => {
     res.render('Weather');
@@ -59,8 +62,8 @@ app.get('/dash/waste', isLoggedIn, async (req, res) => {
     let WasteForms = await Waste.find({ Id: req.user._id })
     res.render('Waste', { WasteForms });
 });
-app.get('/dash/field', async (req, res) => {
-    let field = await Field.find({});
+app.get('/dash/field', isLoggedIn, async (req, res) => {
+    let field = await Field.find({ Id: req.user._id });
     res.render('Fields', { field }); // make sure views/Fields.ejs exists
 });
 app.get("/login", (req, res) => {
@@ -69,12 +72,13 @@ app.get("/login", (req, res) => {
 app.get('/dash/settings', (req, res) => {
     res.render("setting");
 })
-app.post('/fields', async (req, res) => {
+app.post('/fields', isLoggedIn, async (req, res) => {
     try {
+        let Id = req.user._id;
         const { cropName, Area } = req.body;
-        const newField = new Field({ cropName, Area });
+        const newField = new Field({ Id, cropName, Area });
         await newField.save();
-        res.redirect('/dash'); // or render success page
+        res.redirect('/dash/field'); // or render success page
     } catch (err) {
         console.error(err);
         res.status(400).send("Error saving field data");
